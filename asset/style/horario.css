@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+thead th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+}
+
+tbody td, thead th {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+td:first-child {
+    font-weight: bold;
+}
+
+/* Estilo para a linha da semana */
+thead tr:first-child th {
+    background-color: #e6dede; /* Fundo suave */
+    color: #0c0c0c; /* Destaque no texto */
+    font-size: 1.2em; /* Texto levemente maior */
+    font-weight: bold; /* Negrito */
+    text-align: center;
+    padding: 10px;
+}
+
+tbody td {
+    position: relative; /* Necessário para o efeito de marca d'água */
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 30px 8px; /* Aumentando o tamanho da célula */
+}
+
+tbody td::before {
+    content: attr(data-day); /* Exibe o número do dia */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4em; /* Tamanho grande */
+    color: rgba(0, 0, 0, 0.1); /* Efeito de marca d'água */
+    pointer-events: none; /* Impede interação com o texto de marca d'água */
+}
+
+thead th:nth-child(2), tbody td:nth-child(2) {
+    width: 150px; /* Ajuste o valor conforme necessário */
+    white-space: nowrap; /* Evita quebra de linha */
+}
