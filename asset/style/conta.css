@@ -58,7 +58,10 @@ label {
 }
 
 .input-group {
-    position: relative;
+    display: flex;
+    justify-content: flex-start ;
+    align-items: center;
+    //position: relative;
     margin-bottom: 15px;
 }
 
