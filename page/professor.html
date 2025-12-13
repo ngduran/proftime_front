@@ -1,30 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-	<meta charset="UTF-8">
-	<title>Formulário</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
-	<link rel="stylesheet" href="../asset/style/professor.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Professor</title>
+    <link rel="stylesheet" href="/asset/style/professor.css">
 </head>
 <body>
-	<h1>Cadastro do(a) Professor(a)</h1>
-	<form class="form" id="cadastro_professor">
-	
-		<label for="nome">Nome do(a) professor(a):</label>
-		<input type="text" id="nome"><br>
-		<br>
-		
-		<label for="email">Melhor email:</label>
-		<input type="text" id="email"><br>
-		<br>
-		
-		<div class="btn-class">
-			<button type="button" id="submit-btn-salvar" onclick="salvar()">Salvar</button>
-			<button type="button" id="submit-btn-consultar" onclick="consultar()">Consultar</button>
-			<button type="button" id="submit-btn-alterar" onclick="alterar()">Alterar</button>
-			<button type="button" id="submit-btn-apagar" onclick="apagar()">Apagar</button>
-		</div>
-	</form>	
-	<script src="../script/professor.js"></script>
+
+    <div class="container">
+        <h1>🧑‍🏫 Crie sua Conta de Professor</h1>
+        <p>Preencha os dados abaixo para criar seu acesso.</p>
+
+        <form id="formProfessor" autocomplete="off">
+            
+            <div class="input-group">
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="nome" name="nome" required placeholder="Seu nome completo">
+            </div>
+			<div id="erro-nome" class="erro"></div>
+
+            <div class="input-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required placeholder="seu.email@instituicao.com">
+            </div>
+			<div id="erro-email" class="erro"></div>
+
+			<div class="input-group">
+                <label for="telefone">Telefone:</label>
+                <input type="text" id="telefone" name="telefone" required placeholder="(99) 9999-9999">
+            </div>
+			<div id="erro-telefone" class="erro"></div>
+
+			
+            <div class="input-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required placeholder="Mínimo 6 caracteres" minlength="6">
+            </div>
+			<div id="erro-senha" class="erro"></div>
+
+			<div class="crud-actions">
+				<button type="button" id="cadastrarBtn" class="cadastrar-btn" onclick="salvar()">Salvar</button>
+				<button type="button" id="consultarBtn" class="cadastrar-btn" onclick="consultar()">Consultar</button>
+				<button type="button" id="alterarBtn" class="cadastrar-btn" onclick="Alterar()">Alterar</button>
+				<button type="button" id="deletarBtn" class="cadastrar-btn" onclick="Deletar()">Deletar</button>
+			</div>
+			<div id="erro-mensagem" class="message-area"></div>
+        </form>
+
+
+        <p class="login-link">
+            Já tem conta? <a href="#">Fazer Login</a>
+        </p>
+    </div>
+
+    <script src="/script/professor.js"></script>
 </body>
 </html>

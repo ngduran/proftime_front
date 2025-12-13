@@ -1,62 +1,203 @@
-/* Estilos gerais */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    margin: 0;
-  }
-  
-  /* Estilos do formulário */
-  form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #fff;
-  }
-  
-  @media only screen and (max-width: 767px) {
-    form {
-      max-width: 90%;
-    }
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  input[type="text"] {
-    display: block;
-    width: 95%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  } 
-
-  .btn-class {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f4f8; /* Cor de fundo suave */
     display: flex;
-    justify-content: space-between;
-  }
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
 
-  button {    
-    width: 120px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 10px;
+.container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
     text-align: center;
-    background: #4CAF50;
-    color: #fff;  
-  }
+}
 
-  button:hover {
-    background-color: #3e8e41;
-  }
+h1 {
+    color: #00796b;
+    margin-bottom: 10px;
+    font-size: 1.8em;
+}
+
+p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+input:focus {
+    border-color: #00a896;
+    box-shadow: 0 0 5px rgba(0, 168, 150, 0.3);
+    outline: none;
+}
+
+.cadastrar-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #00a896;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.cadastrar-btn:hover {
+    background-color: #00897b;
+}
+
+.message-area {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: none; /* Escondido por padrão */
+}
+
+.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+.error {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+.erro {
+    color: #d32f2f;
+    font-size: 14px;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    font-weight: 600;
+    width: 100%;
+    text-align: left;
+    padding-left: 0;
+    min-height: 16px;
+}
+
+#erro-descricao {
+    padding-left: 0;
+    margin-top: 3px;
+    margin-bottom: 5px;
+}
+
+.login-link {
+    margin-top: 25px;
+    color: #666;
+}
+
+.login-link a {
+    color: #00796b;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* Arquivo CSS: professor.css (Alterações/Adições) */
+
+/* Se estiver reutilizando a classe 'cadastrar-btn' para outros elementos, 
+ * remova 'width: 100%' e 'margin-top' dela. 
+ * Se não, ignore esta seção de .cadastrar-btn (ela não foi usada no HTML ajustado).
+ */
+
+/* =======================================================
+ * NOVO: CONTÊINER FLEXBOX PARA OS BOTÕES CRUD
+ * =======================================================
+ */
+
+.crud-actions {
+    /* Define o layout lado a lado */
+    display: flex;
+    gap: 8px; /* Espaço entre os botões */
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+/* NOVO: Estilo base para os botões CRUD */
+.crud-actions .crud-btn {
+    /* Garante que todos os 4 botões tenham a mesma largura */
+    flex-grow: 1; 
+    
+    /* Reutiliza a aparência da sua classe anterior */
+    padding: 12px;
+    background-color: #00a896;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em; 
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    /* Remove a margem superior desnecessária do empilhamento anterior */
+    margin-top: 0; 
+}
+
+.crud-actions .crud-btn:hover {
+    background-color: #00897b;
+}
+
+/* =======================================================
+ * NOVO: MEDIA QUERY (RESPONSIVIDADE)
+ * =======================================================
+ */
+
+/* Para telas menores ou iguais a 600px, empilhe os botões */
+@media (max-width: 600px) {
+    .crud-actions {
+        /* Muda a direção do flexbox para coluna, empilhando */
+        flex-direction: column; 
+    }
+    
+    .crud-actions .crud-btn {
+        /* Ocupa 100% da largura em coluna */
+        width: 100%;
+        font-size: 1em; 
+    }
+}
+
+/* =======================================================
+ * ALTERAÇÃO: Global Message ID (para ser compatível com o JS)
+ * =======================================================
+ */
+
+/* Mantenha o seu .message-area, mas adicione o ID 'erro-mensagem' no HTML
+   para a compatibilidade. */
