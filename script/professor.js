@@ -118,7 +118,7 @@ async function salvar() {
         
         const dados = coletarDadosForm("formProfessor"); // Supondo que seu <form> tenha id="formProfessor"
         console.log(dados);
-        const btn = document.querySelector("button"); // Bloqueia o botão para evitar cliques duplos (UX Profissional)
+        const btn = document.getElementById("cadastrarBtn"); // Bloqueia o botão para evitar cliques duplos (UX Profissional)
         btn.disabled = true;
         btn.innerText = ACAO_BOTAO.acao;
         
@@ -140,7 +140,7 @@ async function salvar() {
         alert(`Falha ao salvar: ${error.message}`);
     } finally {
         // Restaura o botão independente de sucesso ou erro
-        const btn = document.querySelector("button");
+        const btn = document.getElementById("cadastrarBtn");
         btn.disabled = false;
         btn.innerText = ACAO_BOTAO.nome;        
     }
@@ -163,7 +163,7 @@ async function consultar() {
         
         const dados = coletarDadosForm("formProfessor"); // Supondo que seu <form> tenha id="formProfessor"
         console.log(dados);
-        const btn = document.querySelector("button"); // Bloqueia o botão para evitar cliques duplos (UX Profissional)
+        const btn = document.getElementById("consultarBtn"); // Bloqueia o botão para evitar cliques duplos (UX Profissional)
         btn.disabled = true;
         btn.innerText = ACAO_BOTAO.acao;
 
@@ -182,7 +182,7 @@ async function consultar() {
         alert(`Falha ao consultar: ${error.message}`);
     } finally {
         // Restaura o botão independente de sucesso ou erro
-        const btn = document.querySelector("button");
+        const btn = document.getElementById("consultarBtn");
         btn.disabled = false;
         btn.innerText = ACAO_BOTAO.nome;        
     }
