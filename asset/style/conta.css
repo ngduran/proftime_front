@@ -88,9 +88,14 @@ label {
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--color-border); /* Cor Cinza para o ícone de informação */
+    //color: var(--color-border); /* Cor Cinza para o ícone de informação */
     font-size: 1rem;
-    cursor: help;
+    cursor: help;   
+}
+
+.info-question {
+    color: var(--color-accent);
+
 }
 
 /* Checkbox */
@@ -126,8 +131,8 @@ label {
 .cta-button {
     width: 100%;
     padding: 15px;
-    background-color: var(--color-primary); /* Cor Principal: Azul Escuro */
-    color: var(--color-accent); /* Texto do botão: Amarelo Ouro (Alto Contraste) */
+    background-color: var(--color-accent);  /* Texto do botão: Amarelo Ouro (Alto Contraste) */      
+    color: var(--color-primary); /* Cor Principal: Azul Escuro */
     border: none;
     border-radius: 8px;
     font-size: 1.1rem;
