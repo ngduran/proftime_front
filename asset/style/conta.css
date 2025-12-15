@@ -151,3 +151,22 @@ label {
 .cta-button:active {
     opacity: 0.9;
 }
+
+/* =======================================================
+ * NOVO: MEDIA QUERY (RESPONSIVIDADE)
+ * =======================================================
+ */
+
+/* Para telas menores ou iguais a 600px, empilhe os botões */
+@media (max-width: 600px) {
+    .crud-actions {
+        /* Muda a direção do flexbox para coluna, empilhando */
+        flex-direction: column; 
+    }
+    
+    .crud-actions .crud-btn {
+        /* Ocupa 100% da largura em coluna */
+        width: 100%;
+        font-size: 1em; 
+    }
+}

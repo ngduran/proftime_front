@@ -1,24 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<meta charset="UTF-8">
-	<title>Login</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
-	<link rel="stylesheet" href="../asset/style/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof Time Conta - Cadastro</title>
+    <link rel="stylesheet" href="../asset/style/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<h1>Login</h1>
-	<form class="form" id="login_form">
-		<label for="username">Usuário:</label>
-		<input type="text" id="username" name="username"><br>
-		<br>
+    <div class="container">
+        <div class="form-card">
+            <h1 class="header-title">Login</h1>
 
-		<label for="password">Senha:</label>
-		<input type="password" id="password" name="password"><br>
-		<br>
-		
-		<button type="button" id="login-btn" onclick="login">Entrar</button>		
-	</form>	
-	<script src="../script/login.js"></script>
+            <form id="contaForm" autocomplete="off">
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="seu@email.com">
+                    <i class="fa-solid fa-circle-question info-question"></i>
+                    <span class="info-icon" title="Obrigatório"></span>
+                </div>
+                
+                <label for="senha">Senha</label>
+                <div class="input-group">
+                    <input type="password" id="senha" placeholder="Digite sua senha">
+                    <i class="fa-solid fa-circle-question info-question"></i>
+                    <span class="info-icon" title="Obrigatório"></span>
+                </div>
+				
+				<div class="checkbox-group">
+					<input type="checkbox" id="mostrarSenha">                
+					<label for="mostrarSenha">Mostrar Senha</label>
+				</div>
+				
+				<button type="submit" class="cta-button">Entrar</button>
+				
+				<div class="help-link">
+					<a href="esqueceu-a-senha.html" class="help-link">Esqueceu a senha?</a>
+				</div>
+
+				<button type="submit" class="cta-button">Criar Conta</button>
+
+				<div class="help-link">
+					<a href="reenviar-email.html" class="help-link">Reenviar email</a>
+				</div>
+
+			</form>
+        </div>
+    </div>
+    <script src="../script/login.js"></script>
 </body>
 </html>
