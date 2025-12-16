@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituição</title>
+    <link rel="stylesheet" href="../asset/style/instituicao.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container">
+        <div class="form-card">
+            <h1 class="header-title">Instituição</h1>
+
+            <form id="instituicaoForm" autocomplete="off">
+                
+                <label for="instituicao">Nome</label>
+                <div class="input-group">
+                    <input type="text" id="nome" name="nome" placeholder="Ex: Escola Estadual XXX">
+                </div>
+
+                <label for="administracao">Administração</label>
+                <div class="input-group">
+                    <input type="text" id="administracao" name="administracao" placeholder="Ex: Estadual">
+                </div>
+                
+                <label for="cidade">Cidade</label>
+                <div class="input-group">
+                    <input type="text" id="cidade" name="cidade" placeholder="Ex: Curitiba">
+                </div>
+
+                <label for="estado">Estado (UF)</label>
+                <div class="input-group">
+                    <select id="estado" name="estado">
+                        <option value="">Selecione o Estado</option>
+                        <option value="AC">Acre</option>
+                        <option value="PR">Paraná</option>
+                        </select>
+                </div>
+
+                <label for="horarioInicial">Horário de Início das Atividades</label>
+                <div class="input-group">
+                    <input type="time" id="horarioInicial" name="horarioInicial" value="07:30">
+                </div>
+
+                <label for="horaAula">Duração Padrão da Aula (em minutos)</label>
+                <div class="input-group">
+                    <input type="time" id="horaAula" name="horaAula" value="00:50">                    
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" id="cadastrarBtn" class="cta-button" onclick="salvar()">Salvar Local</button>
+                    <button type="button" id="voltarBtn"    class="cta-button" onclick="voltarAoInicio()">Voltar ao Inicio</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script src="../script/instituicao.js"></script> 
+</body>
+</html>
