@@ -141,7 +141,7 @@ label {
     padding: 15px;
     background-color: var(--color-primary); /* Cor Principal: Azul Escuro */     
      
-    color: var(--color-accent);  /* Texto do botão: Amarelo Ouro (Alto Contraste) */ 
+    color: var(--color-card-bg);  /* Texto do botão: Amarelo Ouro (Alto Contraste) */ 
     border: none;
     border-radius: 8px;
     font-size: 1.1rem;
