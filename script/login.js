@@ -28,4 +28,8 @@ function login() {
     })
     .then(data => console.log(data))
     .catch(error => console.error('Error:', error));
-};
+}
+
+function criarConta() {
+    window.location.href='../page/conta.html'
+}
