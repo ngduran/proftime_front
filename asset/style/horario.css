@@ -1,77 +1,120 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
+:root {
+    --color-primary: #1748AF;
+    --color-accent: #ffc346;
+    --color-border: #BCBDC1;
+    --color-background-soft: #E0E4FD;
+    --color-text-dark: #2E2F33;
+    --color-card-bg: #FFFFFF;
 }
 
-h1 {
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+
+body {
+    background-color: var(--color-background-soft);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.container { width: 100%; max-width: 1100px; }
+
+.form-card {
+    background: var(--color-card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.header-title {
+    color: var(--color-primary);
+    text-align: center;
     margin-bottom: 20px;
 }
 
-table {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    border-collapse: collapse;
-    background: #fff;
+/* Grids Responsivos */
+.responsive-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-thead th {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
+.entry-grid {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr auto;
+    gap: 10px;
+    align-items: flex-end;
 }
 
-tbody td, thead th {
-    border: 1px solid #ddd;
-    text-align: center;
-    padding: 8px;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-td:first-child {
+/* Estilo de Inputs */
+.input-group label {
+    display: block;
+    font-size: 0.8rem;
     font-weight: bold;
+    margin-bottom: 5px;
 }
 
-/* Estilo para a linha da semana */
-thead tr:first-child th {
-    background-color: #e6dede; /* Fundo suave */
-    color: #0c0c0c; /* Destaque no texto */
-    font-size: 1.2em; /* Texto levemente maior */
-    font-weight: bold; /* Negrito */
-    text-align: center;
+input, select {
+    width: 100%;
     padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
 }
 
-tbody td {
-    position: relative; /* Necessário para o efeito de marca d'água */
-    border: 1px solid #ddd;
+/* Botões */
+.cta-button {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* CORREÇÃO PARA TABELA (O segredo da imagem 885aa6) */
+.table-responsive-container {
+    width: 100%;
+    overflow-x: auto; /* Permite scroll horizontal */
+    margin-top: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.horario-table {
+    width: 100%;
+    min-width: 700px; /* Garante que a tabela não "esprema" os dados no celular */
+    border-collapse: collapse;
+}
+
+.horario-table th, .horario-table td {
+    padding: 12px;
+    border: 1px solid #f0f0f0;
     text-align: center;
-    padding: 30px 8px; /* Aumentando o tamanho da célula */
 }
 
-tbody td::before {
-    content: attr(data-day); /* Exibe o número do dia */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 4em; /* Tamanho grande */
-    color: rgba(0, 0, 0, 0.1); /* Efeito de marca d'água */
-    pointer-events: none; /* Impede interação com o texto de marca d'água */
+.horario-table th { background: #f8f9fa; color: var(--color-primary); }
+
+/* Badges (Pills) */
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    white-space: nowrap; /* Impede que o texto quebre linha dentro da badge */
 }
 
-thead th:nth-child(2), tbody td:nth-child(2) {
-    width: 150px; /* Ajuste o valor conforme necessário */
-    white-space: nowrap; /* Evita quebra de linha */
+.badge-blue { background: #d1e3ff; color: #1748af; }
+.badge-orange { background: #ffe8d1; color: #af6b17; }
+
+/* MEDIA QUERIES PARA CELULAR */
+@media (max-width: 768px) {
+    .responsive-grid, .entry-grid {
+        grid-template-columns: 1fr; /* Tudo vira uma única coluna */
+    }
+    
+    .cta-button.secundario { width: 100%; }
+    
+    .form-card { padding: 15px; }
 }

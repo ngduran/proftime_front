@@ -3,29 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horário de Aulas</title>
+    <title>Prof Time - Grade de Horários Responsiva</title>
     <link rel="stylesheet" href="../asset/style/horario.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 <body>
-    <h1>Horário de Aulas</h1>
-    <table id="horario-aulas">
-        <thead>            
-            <tr>
-                <th>Aula</th>
-                <th>Horário</th>
-                <th>Segunda</th>
-                <th>Terça</th>
-                <th>Quarta</th>
-                <th>Quinta</th>
-                <th>Sexta</th>
-                <th>Sábado</th>
-                <th>Domingo</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- As linhas serão preenchidas dinamicamente pelo JavaScript -->
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="form-card">
+            <h1 class="header-title">Horário</h1>
+
+            <form id="horarioFiltroForm" class="responsive-grid">
+                <div class="input-group">
+                    <label for="instituicao">Instituição</label>
+                    <select id="instituicao" name="instituicao">
+                        <option value="">Selecione a instituição</option>
+                        <option value="1">Colégio Estadual Marilis Faria Pirotelli</option>
+                        <option value="2">Colégio Estadual Marechal Humberto de Alencar Castelo Branco - EFM</option>
+                        <option value="3">Escola Municipal Professora Gladis Maria Tibola</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="turno">Turno</label>
+                    <select id="turno" name="turno">
+                        <option value="">Selecione o turno</option>
+                        <option value="1">Manhã</option>
+                        <option value="2">Tarde</option>
+                        <option value="3">Noite</option>
+                    </select>
+                </div>
+            </form>
+
+            <div class="section-grade">
+                <h2 class="section-title">Grade das Aulas</h2>
+                <form id="gradeForm" class="entry-grid">
+                    <div class="input-group">
+                        <label>Posição</label>
+                        <input type="number" name="posicao" value="1" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label>Dia</label>
+                        <select name="diaSemana">
+                            <option value="">Selecione o dia</option>
+                            <option value="1">Segunda</option>
+                            <option value="2">Terça</option>
+                            <option value="3">Quarta</option>
+                            <option value="4">Quinta</option>
+                            <option value="5">Sexta</option>
+                            <option value="6">Sábado</option>
+                            <option value="7">Domingo</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Turma</label>
+                        <select name="turma">
+                            <option value="2A">2º Técnico A</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Matéria</label>
+                        <select name="materia">
+                            <option value="">Selecione a Turma</option>
+                            <option value="1">1º Técnico em Desenvolvimento de Sistemas</option>
+                            <option value="2">2º Técnico em Desenvolvimento de Sistemas</option>
+                            <option value="3">3º Técnico em Desenvolvimento de Sistemas</option>
+                            <option value="4">1º Técnico em Administração</option>
+                        </select>
+                    </div>
+                    <button type="button" class="cta-button btn-add">Adicionar</button>
+                </form>
+            </div>
+
+            <div class="table-responsive-container">
+                <table class="horario-table">
+                    <thead>
+                        <tr>
+                            <th>Aula</th>
+                            <th>Segunda</th>
+                            <th>Terça</th>
+                            <th>Quarta</th>
+                            <th>Quinta</th>
+                            <th>Sexta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradeCorpo">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="footer-actions">
+                <button type="button" class="cta-button secundario">Voltar ao Inicio</button>
+            </div>
+        </div>
+    </div>
     <script src="../script/horario.js"></script>
 </body>
 </html>

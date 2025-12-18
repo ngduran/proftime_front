@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof Time - Horários</title>
+    <link rel="stylesheet" href="../asset/style/horario.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container wide">
+        <div class="form-card">
+            <h1 class="header-title">Horário Professor</h1>
+            <form id="horarioForm">
+                <section class="add-section">
+
+                    <label for="instituicao">Instituição</label>
+                    <div class="input-group">
+                        <select id="administracao" name="administracao">
+                            <option value="">Selecione a Administração</option>
+                            <option value="Municipal">Municipal</option>
+                            <option value="Estadual">Estadual</option>
+                            <option value="Federal">Federal</option>
+                        </select>
+                    </div>
+
+
+                    <h2 class="sub-title">Adicionar Novo Horário</h2>
+                    <div class="input-grid-box">
+                        <div class="input-field">
+                            <label><i class="fa-solid fa-circle-question info-question"></i> Posição da Aula</label>
+                            <input type="number" id="posicao" name="posicao" placeholder="1, 2, etc.">
+                        </div>
+                        <div class="input-field">
+                            <label><i class="fa-solid fa-circle-question info-question"></i> Dia da Semana</label>
+                            <select id="diaSemana" name="diaSemana">
+                                <option value="" disabled selected>Selecione o dia</option>
+                                <option>Segunda-feira</option>
+                                <option>Terça-feira</option>
+                                <option>Quarta-feira</option>
+                                <option>Quinta-feira</option>
+                                <option>Sexta-feira</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label><i class="fa-solid fa-circle-question info-question"></i> Turno</label>
+                            <select id="turno" name="turno">
+                                <option value="" disabled selected>Selecione</option>
+                                <option>Manhã</option>
+                                <option>Tarde</option>
+                                <option>Noite</option>
+                            </select>
+                        </div>
+                        <!-- <div class="input-field">
+                            <label>Início</label>
+                            <input type="time" id="hora-inicio" name="horario-inicio">
+                        </div>
+                        <div class="input-field">
+                            <label>Término</label>
+                            <input type="time" id="hora-fim">
+                        </div> -->
+                    </div>
+                    
+                    <div class="action-row">
+                        <button type="button" class="cta-button btn-add" onclick="adicionarHorario()">Adicionar Horário <i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </section>
+
+                <hr class="divider">
+
+                <section class="list-section">
+                    <h2 class="sub-title">Horários Registrados</h2>
+                    
+                    <ul id="saved-schedules">
+                        <li class="empty-message-item">Nenhum horário registrado ainda.</li>
+                        
+                        <li class="schedule-item-card">
+                            <!-- <div class="item-data">
+                                <p><strong>Posição:</strong> 1ª <span class="star">★</span> Segunda</p>
+                                <p><strong>Turno:</strong> Manhã <span class="star">★</span> 07:30 - 08:20</p>
+                            </div> -->
+                            <div class="item-actions">
+                                <button class="btn-icon-action edit"><i class="fa-solid fa-pen"></i> Alterar</button>
+                                <button class="btn-icon-action delete"><i class="fa-solid fa-trash"></i> Deletar</button>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <button class="cta-button btn-save-all">Salvar Todos os Horários</button>
+                </section>
+
+                <!-- <div class="output-container">
+                    <h3 class="output-title">Output de dados</h3>
+                    <div id="json-output" class="json-box">
+                        Aguardando salvamento...
+                    </div>
+                </div> -->
+            </form>
+        </div>
+    </div>
+    <script src="../script/horario.js"></script>
+</body>
+</html>
