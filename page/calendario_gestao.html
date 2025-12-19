@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof Time - Gestão de Calendário</title>
+    <link rel="stylesheet" href="../asset/style/calendario_gestao.css">
+    <link rel="stylesheet" href="../asset/style/calendario_layout.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container-full">
+        <header class="calendar-header">
+            <h1 class="header-title">Gerenciador de Calendário Escolar 2026</h1>
+            <div class="header-actions">
+                <button class="cta-button-small" onclick="abrirModalLote()">Editar Período em Lote</button>
+                <span class="year-display">2026</span>
+            </div>
+        </header>
+
+        <main class="calendar-grid" id="calendarGrid">
+            </main>
+    </div>
+
+    <div id="modalEdicao" class="modal">
+        <div class="form-card modal-content">
+            <h2 id="modalTitle">Editar Dia</h2>
+            <form id="editForm">
+                <input type="hidden" id="dataInicio">
+                
+                <div id="campoDataFinal" style="display:none;">
+                    <label for="dataFim">Data Final</label>
+                    <input type="date" id="dataFim" class="input-field">
+                </div>
+
+                <label>Tipo de Dia</label>
+                <div class="radio-group">
+                    <input type="radio" name="tipoDia" value="LETIVO" id="tipoLetivo" checked>
+                    <label for="tipoLetivo">Sim, dia letivo</label>
+                    
+                    <input type="radio" name="tipoDia" value="NAO_LETIVO" id="tipoNaoLetivo">
+                    <label for="tipoNaoLetivo">Não letivo</label>
+                </div>
+
+                <div id="motivoContainer" style="display:none;">
+                    <label for="motivo">Motivo</label>
+                    <select id="motivo" class="custom-select">
+                        <option value="FERIADO">Feriado</option>
+                        <option value="RECESSO">Recesso Escolar</option>
+                        <option value="PLANEJAMENTO">Estudo e Planejamento</option>
+                        <option value="OUTRO">Outro</option>
+                    </select>
+                </div>
+
+                <div class="button-group" style="margin-top:20px;">
+                    <button type="button" class="cta-button" onclick="processarSalvamento()">Confirmar</button>
+                    <button type="button" class="cta-button secondary" onclick="fecharModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../script/calendario_gestao.js"></script>
+</body>
+</html>

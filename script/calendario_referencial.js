@@ -1,0 +1,110 @@
+const API_CONFIG = {
+    BASE_URL: "http://127.0.0.1:8080",
+    RESOURCE: "/calendario-referencial"
+};
+
+const ENDPOINTS = {
+    CREATE: { path: `${API_CONFIG.RESOURCE}/create`, method: 'POST'  },
+    READ:   { path: `${API_CONFIG.RESOURCE}/read`,   method: 'POST'  },
+    UPDATE: { path: `${API_CONFIG.RESOURCE}/update`, method: 'PUT'   },
+    DELETE: { path: `${API_CONFIG.RESOURCE}/delete`, method: 'DELETE'}
+};
+
+function coletarDadosForm(idFormulario) {
+    const formulario = document.getElementById(idFormulario);
+    const formData = new FormData(formulario);
+    
+    // Converte o FormData em um objeto simples { nome: '...', email: '...' }
+    return Object.fromEntries(formData.entries());
+}
+
+async function popularFormulario(idFormulario, dados) {
+    const formulario = document.getElementById(idFormulario);
+    if (!formulario || !dados) return;
+
+    // Iteramos sobre as chaves do objeto JSON (nome, email, etc)
+    Object.keys(dados).forEach(key => {
+        // Buscamos o input que tenha o atributo name EXATAMENTE igual à chave
+        const campo = formulario.querySelector(`[name="${key}"]`);
+
+        if (campo) {
+            // Atribuímos o valor. O '?? ""' garante que se vier nulo do banco, o campo fique vazio
+            campo.value = dados[key] ?? "";
+            console.log(`Sucesso: Campo [${key}] preenchido.`);
+        } else {
+            console.warn(`Aviso: O JSON trouxe '${key}', mas não existe <input name="${key}"> no HTML.`);
+        }
+    });
+    
+    await new Promise(resolve => setTimeout(resolve, 0));
+}
+
+async function executarAcao(endpoint, dados, id = null) {
+    
+    const { path, method } = endpoint;
+  
+    const pathComId = id ? `${endpoint.path}/${id}` : endpoint.path;
+    const URL = `${API_CONFIG.BASE_URL}${pathComId}`;
+
+    const HEADERS = new Headers({
+        "Content-Type": "application/json"
+    });
+
+    const FETCH_CONFIG = {        
+            method: method,
+            mode: 'cors',
+            cache: 'no-cache',
+            headers: HEADERS,           
+            body: endpoint.method !== 'GET' ? JSON.stringify(dados) : null
+    }
+   
+    try {
+        const response = await fetch(URL, FETCH_CONFIG);
+        
+        if (!response.ok) {
+            const erroStatus = await response.json().catch(() => ({}));
+            throw new Error(erroStatus.message || `Erro no servidor: ${response.status}`);
+        }
+
+        const data = await response.json();
+         console.log("Resposta do servidor:", data);
+        return data;
+    } catch (error) {
+        console.error("Erro ao acessar o servidor:", error);
+        throw error;
+        
+    }
+
+}
+
+async function salvar() {
+
+    const ACAO_BOTAO = { nome: 'Salvar', acao: 'Salvando...'}
+
+    try {
+        
+        const dados = coletarDadosForm("calendarioForm");
+        console.log(dados);
+        const btn = document.getElementById("cadastrarBtn");
+        btn.disabled = true;
+        btn.innerText = ACAO_BOTAO.acao;        
+       
+        const resultado = await executarAcao(ENDPOINTS.CREATE, dados);        
+      
+        if (resultado && resultado.id) {
+            sessionStorage.setItem('calendarioReferencialId', resultado.id);
+            console.log("ID guardado na sessão:", resultado.id);
+        }        
+        
+       alert("Operação realizada com sucesso!");
+       document.getElementById("calendarioForm").reset();
+
+    } catch (error) {
+        alert(`Falha ao salvar: ${error.message}`);
+    } finally {
+        // Restaura o botão independente de sucesso ou erro
+        const btn = document.getElementById("cadastrarBtn");
+        btn.disabled = false;
+        btn.innerText = ACAO_BOTAO.nome;        
+    }
+}
