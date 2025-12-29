@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão de Recessos Escolares</title>
+    <link rel="stylesheet" href="../asset/style/voto_recesso.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Sistema de Gestão de Recessos Escolares</h1>
+            <p>Colabore com sua rede para manter o calendário escolar atualizado</p>
+        </div>
+
+        <!-- User Selector -->
+        <div class="card user-selector" id="userSelector">
+            <div class="user-selector-header">
+                <span>👥</span>
+                <span>Simular usuário:</span>
+            </div>
+            <div class="user-buttons" id="userButtons"></div>
+            <div class="user-network">
+                <strong>Rede:</strong> <span id="currentNetwork"></span>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid">
+            <!-- Add Recess Form -->
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                    <span style="color: #4f46e5;">📅</span>
+                    <h2>Sugerir Novo Recesso</h2>
+                </div>
+                <form id="recessForm">
+                    <div class="form-group">
+                        <label for="description" class="form-label">Descrição</label>
+                        <input 
+                            type="text" 
+                            id="description" 
+                            class="form-input" 
+                            placeholder="Ex: Recesso Escolar de Julho"
+                            required
+                        />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate" class="form-label">Data de Início</label>
+                            <input 
+                                type="date" 
+                                id="startDate" 
+                                class="form-input"
+                                value="2026-07-06"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate" class="form-label">Data de Término</label>
+                            <input 
+                                type="date" 
+                                id="endDate" 
+                                class="form-input"
+                                value="2026-07-17"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>➕</span>
+                        Sugerir Recesso
+                    </button>
+                </form>
+            </div>
+
+            <!-- Statistics -->
+            <div class="card">
+                <h2>Estatísticas</h2>
+                <div class="stats-grid">
+                    <div class="stat-card pending">
+                        <div class="stat-value" id="pendingCount">0</div>
+                        <div class="stat-label">Pendentes</div>
+                    </div>
+                    <div class="stat-card approved">
+                        <div class="stat-value" id="approvedCount">0</div>
+                        <div class="stat-label">Aprovados</div>
+                    </div>
+                    <div class="stat-card denied">
+                        <div class="stat-value" id="deniedCount">0</div>
+                        <div class="stat-label">Negados</div>
+                    </div>
+                </div>
+                <div class="quorum-card">
+                    <div class="quorum-label">Quórum para Aprovação</div>
+                    <div class="quorum-value">3 votos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Recesses -->
+        <div id="pendingSection" style="display: none;">
+            <div class="card">
+                <div class="section-header">
+                    <h2>Recessos Pendentes</h2>
+                    <p class="section-subtitle">Vote para validar ou negar as sugestões</p>
+                </div>
+                <div id="pendingList"></div>
+            </div>
+        </div>
+
+        <!-- Approved Recesses -->
+        <div id="approvedSection" style="display: none;">
+            <div class="card">
+                <div class="section-header">
+                    <h2>Recessos Aprovados</h2>
+                    <p class="section-subtitle">Períodos bloqueados no calendário escolar</p>
+                </div>
+                <div id="approvedList"></div>
+            </div>
+        </div>
+
+        <!-- Denied Recesses -->
+        <div id="deniedSection" style="display: none;">
+            <div class="card">
+                <div class="section-header">
+                    <h2>Recessos Negados</h2>
+                    <p class="section-subtitle">Sugestões que não foram aprovadas pela rede</p>
+                </div>
+                <div id="deniedList"></div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="card empty-state">
+            <div class="empty-icon">📅</div>
+            <h3 class="empty-title">Nenhum recesso cadastrado</h3>
+            <p class="empty-text">Adicione o primeiro recesso usando o formulário acima</p>
+        </div>
+    </div>
+
+    <script src="../script/voto_recesso.js"></script>
+</body>
+</html>

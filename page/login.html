@@ -13,17 +13,17 @@
         <div class="form-card">
             <h1 class="header-title">Login</h1>
 
-            <form id="contaForm" autocomplete="off">
+            <form id="loginForm" autocomplete="off">
                 <label for="email">Email</label>
                 <div class="input-group">
-                    <input type="email" id="email" placeholder="seu@email.com">
+                    <input type="email" id="email" name="email" placeholder="seu@email.com">
                     <i class="fa-solid fa-circle-question info-question"></i>
                     <span class="info-icon" title="Obrigatório"></span>
                 </div>
                 
                 <label for="senha">Senha</label>
                 <div class="input-group">
-                    <input type="password" id="senha" placeholder="Digite sua senha">
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
                     <i class="fa-solid fa-circle-question info-question"></i>
                     <span class="info-icon" title="Obrigatório"></span>
                 </div>
@@ -33,7 +33,7 @@
 					<label for="mostrarSenha">Mostrar Senha</label>
 				</div>
 				
-				<button type="submit" class="cta-button">Entrar</button>
+				<button type="button" id="loginBtn" class="cta-button" onclick="logar()">Entrar</button>
 				
 				<div class="help-link">
 					<a href="esqueceu-a-senha.html" class="help-link">Esqueceu a senha?</a>
