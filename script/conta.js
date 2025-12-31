@@ -169,24 +169,92 @@ document.querySelectorAll('.info-question').forEach(icon => {
     });
 });
 
+function validarFormulario(idFormulario) {
+    const form = document.getElementById(idFormulario);
+    const inputs = form.querySelectorAll("[required]");
+    let todosValidos = true;
 
+    // Limpa mensagens de erro anteriores
+    form.querySelectorAll(".error-message").forEach(el => el.remove());
 
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            marcarErro(input, "Este campo é obrigatório.");
+            todosValidos = false;
+        } else {
+            input.classList.remove("invalid");
+        }
+    });
 
-
-
-
-
-
-
-
-
-
-
-
-
-function salvar() {
-    salvarGenerico("contaForm", "cadastrarBtn", ENDPOINTS.CREATE, "contaId");
+    return todosValidos;
 }
+
+/*
+function marcarErro(input, mensagem) {
+    input.classList.add("invalid");
+    
+    // Cria a mensagem de texto logo abaixo do input
+    const spanErro = document.createElement("span");
+    spanErro.className = "error-message";
+    spanErro.innerText = mensagem;
+    
+    // Insere após o container do grupo (input-group)
+    //input.closest(".input-group").after(spanErro);
+
+    // CORREÇÃO: Insere DENTRO do container para a ancoragem funcionar
+    container.appendChild(spanErro);
+
+    // Listener para remover o erro quando o usuário começar a digitar
+    input.addEventListener('input', () => {
+        input.classList.remove("invalid");
+        if(spanErro) spanErro.remove();
+    }, { once: true });
+}
+*/
+
+function marcarErro(input, mensagem) {
+    // 1. Precisamos achar o container e definir a variável
+    const container = input.closest(".input-group");
+    
+    input.classList.add("invalid");
+    
+    const spanErro = document.createElement("span");
+    spanErro.className = "error-message";
+    spanErro.innerText = mensagem;
+    
+    // 2. Agora o container existe e o appendChild vai funcionar
+    container.appendChild(spanErro);
+
+    input.addEventListener('input', () => {
+        input.classList.remove("invalid");
+        if(spanErro) spanErro.remove();
+    }, { once: true });
+}
+
+
+
+
+async function salvar() {
+    // Agora a validação é genérica para o formulário
+    if (!validarFormulario("contaForm")) {
+        return; // Para a execução aqui e mostra os erros na tela
+    }
+
+    // Se passar na validação, segue para o salvar que já testamos ontem
+    await salvarGenerico("contaForm", "cadastrarBtn", ENDPOINTS.CREATE, "contaId");
+}
+
+
+
+
+
+
+
+
+
+// function salvar() {
+//     salvarGenerico("contaForm", "cadastrarBtn", ENDPOINTS.CREATE, "contaId");
+// }
 
 
 // async function salvar() {

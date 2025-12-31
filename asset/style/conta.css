@@ -61,8 +61,15 @@ label {
     display: flex;
     justify-content: flex-start ;
     align-items: center;
-    //position: relative;
+    position: relative;
     margin-bottom: 15px;
+    width: 100%;
+}
+
+/* Força a borda vermelha quando a classe invalid está presente */
+.input-group input.invalid {
+    border: 1px solid #ff4d4d;
+    outline: none;
 }
 
 .input-group input {
@@ -160,14 +167,28 @@ label {
     opacity: 0.9;
 }
 
-
-/* Garante que o tooltip seja posicionado em relação ao grupo do input */
-.input-group {
-    position: relative; 
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+.error-message {
+    position: absolute;
+    top: 100%;
+    margin-top: 2px;
+    //z-index: 10; //Não precisava pois já estava acima do fundo
+   
+    left: 0px;    
+    font-size: 12px;
+    color: #ff4d4d;
 }
+
+/* Ajuste na mensagem para flutuar no vão */
+/* .error-message {
+    position: absolute;  // Essencial: remove o elemento do fluxo normal
+    top: 100%;           // Gruda logo abaixo do input
+    left: 0;
+    font-size: 10px;     // Redução do tamanho da letra como solicitado
+    color: #ff4d4d;      // Destaque em vermelho
+    margin-top: 2px;     // Pequeno respiro abaixo da borda
+    white-space: nowrap; // Garante que a frase fique em uma linha só
+} */
+
 
 .tooltip-container {
     position: absolute;
