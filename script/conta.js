@@ -1,6 +1,6 @@
 const API_CONFIG = {
     BASE_URL: "http://127.0.0.1:8080",
-    RESOURCE: "/conta"
+    RESOURCE: "/usuario"
 };
 
 const ENDPOINTS = {
@@ -66,8 +66,15 @@ async function executarAcao(endpoint, dados, id = null) {
             throw new Error(erroStatus.message || `Erro no servidor: ${response.status}`);
         }
 
+        // SOLUÇÃO: Verifica se o status é 204 (No Content) ou se não há corpo
+        const contentType = response.headers.get("content-type");
+        if (response.status === 204 || !contentType || !contentType.includes("application/json")) {
+            console.log("Sucesso, mas sem corpo de resposta.");
+            return null; 
+        }
+
         const data = await response.json();
-         console.log("Resposta do servidor:", data);
+        console.log("Resposta do servidor:", data);
         return data;
     } catch (error) {
         console.error("Erro ao acessar o servidor:", error);
@@ -77,37 +84,82 @@ async function executarAcao(endpoint, dados, id = null) {
 
 }
 
-async function salvar() {
-
-    const ACAO_BOTAO = { nome: 'Salvar', acao: 'Salvando...'}
+/**
+ * Função genérica para salvar qualquer formulário
+ * @param {string} formId - O ID do formulário no HTML (ex: "instituicaoForm")
+ * @param {string} btnId - O ID do botão (ex: "cadastrarBtn")
+ * @param {string} endpoint - A URL/Endpoint (ex: ENDPOINTS.INSTITUICAO)
+ * @param {string} sessionKey - A chave para guardar o ID (ex: "instituicaoId")
+ */
+async function salvarGenerico(formId, btnId, endpoint, sessionKey) {
+    const ACAO_BOTAO = { nome: 'Salvar', acao: 'Salvando...' };
+    const btn = document.getElementById(btnId);
+    const form = document.getElementById(formId);
 
     try {
-        
-        const dados = coletarDadosForm("instituicaoForm");
-        console.log(dados);
-        const btn = document.getElementById("cadastrarBtn");
+        const dados = coletarDadosForm(formId);
+        console.log(`Dados de ${formId}:`, dados);
+
         btn.disabled = true;
-        btn.innerText = ACAO_BOTAO.acao;        
-       
-        const resultado = await executarAcao(ENDPOINTS.CREATE, dados);        
-      
-        if (resultado && resultado.id) {
-            sessionStorage.setItem('instituicaoId', resultado.id);
-            console.log("ID guardado na sessão:", resultado.id);
-        }        
-        
-       alert("Operação realizada com sucesso!");
-       document.getElementById("instituicaoForm").reset();
+        btn.innerText = ACAO_BOTAO.acao;
+
+        const resultado = await executarAcao(endpoint, dados);
+
+        // Se houver retorno de ID e uma chave de sessão foi informada
+        if (resultado && resultado.id && sessionKey) {
+            sessionStorage.setItem(sessionKey, resultado.id);
+            console.log(`ID guardado em ${sessionKey}:`, resultado.id);
+        }
+
+        alert("Operação realizada com sucesso!");
+        form.reset();
 
     } catch (error) {
         alert(`Falha ao salvar: ${error.message}`);
     } finally {
-        // Restaura o botão independente de sucesso ou erro
-        const btn = document.getElementById("cadastrarBtn");
         btn.disabled = false;
-        btn.innerText = ACAO_BOTAO.nome;        
+        btn.innerText = ACAO_BOTAO.nome;
     }
 }
+
+function salvar() {
+    salvarGenerico("contaForm", "cadastrarBtn", ENDPOINTS.CREATE, "contaId");
+}
+
+
+// async function salvar() {
+
+//     const ACAO_BOTAO = { nome: 'Salvar', acao: 'Salvando...'}
+
+//     try {
+        
+//         const dados = coletarDadosForm("contaForm");
+//         console.log(dados);
+//         const btn = document.getElementById("cadastrarBtn");
+//         btn.disabled = true;
+//         btn.innerText = ACAO_BOTAO.acao;        
+       
+//         const resultado = await executarAcao(ENDPOINTS.CREATE, dados);        
+      
+//         if (resultado && resultado.id) {
+//             sessionStorage.setItem('instituicaoId', resultado.id);
+//             console.log("ID guardado na sessão:", resultado.id);
+//         }        
+        
+//        alert("Operação realizada com sucesso!");
+//        document.getElementById("instituicaoForm").reset();
+
+//     } catch (error) {
+//         alert(`Falha ao salvar: ${error.message}`);
+//     } finally {
+//         // Restaura o botão independente de sucesso ou erro
+//         const btn = document.getElementById("cadastrarBtn");
+//         btn.disabled = false;
+//         btn.innerText = ACAO_BOTAO.nome;        
+//     }
+// }
+
+
 
 
 
