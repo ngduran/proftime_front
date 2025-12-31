@@ -123,14 +123,12 @@ async function salvarGenerico(formId, btnId, endpoint, sessionKey) {
 }
 
 // --- NOVAS FUNCIONALIDADES DE UI ---
-
 // 1. Lógica para Mostrar/Esconder Senha
 document.getElementById('mostrarSenha').addEventListener('change', function() {
     const tipo = this.checked ? 'text' : 'password';
     document.getElementById('senha').type = tipo;
     document.getElementById('confirmarSenha').type = tipo;
 });
-
 
 function validarNome() {
     const nome = document.getElementById('nome');
@@ -151,7 +149,6 @@ function validarNome() {
     marcarSucesso(nome);
     return true;
 }
-
 
 function validarEmail() {
     const email = document.getElementById('email');
@@ -245,25 +242,6 @@ function validarFormulario(idFormulario) {
     return todosValidos;
 }
 
-// function marcarErro(input, mensagem) {
-//     // 1. Precisamos achar o container e definir a variável
-//     const container = input.closest(".input-group");
-    
-//     input.classList.add("invalid");
-    
-//     const spanErro = document.createElement("span");
-//     spanErro.className = "error-message";
-//     spanErro.innerText = mensagem;
-    
-//     // 2. Agora o container existe e o appendChild vai funcionar
-//     container.appendChild(spanErro);
-
-//     input.addEventListener('input', () => {
-//         input.classList.remove("invalid");
-//         if(spanErro) spanErro.remove();
-//     }, { once: true });
-// }
-
 function marcarErro(input, mensagem) {
     if (!input) return;
 
@@ -312,13 +290,6 @@ function marcarSucesso(input) {
     }
 }
 
-
-
-
-
-
-
-
 // Evento para formatar enquanto o usuário digita
 document.getElementById('telefone').addEventListener('input', (e) => {
     e.target.value = aplicarMascaraTelefone(e.target.value);
@@ -353,9 +324,6 @@ function validarTelefone() {
     }
     return true;
 }
-
-
-
 
 async function salvar() {
     // Agora a validação é genérica para o formulário
@@ -392,15 +360,12 @@ async function salvar() {
     await salvarGenerico("contaForm", "cadastrarBtn", ENDPOINTS.CREATE, "contaId");
 }
 
-
 // Validação em tempo real ao sair do campo (Blur)
 document.getElementById('nome').addEventListener('blur', validarNome);
 document.getElementById('email').addEventListener('blur', validarEmail);
 document.getElementById('telefone').addEventListener('blur', validarTelefone);
 document.getElementById('senha').addEventListener('blur', validarForcaSenha);
 document.getElementById('confirmarSenha').addEventListener('blur', validarSenhasIguais);
-
-
 
 function voltarAoInicio() {
     window.location.href='../page/login.html'
