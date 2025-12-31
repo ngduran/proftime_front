@@ -131,7 +131,43 @@ document.getElementById('mostrarSenha').addEventListener('change', function() {
     document.getElementById('confirmarSenha').type = tipo;
 });
 
+// // 2. Lógica para Tooltips (Ícones de Interrogação)
+// // Adiciona um alerta simples ao clicar no ícone
+// document.querySelectorAll('.info-question').forEach(icon => {
+//     icon.addEventListener('click', function() {
+//         const campo = this.previousElementSibling.placeholder;
+//         alert(`Ajuda: O campo "${campo}" é necessário para a segurança e identificação da sua conta.`);
+//     });
+// });
 
+document.querySelectorAll('.info-question').forEach(icon => {
+    icon.addEventListener('mouseenter', () => {
+        const mensagem = icon.getAttribute('data-tooltip');
+        const container = icon.closest('.input-group');
+
+        // Cria o tooltip se não existir
+        let tooltip = container.querySelector('.tooltip-container');
+        if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.className = 'tooltip-container';
+            tooltip.innerText = mensagem;
+            container.appendChild(tooltip);
+        }
+
+        // Exibe com um pequeno frame de atraso para a animação
+        requestAnimationFrame(() => tooltip.classList.add('visible'));
+    });
+
+    icon.addEventListener('mouseleave', () => {
+        const container = icon.closest('.input-group');
+        const tooltip = container.querySelector('.tooltip-container');
+        if (tooltip) {
+            tooltip.classList.remove('visible');
+            // Remove do DOM após a transição para economizar memória
+            setTimeout(() => tooltip.remove(), 300);
+        }
+    });
+});
 
 
 

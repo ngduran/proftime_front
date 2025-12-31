@@ -160,6 +160,60 @@ label {
     opacity: 0.9;
 }
 
+
+/* Garante que o tooltip seja posicionado em relação ao grupo do input */
+.input-group {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.tooltip-container {
+    position: absolute;
+    background-color: #444;
+    color: #fff;
+    padding: 10px 15px;
+    /* Canto arredondado invertido para a ponta do balão */
+    border-radius: 12px 12px 0px 12px; 
+    font-size: 13px;
+    line-height: 1.4;
+    z-index: 1000;
+    width: max-content;
+    max-width: 180px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    
+    /* Posicionamento inicial acima do ícone */
+    bottom: 100%; 
+    right: 0;
+    margin-bottom: 10px;
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(10px);
+}
+
+.tooltip-container.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Pequena seta para o balão */
+.tooltip-container::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 5px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: #444 transparent transparent transparent;
+}
+
+
+
 /* =======================================================
  * NOVO: MEDIA QUERY (RESPONSIVIDADE)
  * =======================================================
