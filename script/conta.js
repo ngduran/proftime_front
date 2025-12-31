@@ -122,6 +122,32 @@ async function salvarGenerico(formId, btnId, endpoint, sessionKey) {
     }
 }
 
+// --- NOVAS FUNCIONALIDADES DE UI ---
+
+// 1. Lógica para Mostrar/Esconder Senha
+document.getElementById('mostrarSenha').addEventListener('change', function() {
+    const tipo = this.checked ? 'text' : 'password';
+    document.getElementById('senha').type = tipo;
+    document.getElementById('confirmarSenha').type = tipo;
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function salvar() {
     salvarGenerico("contaForm", "cadastrarBtn", ENDPOINTS.CREATE, "contaId");
 }
