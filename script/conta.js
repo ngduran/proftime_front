@@ -131,14 +131,47 @@ document.getElementById('mostrarSenha').addEventListener('change', function() {
     document.getElementById('confirmarSenha').type = tipo;
 });
 
-// // 2. Lógica para Tooltips (Ícones de Interrogação)
-// // Adiciona um alerta simples ao clicar no ícone
-// document.querySelectorAll('.info-question').forEach(icon => {
-//     icon.addEventListener('click', function() {
-//         const campo = this.previousElementSibling.placeholder;
-//         alert(`Ajuda: O campo "${campo}" é necessário para a segurança e identificação da sua conta.`);
-//     });
-// });
+
+function validarEmail() {
+    const email = document.getElementById('email');
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!regexEmail.test(email.value)) {
+        marcarErro(email, "Por favor, insira um e-mail válido.");
+        return false;
+    }
+  
+    return true;
+}
+
+function validarSenhasIguais() {    
+    const senha = document.getElementById('senha');
+    const confirmarSenha = document.getElementById('confirmarSenha');
+    
+    // Se as senhas forem diferentes
+    if (senha.value !== confirmarSenha.value) {
+        // Usamos sua função marcarErro que já está configurada com CSS absoluto
+        marcarErro(confirmarSenha, "As senhas não conferem.");
+        return false;
+    }  
+
+    return true;
+}
+
+function validarForcaSenha() {
+    const senha = document.getElementById('senha').value;
+    
+    // Regex completa: Maiúscula, Minúscula, Número, Símbolo e 8+ caracteres
+    const regexComplexidade = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+
+    if (!regexComplexidade.test(senha)) {
+        const campoSenha = document.getElementById('senha');
+        marcarErro(campoSenha, "A senha deve conter: Maiúscula, Minúscula, Número e Símbolo.");
+        return false;
+    }
+
+    return true;
+}
 
 document.querySelectorAll('.info-question').forEach(icon => {
     icon.addEventListener('mouseenter', () => {
@@ -208,21 +241,41 @@ function marcarErro(input, mensagem) {
     }, { once: true });
 }
 
-// Função para aplicar a máscara de telefone (formato brasileiro)
-function aplicarMascaraTelefone(valor) {
-    if (!valor) return "";
-    valor = valor.replace(/\D/g, ""); // Remove tudo que não é número
-    valor = valor.replace(/(\d{2})(\d)/, "($1) $2"); // Coloca parênteses
-    valor = valor.replace(/(\d{5})(\d)/, "$1-$2"); // Coloca o hífen (celular 9 dígitos)
-    return valor.substring(0, 15); // Limita o tamanho máximo
-}
 
 // Evento para formatar enquanto o usuário digita
 document.getElementById('telefone').addEventListener('input', (e) => {
     e.target.value = aplicarMascaraTelefone(e.target.value);
 });
 
+function aplicarMascaraTelefone(valor) {
+    if (!valor) return "";
+    valor = valor.replace(/\D/g, ""); // Remove tudo que não é número
+    valor = valor.replace(/(\d{2})(\d)/, "($1) $2"); // Coloca parênteses no DDD
+    
+    // Lógica dinâmica para o hífen:
+    if (valor.length > 13) {
+        // Celular: (00) 00000-0000 (14 ou 15 caracteres com máscara)
+        valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
+    } else {
+        // Fixo: (00) 0000-0000
+        valor = valor.replace(/(\d{4})(\d)/, "$1-$2");
+    }
+    
+    return valor.substring(0, 15); // Limita ao tamanho máximo de celular
+}
 
+function validarTelefone() {
+    const telefone = document.getElementById('telefone');
+    const valor = telefone.value.trim();
+
+    // (00) 0000-0000 -> 14 caracteres
+    // (00) 00000-0000 -> 15 caracteres
+    if (valor.length > 0 && valor.length < 14) {
+        marcarErro(telefone, "Telefone incompleto.");
+        return false;
+    }
+    return true;
+}
 
 
 
@@ -233,90 +286,36 @@ async function salvar() {
         return; // Para a execução aqui e mostra os erros na tela
     }
 
+    // 2. Validação de E-mail
+    if (!validarEmail()) {
+        return;
+    }
+
+    // 3. Telefone completo
+    if (!validarTelefone()) {
+        return;
+    }
+
+    // 4. Regras de Complexidade da Senha
+    if (!validarForcaSenha()) {
+        return;
+    }
+
+    // 5. Comparação entre as duas senhas
+    if (!validarSenhasIguais()) {
+        return;
+    }
+
     // Se passar na validação, segue para o salvar que já testamos ontem
     await salvarGenerico("contaForm", "cadastrarBtn", ENDPOINTS.CREATE, "contaId");
 }
 
 
-
-
-
-
-
-
-
-// function salvar() {
-//     salvarGenerico("contaForm", "cadastrarBtn", ENDPOINTS.CREATE, "contaId");
-// }
-
-
-// async function salvar() {
-
-//     const ACAO_BOTAO = { nome: 'Salvar', acao: 'Salvando...'}
-
-//     try {
-        
-//         const dados = coletarDadosForm("contaForm");
-//         console.log(dados);
-//         const btn = document.getElementById("cadastrarBtn");
-//         btn.disabled = true;
-//         btn.innerText = ACAO_BOTAO.acao;        
-       
-//         const resultado = await executarAcao(ENDPOINTS.CREATE, dados);        
-      
-//         if (resultado && resultado.id) {
-//             sessionStorage.setItem('instituicaoId', resultado.id);
-//             console.log("ID guardado na sessão:", resultado.id);
-//         }        
-        
-//        alert("Operação realizada com sucesso!");
-//        document.getElementById("instituicaoForm").reset();
-
-//     } catch (error) {
-//         alert(`Falha ao salvar: ${error.message}`);
-//     } finally {
-//         // Restaura o botão independente de sucesso ou erro
-//         const btn = document.getElementById("cadastrarBtn");
-//         btn.disabled = false;
-//         btn.innerText = ACAO_BOTAO.nome;        
-//     }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Validação em tempo real ao sair do campo (Blur)
+document.getElementById('email').addEventListener('blur', validarEmail);
+document.getElementById('telefone').addEventListener('blur', validarTelefone);
+document.getElementById('senha').addEventListener('blur', validarForcaSenha);
+document.getElementById('confirmarSenha').addEventListener('blur', validarSenhasIguais);
 
 
 

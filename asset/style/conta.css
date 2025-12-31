@@ -72,6 +72,11 @@ label {
     outline: none;
 }
 
+.input-group input.valid {
+    border-color: #28a745 !important; /* Verde padrão de sucesso */
+    background-color: #f8fff9; /* Um fundo bem suave para reforçar */
+}
+
 .input-group input {
     width: 100%;
     padding: 12px 40px 12px 15px; /* Espaço para o ícone de informação */
