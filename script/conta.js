@@ -189,29 +189,6 @@ function validarFormulario(idFormulario) {
     return todosValidos;
 }
 
-/*
-function marcarErro(input, mensagem) {
-    input.classList.add("invalid");
-    
-    // Cria a mensagem de texto logo abaixo do input
-    const spanErro = document.createElement("span");
-    spanErro.className = "error-message";
-    spanErro.innerText = mensagem;
-    
-    // Insere após o container do grupo (input-group)
-    //input.closest(".input-group").after(spanErro);
-
-    // CORREÇÃO: Insere DENTRO do container para a ancoragem funcionar
-    container.appendChild(spanErro);
-
-    // Listener para remover o erro quando o usuário começar a digitar
-    input.addEventListener('input', () => {
-        input.classList.remove("invalid");
-        if(spanErro) spanErro.remove();
-    }, { once: true });
-}
-*/
-
 function marcarErro(input, mensagem) {
     // 1. Precisamos achar o container e definir a variável
     const container = input.closest(".input-group");
@@ -230,6 +207,22 @@ function marcarErro(input, mensagem) {
         if(spanErro) spanErro.remove();
     }, { once: true });
 }
+
+// Função para aplicar a máscara de telefone (formato brasileiro)
+function aplicarMascaraTelefone(valor) {
+    if (!valor) return "";
+    valor = valor.replace(/\D/g, ""); // Remove tudo que não é número
+    valor = valor.replace(/(\d{2})(\d)/, "($1) $2"); // Coloca parênteses
+    valor = valor.replace(/(\d{5})(\d)/, "$1-$2"); // Coloca o hífen (celular 9 dígitos)
+    return valor.substring(0, 15); // Limita o tamanho máximo
+}
+
+// Evento para formatar enquanto o usuário digita
+document.getElementById('telefone').addEventListener('input', (e) => {
+    e.target.value = aplicarMascaraTelefone(e.target.value);
+});
+
+
 
 
 
