@@ -67,14 +67,28 @@ label {
 }
 
 /* Força a borda vermelha quando a classe invalid está presente */
-.input-group input.invalid {
+/* .input-group input.invalid {
     border: 1px solid #ff4d4d;
     outline: none;
+} */
+
+/* Mantenha o vermelho assim para comparar o peso */
+.input-group input.invalid {
+    border: 1px solid #ff4d4d !important;
+    outline: none;
+    background-color: #fffafa; /* Um fundinho avermelhado leve opcional */
 }
 
+/* .input-group input.valid {
+    border-color: #28a745 !important; // Verde padrão de sucesso
+    background-color: #f8fff9; // Um fundo bem suave para reforçar
+}  */
+
+/* Ajuste para garantir que o verde apareça */
 .input-group input.valid {
-    border-color: #28a745 !important; /* Verde padrão de sucesso */
-    background-color: #f8fff9; /* Um fundo bem suave para reforçar */
+    border: 1px solid #28a745 !important; 
+    background-color: #f8fff9 !important;
+    outline: none;
 }
 
 .input-group input {

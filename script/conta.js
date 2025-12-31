@@ -132,6 +132,27 @@ document.getElementById('mostrarSenha').addEventListener('change', function() {
 });
 
 
+function validarNome() {
+    const nome = document.getElementById('nome');
+    // Regex: ^[A-Za-zÀ-ÿ ]+$
+    // Aceita letras maiúsculas, minúsculas, acentos e espaços.
+    const regexNome = /^[A-Za-zÀ-ÿ\s]+$/;
+
+    if (!regexNome.test(nome.value.trim())) {
+        marcarErro(nome, "O nome deve conter apenas letras.");
+        return false;
+    }
+
+    if (nome.value.trim().length < 3) {
+        marcarErro(nome, "O nome deve ter pelo menos 3 letras.");
+        return false;
+    }
+
+    marcarSucesso(nome);
+    return true;
+}
+
+
 function validarEmail() {
     const email = document.getElementById('email');
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -141,6 +162,8 @@ function validarEmail() {
         return false;
     }
   
+    marcarSucesso(email);
+
     return true;
 }
 
@@ -222,24 +245,78 @@ function validarFormulario(idFormulario) {
     return todosValidos;
 }
 
+// function marcarErro(input, mensagem) {
+//     // 1. Precisamos achar o container e definir a variável
+//     const container = input.closest(".input-group");
+    
+//     input.classList.add("invalid");
+    
+//     const spanErro = document.createElement("span");
+//     spanErro.className = "error-message";
+//     spanErro.innerText = mensagem;
+    
+//     // 2. Agora o container existe e o appendChild vai funcionar
+//     container.appendChild(spanErro);
+
+//     input.addEventListener('input', () => {
+//         input.classList.remove("invalid");
+//         if(spanErro) spanErro.remove();
+//     }, { once: true });
+// }
+
 function marcarErro(input, mensagem) {
-    // 1. Precisamos achar o container e definir a variável
-    const container = input.closest(".input-group");
-    
+    if (!input) return;
+
+    // 1. Limpa o estado de sucesso (verde) antes de aplicar o erro
+    input.classList.remove("valid");
     input.classList.add("invalid");
-    
+
+    const container = input.closest(".input-group");
+    if (!container) return;
+
+    // 2. Remove mensagens de erro antigas para não acumular várias
+    const erroExistente = container.querySelector(".error-message");
+    if (erroExistente) {
+        erroExistente.remove();
+    }
+
+    // 3. Cria e adiciona a nova mensagem
     const spanErro = document.createElement("span");
     spanErro.className = "error-message";
     spanErro.innerText = mensagem;
-    
-    // 2. Agora o container existe e o appendChild vai funcionar
     container.appendChild(spanErro);
 
+    // 4. Limpa o vermelho assim que o usuário começar a tentar corrigir
     input.addEventListener('input', () => {
         input.classList.remove("invalid");
-        if(spanErro) spanErro.remove();
+        if (spanErro && spanErro.parentNode) {
+            spanErro.remove();
+        }
     }, { once: true });
 }
+
+function marcarSucesso(input) {
+    if (!input) return;
+
+    // 1. Limpa o estado de erro (vermelho) antes de aplicar o sucesso
+    input.classList.remove("invalid");
+    input.classList.add("valid");
+
+    const container = input.closest('.input-group');
+    if (!container) return;
+
+    // 2. Busca a mensagem de erro. O '?' garante que só tenta remover se ela existir
+    const erroAnterior = container.querySelector(".error-message");
+    if (erroAnterior) {
+        erroAnterior.remove();
+    }
+}
+
+
+
+
+
+
 
 
 // Evento para formatar enquanto o usuário digita
@@ -286,22 +363,27 @@ async function salvar() {
         return; // Para a execução aqui e mostra os erros na tela
     }
 
-    // 2. Validação de E-mail
+    // 2. Validação de Nome
+    if (!validarNome()) {
+        return;
+    }
+
+    // 3. Formato do E-mail
     if (!validarEmail()) {
         return;
     }
 
-    // 3. Telefone completo
+    // 4. Telefone completo
     if (!validarTelefone()) {
         return;
     }
 
-    // 4. Regras de Complexidade da Senha
+    // 5. Regras de Complexidade da Senha
     if (!validarForcaSenha()) {
         return;
     }
 
-    // 5. Comparação entre as duas senhas
+    // 6. Comparação entre as duas senhas
     if (!validarSenhasIguais()) {
         return;
     }
@@ -312,6 +394,7 @@ async function salvar() {
 
 
 // Validação em tempo real ao sair do campo (Blur)
+document.getElementById('nome').addEventListener('blur', validarNome);
 document.getElementById('email').addEventListener('blur', validarEmail);
 document.getElementById('telefone').addEventListener('blur', validarTelefone);
 document.getElementById('senha').addEventListener('blur', validarForcaSenha);
