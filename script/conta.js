@@ -1,14 +1,17 @@
-const API_CONFIG = {
-    BASE_URL: "http://127.0.0.1:8080",
-    RESOURCE: "/usuario"
-};
+import { API_CONFIG, ENDPOINTS, executarAcao } from "./services/api-service.js";
 
-const ENDPOINTS = {
-    CREATE: { path: `${API_CONFIG.RESOURCE}/create`, method: 'POST'  },
-    READ:   { path: `${API_CONFIG.RESOURCE}/read`,   method: 'POST'  },
-    UPDATE: { path: `${API_CONFIG.RESOURCE}/update`, method: 'PUT'   },
-    DELETE: { path: `${API_CONFIG.RESOURCE}/delete`, method: 'DELETE'}
-};
+
+// const API_CONFIG = {
+//     BASE_URL: "http://127.0.0.1:8080",
+//     RESOURCE: "/usuario"
+// };
+
+// const ENDPOINTS = {
+//     CREATE: { path: `${API_CONFIG.RESOURCE}/create`, method: 'POST'  },
+//     READ:   { path: `${API_CONFIG.RESOURCE}/read`,   method: 'POST'  },
+//     UPDATE: { path: `${API_CONFIG.RESOURCE}/update`, method: 'PUT'   },
+//     DELETE: { path: `${API_CONFIG.RESOURCE}/delete`, method: 'DELETE'}
+// };
 
 function coletarDadosForm(idFormulario) {
     const formulario = document.getElementById(idFormulario);
@@ -39,50 +42,50 @@ async function popularFormulario(idFormulario, dados) {
     await new Promise(resolve => setTimeout(resolve, 0));
 }
 
-async function executarAcao(endpoint, dados, id = null) {
+// async function executarAcao(endpoint, dados, id = null) {
     
-    const { path, method } = endpoint;
+//     const { path, method } = endpoint;
   
-    const pathComId = id ? `${endpoint.path}/${id}` : endpoint.path;
-    const URL = `${API_CONFIG.BASE_URL}${pathComId}`;
+//     const pathComId = id ? `${endpoint.path}/${id}` : endpoint.path;
+//     const URL = `${API_CONFIG.BASE_URL}${pathComId}`;
 
-    const HEADERS = new Headers({
-        "Content-Type": "application/json"
-    });
+//     const HEADERS = new Headers({
+//         "Content-Type": "application/json"
+//     });
 
-    const FETCH_CONFIG = {        
-            method: method,
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: HEADERS,           
-            body: endpoint.method !== 'GET' ? JSON.stringify(dados) : null
-    }
+//     const FETCH_CONFIG = {        
+//             method: method,
+//             mode: 'cors',
+//             cache: 'no-cache',
+//             headers: HEADERS,           
+//             body: endpoint.method !== 'GET' ? JSON.stringify(dados) : null
+//     }
    
-    try {
-        const response = await fetch(URL, FETCH_CONFIG);
+//     try {
+//         const response = await fetch(URL, FETCH_CONFIG);
         
-        if (!response.ok) {
-            const erroStatus = await response.json().catch(() => ({}));
-            throw new Error(erroStatus.message || `Erro no servidor: ${response.status}`);
-        }
+//         if (!response.ok) {
+//             const erroStatus = await response.json().catch(() => ({}));
+//             throw new Error(erroStatus.message || `Erro no servidor: ${response.status}`);
+//         }
 
-        // SOLUÇÃO: Verifica se o status é 204 (No Content) ou se não há corpo
-        const contentType = response.headers.get("content-type");
-        if (response.status === 204 || !contentType || !contentType.includes("application/json")) {
-            console.log("Sucesso, mas sem corpo de resposta.");
-            return null; 
-        }
+//         // SOLUÇÃO: Verifica se o status é 204 (No Content) ou se não há corpo
+//         const contentType = response.headers.get("content-type");
+//         if (response.status === 204 || !contentType || !contentType.includes("application/json")) {
+//             console.log("Sucesso, mas sem corpo de resposta.");
+//             return null; 
+//         }
 
-        const data = await response.json();
-        console.log("Resposta do servidor:", data);
-        return data;
-    } catch (error) {
-        console.error("Erro ao acessar o servidor:", error);
-        throw error;
+//         const data = await response.json();
+//         console.log("Resposta do servidor:", data);
+//         return data;
+//     } catch (error) {
+//         console.error("Erro ao acessar o servidor:", error);
+//         throw error;
         
-    }
+//     }
 
-}
+// }
 
 /**
  * Função genérica para salvar qualquer formulário
@@ -360,13 +363,18 @@ async function salvar() {
     await salvarGenerico("contaForm", "cadastrarBtn", ENDPOINTS.CREATE, "contaId");
 }
 
-// Validação em tempo real ao sair do campo (Blur)
-document.getElementById('nome').addEventListener('blur', validarNome);
-document.getElementById('email').addEventListener('blur', validarEmail);
-document.getElementById('telefone').addEventListener('blur', validarTelefone);
-document.getElementById('senha').addEventListener('blur', validarForcaSenha);
-document.getElementById('confirmarSenha').addEventListener('blur', validarSenhasIguais);
 
 function voltarAoInicio() {
     window.location.href='../page/login.html'
 }
+
+// Validação em tempo real ao sair do campo (Blur)
+document.getElementById('nome'          ).addEventListener('blur', validarNome         );
+document.getElementById('email'         ).addEventListener('blur', validarEmail        );
+document.getElementById('telefone'      ).addEventListener('blur', validarTelefone     );
+document.getElementById('senha'         ).addEventListener('blur', validarForcaSenha   );
+document.getElementById('confirmarSenha').addEventListener('blur', validarSenhasIguais );
+
+
+document.getElementById('cadastrarBtn'  ).addEventListener('click', salvar         );
+document.getElementById('voltarBtn'     ).addEventListener('click', voltarAoInicio ); 
