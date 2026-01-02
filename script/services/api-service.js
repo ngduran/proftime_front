@@ -54,3 +54,41 @@ export async function executarAcao(endpoint, dados, id = null) {
     }
 
 }
+
+/**
+ * Função genérica para salvar qualquer formulário
+ * @param {string} formId - O ID do formulário no HTML (ex: "instituicaoForm")
+ * @param {string} btnId - O ID do botão (ex: "cadastrarBtn")
+ * @param {string} endpoint - A URL/Endpoint (ex: ENDPOINTS.INSTITUICAO)
+ * @param {string} sessionKey - A chave para guardar o ID (ex: "instituicaoId")
+ */
+export async function salvarGenerico(formId, btnId, endpoint, sessionKey) {
+    const ACAO_BOTAO = { nome: 'Salvar', acao: 'Salvando...' };
+    const btn = document.getElementById(btnId);
+    const form = document.getElementById(formId);
+
+    try {
+        const dados = coletarDadosForm(formId);
+        console.log(`Dados de ${formId}:`, dados);
+
+        btn.disabled = true;
+        btn.innerText = ACAO_BOTAO.acao;
+
+        const resultado = await executarAcao(endpoint, dados);
+
+        // Se houver retorno de ID e uma chave de sessão foi informada
+        if (resultado && resultado.id && sessionKey) {
+            sessionStorage.setItem(sessionKey, resultado.id);
+            console.log(`ID guardado em ${sessionKey}:`, resultado.id);
+        }
+
+        alert("Operação realizada com sucesso!");
+        form.reset();
+
+    } catch (error) {
+        alert(`Falha ao salvar: ${error.message}`);
+    } finally {
+        btn.disabled = false;
+        btn.innerText = ACAO_BOTAO.nome;
+    }
+}
