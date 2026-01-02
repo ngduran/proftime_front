@@ -1,3 +1,5 @@
+import { coletarDadosForm } from "../utils/form-helper.js";
+
 export const API_CONFIG = {
     BASE_URL: "http://127.0.0.1:8080",
     RESOURCE: "/usuario"
@@ -42,6 +44,12 @@ export async function executarAcao(endpoint, dados, id = null) {
         if (response.status === 204 || !contentType || !contentType.includes("application/json")) {
             console.log("Sucesso, mas sem corpo de resposta.");
             return null; 
+        }
+
+        if (response.status === 409) {
+            const mensagem = await response.text(); // Pega o texto enviado pelo Java
+            alert(mensagem); // Exibe: "Este e-mail já está cadastrado."
+            return;
         }
 
         const data = await response.json();

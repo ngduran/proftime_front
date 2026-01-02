@@ -54,14 +54,12 @@ export function validarSenhasIguais() {
     const inputConfirmarSenha = document.getElementById('confirmarSenha');
 
     // 1. Se estiver vazio, não marca sucesso nem erro (deixa para o validarFormulario)
-    if (inputSenha.value === "" || inputConfirmarSenha.value === "") {
-        console.log("Uma das senhas vazias")
+    if (inputSenha.value === "" || inputConfirmarSenha.value === "") {        
         return false; 
     }
     
     // 2. Se forem diferentes
-    if (inputSenha.value !== inputConfirmarSenha.value) {
-        console.log("Senhas diferentes");              
+    if (inputSenha.value !== inputConfirmarSenha.value) {                      
         marcarErro(inputConfirmarSenha, "As senhas não conferem.");
         return false;
     }
@@ -81,7 +79,7 @@ export function validarForcaSenha() {
         marcarErro(inputSenha, "A senha deve conter: Maiúscula, Minúscula, Número e Símbolo.");
         return false;
     }
-    console.log("vai adicionar sucesso no campo senha");   
+    
     marcarSucesso(inputSenha);
     return true;
 }

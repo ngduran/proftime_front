@@ -1,8 +1,8 @@
-import { ENDPOINTS, executarAcao, salvarGenerico } from "./services/api-service.js";
-import { coletarDadosForm, aplicarMascaraTelefone, configurarMascaraTelefone } from "./utils/form-helper.js";
+import { ENDPOINTS, salvarGenerico } from "./services/api-service.js";
+import { configurarMascaraTelefone } from "./utils/form-helper.js";
 import { validarNome, validarUsuario, validarFormulario, validarEmail, 
          validarTelefone, validarForcaSenha, validarSenhasIguais } from "./utils/validador.js";
-import { inicializarTooltips, popularFormulario, configurarMostrarSenha } from "./ui/dom-utils.js";
+import { inicializarTooltips, configurarMostrarSenha } from "./ui/dom-utils.js";
 
 
 inicializarTooltips();
