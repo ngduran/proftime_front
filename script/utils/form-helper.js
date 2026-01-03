@@ -12,7 +12,11 @@ export function desbloquearButton(btnId, textoButton) {
 
 export function limparFormulario(idFormulario) {
     const formulario = document.getElementById(idFormulario);
-    document.getElementById(formulario).reset();
+    if (formulario) {
+        formulario.reset();
+    } else {
+        console.error(`Formulário com ID "${idFormulario}" não foi encontrado.`);
+    }    
 }
 
 
@@ -41,7 +45,6 @@ export function aplicarMascaraTelefone(valor) {
     return valor.substring(0, 15); // Limita ao tamanho máximo de celular
 }
 
-// Função que "ataca" o DOM
 export function configurarMascaraTelefone(id) {
     const campo = document.getElementById(id);
     if (campo) {
@@ -49,6 +52,15 @@ export function configurarMascaraTelefone(id) {
             e.target.value = aplicarMascaraTelefone(e.target.value);
         });
     }
+}
+
+/**
+ * Redireciona para uma página específica dentro da pasta /page/
+ * @param {string} nomePagina - O nome do arquivo (ex: 'login', 'home', 'index')
+ */
+export function navegarPara(nomePagina) {    
+    const pagina = nomePagina.replace('.html', '');  
+    window.location.href = `../page/${pagina}.html`;
 }
 
 // // Evento para formatar enquanto o usuário digita

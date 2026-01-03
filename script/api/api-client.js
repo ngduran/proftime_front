@@ -1,28 +1,14 @@
 export async function apiFetch(endpoint, dados) {
-
-    console.log("------------------- endpoint -------------------------------------");
-    console.log(endpoint);
-    console.log("------------------------------------------------------------------");
-    console.log("------------------- path -----------------------------------------");
-    console.log(endpoint.path);
-    console.log("------------------------------------------------------------------");
-    console.log("------------------- method ---------------------------------------");
-    console.log(endpoint.method);
-    console.log("------------------------------------------------------------------");
-
     try {
         const response = await fetch(endpoint.path, {
             method: endpoint.method,
             headers: { 
-                "Content-Type": "application/json",
-                // ESSA LINHA RESOLVE O CORS DO NGROK:
+                "Content-Type": "application/json",               
                 "ngrok-skip-browser-warning": "true"
             },
             body: JSON.stringify(dados)
         });
-
-        // Retornamos o objeto response INTEIRO. 
-        // Não tratamos JSON, não tratamos texto, não tratamos erro HTTP aqui.
+      
         return response;
         
     } catch (error) {
@@ -32,35 +18,41 @@ export async function apiFetch(endpoint, dados) {
     }
 }
 
-// Converte a resposta em JSON caso seja sucesso
 export async function lerRespostaSucesso(response) {
-    if (response.status === 204) return null; // No Content
-    return await response.json();
+    return await extrairDados(response);
 }
 
-// Converte a resposta em texto caso seja erro (mensagem do Java)
 export async function lerRespostaErro(response) {
-    const texto = await response.text();
-    return texto || "Erro inesperado no servidor";
+    return await extrairDados(response);
 }
 
-// // Apenas faz o fetch e traduz a resposta (Erro ou JSON)
-// export async function apiFetch(endpoint, dados) {
+async function extrairDados(response) {    
+    const contentType = response.headers.get("content-type");
+    const status = response.status;
+    
+    if (status === 204) return null;
 
-//     const response = await fetch(endpoint.path, {
-//         method: endpoint.method,
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(dados)
-//     });
+    try {
+        
+        if (contentType && contentType.includes("application/json")) {
+            return await response.json();
+        }
+        
+        const texto = await response.text();
+                
+        if (texto && (texto.startsWith('{') || texto.startsWith('['))) {
+            try {
+                return JSON.parse(texto);
+            } catch (e) {
+                return texto;
+            }
+        }
 
-//     if (!response.ok) {
-//         // Pega a mensagem do Java (ex: "E-mail já existe")
-//         const msg = await response.text(); 
-//         const erro = new Error(msg || "Erro desconhecido");
-//         erro.status = response.status;
-//         throw erro;
-//     }
+        return texto || null;
 
-//     // Se for 201 ou 200, tenta ler o JSON
-//     return response.status !== 204 ? await response.json() : null;
-// }
+    } catch (erro) {
+        console.error("[API CLIENT] Erro ao extrair dados da resposta:", erro);
+        // Retorna um objeto de erro padronizado para não quebrar o fluxo superior
+        return { error: "Falha ao processar resposta do servidor", detalhe: erro.message };
+    }
+}
