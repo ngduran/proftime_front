@@ -1,7 +1,8 @@
 // Substituindo o alert por algo visual
 export const Mensagem = {
     sucesso(texto) {
-        Swal.fire({
+        // O window.Swal garante que ele acesse a lib carregada no HTML
+        window.Swal.fire({
             icon: 'success',
             title: 'Sucesso!',
             text: texto,
@@ -11,7 +12,7 @@ export const Mensagem = {
     },
 
     erro(status, texto) {
-        Swal.fire({
+        window.Swal.fire({
             icon: 'error',
             title: `Erro ${status}`,
             text: texto,
@@ -21,7 +22,7 @@ export const Mensagem = {
     },
 
     aviso(texto) {
-        Swal.fire({
+        window.Swal.fire({
             icon: 'warning',
             title: 'Atenção',
             text: texto

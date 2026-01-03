@@ -13,7 +13,11 @@ export async function apiFetch(endpoint, dados) {
     try {
         const response = await fetch(endpoint.path, {
             method: endpoint.method,
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                // ESSA LINHA RESOLVE O CORS DO NGROK:
+                "ngrok-skip-browser-warning": "true"
+            },
             body: JSON.stringify(dados)
         });
 
