@@ -1,3 +1,21 @@
+export function bloquearButton(btnId, textoButton) {
+    const btn = document.getElementById(btnId);
+    btn.disabled = true;
+    btn.innerText = textoButton;
+}
+
+export function desbloquearButton(btnId, textoButton) {
+    const btn = document.getElementById(btnId);
+    btn.disabled = false;
+    btn.innerText = textoButton;
+}
+
+export function limparFormulario(idFormulario) {
+    const formulario = document.getElementById(idFormulario);
+    document.getElementById(formulario).reset();
+}
+
+
 export function coletarDadosForm(idFormulario) {
     const formulario = document.getElementById(idFormulario);
     const formData = new FormData(formulario);

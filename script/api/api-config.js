@@ -1,0 +1,26 @@
+const BASE_URL = "http://127.0.0.1:8080";
+
+// Recursos (Basta alterar aqui se o nome da tabela/controller mudar no Java)
+const R_USUARIO   = "/usuario";
+const R_CONTA     = "/conta";
+const R_PROFESSOR = "/professor";
+
+export const API_MAP = {
+    BASE_URL: BASE_URL,
+
+    USUARIO: {
+        CREATE: { path: `${BASE_URL}${R_USUARIO}/create`, method: 'POST' },
+        READ:   { path: `${BASE_URL}${R_USUARIO}/read`,   method: 'POST' },
+        UPDATE: { path: `${BASE_URL}${R_USUARIO}/update`, method: 'PUT'  },
+        DELETE: { path: `${BASE_URL}${R_USUARIO}/delete`, method: 'DELETE'}
+    },
+
+    CONTA: {
+        CREATE: { path: `${BASE_URL}${R_CONTA}/create`, method: 'POST' },
+        BUSCAR: { path: `${BASE_URL}${R_CONTA}/read`,   method: 'POST' }
+    },
+
+    PROFESSOR: {
+        LISTAR: { path: `${BASE_URL}${R_PROFESSOR}/all`, method: 'GET' }
+    }
+};
