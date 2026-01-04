@@ -1,0 +1,162 @@
+/* Definição das variáveis de cor da sua paleta */
+:root {
+    --color-primary: #1748AF; /* Azul Escuro (Botão, Título) */
+    --color-accent: #ffb51a; /* Amarelo Ouro (Destaque, Foco) */
+    --color-border: #BCBDC1; /* Cinza Claro (Borda Padrão) */
+    --color-background-soft: #E0E4FD; /* Azul Claro Suave (Fundo da página) */
+    --color-text-dark: #2E2F33; /* Cinza Escuro (Textos) */
+    --color-card-bg: #FFFFFF; /* Branco (Fundo do Card) */
+    --color-input-bg: #FFFFFF; /* Branco (Fundo dos campos) */
+}
+
+/* Base e Layout */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: var(--color-background-soft);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px; /* Largura típica para formulários mobile/card */
+}
+
+.form-card {
+    background-color: var(--color-card-bg);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+.header-title {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+/* Labels e Inputs */
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.input-group {
+    display: flex;
+    justify-content: flex-start ;
+    align-items: center;
+    //position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 40px 12px 15px; /* Espaço para o ícone de informação */
+    //border: 1px solid var(--color-border);
+    border: 1px solid var(--color-accent);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--color-text-dark);
+    background-color: var(--color-input-bg);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+//-----------------------------------------------
+.help-link {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+  margin-top: 14px;
+}
+//-----------------------------------------------
+
+/* Efeito de Foco Aplicando a Cor de Destaque */
+.input-group input:focus {
+    border-color: var(--color-accent); /* Borda fica Ouro */
+    box-shadow: 0 0 0 2px rgba(175, 126, 23, 0.2);
+    outline: none;
+}
+
+.info-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    //color: var(--color-border); /* Cor Cinza para o ícone de informação */
+    font-size: 1rem;
+    cursor: help;   
+}
+
+.info-question {
+    color: var(--color-accent);
+
+}
+
+/* Checkbox */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    margin-right: 8px;
+    appearance: none; /* Esconde o estilo nativo */
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.checkbox-group input[type="checkbox"]:checked {
+    background-color: var(--color-primary); /* Checkbox marcado usa Azul Escuro */
+    border-color: var(--color-primary);
+}
+
+.checkbox-group label {
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Botão CTA (Call to Action) */
+.cta-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-primary); /* Cor Principal: Azul Escuro */     
+     
+    color: var(--color-card-bg);  /* Texto do botão: Amarelo Ouro (Alto Contraste) */ 
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.cta-button:hover {
+    /* Levemente mais escuro ou opaco no hover */
+    background-color: #0A2A6E; /* Um tom mais escuro de azul da sua paleta */
+}
+
+.cta-button:active {
+    opacity: 0.9;
+}

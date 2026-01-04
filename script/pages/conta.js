@@ -1,12 +1,12 @@
-import { cadastrarUsuario } from "./services/usuario-service.js";
+import { cadastrarUsuario } from "../services/usuario-service.js";
 import { bloquearButton, desbloquearButton, coletarDadosForm, configurarMascaraTelefone, 
-         navegarPara} from "./utils/form-helper.js";
+         navegarPara} from "../utils/form-helper.js";
 import { validarNome, validarUsuario, validarFormulario, validarEmail, 
-         validarTelefone, validarForcaSenha, validarSenhasIguais } from "./utils/validador.js";
-import { inicializarTooltips, configurarMostrarSenha } from "./ui/dom-utils.js";
-import { SessionManager } from "./utils/session-manager.js";
-import { lerRespostaSucesso, lerRespostaErro } from "./api/api-client.js";
-import { Mensagem } from "./ui/mensageiro.js";
+         validarTelefone, validarForcaSenha, validarSenhasIguais } from "../utils/validador.js";
+import { inicializarTooltips, configurarMostrarSenha } from "../ui/dom-utils.js";
+import { SessionManager } from "../utils/session-manager.js";
+import { lerRespostaSucesso, lerRespostaErro } from "../api/api-client.js";
+import { Mensagem } from "../ui/mensageiro.js";
 
 
 inicializarTooltips();
