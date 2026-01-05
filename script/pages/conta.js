@@ -1,4 +1,4 @@
-import { cadastrarUsuario } from "../services/usuario-service.js";
+import { cadastrarUsuario } from "../services/api_service.js";
 import { bloquearButton, desbloquearButton, coletarDadosForm, configurarMascaraTelefone, 
          navegarPara} from "../utils/form-helper.js";
 import { validarNome, validarUsuario, validarFormulario, validarEmail, 

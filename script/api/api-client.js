@@ -4,7 +4,7 @@ export async function apiFetch(endpoint, dados) {
             method: endpoint.method,
             headers: { 
                 "Content-Type": "application/json",               
-                "ngrok-skip-browser-warning": "true"
+                //"ngrok-skip-browser-warning": "true"
             },
             body: JSON.stringify(dados)
         });

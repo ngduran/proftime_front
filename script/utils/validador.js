@@ -35,7 +35,7 @@ export function validarUsuario() {
     return true;
 }
 
-export function validarEmail() {
+export function validarEmail() {    
     const email = document.getElementById('email');
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

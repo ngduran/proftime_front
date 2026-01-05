@@ -1,9 +1,10 @@
-//const BASE_URL = "http://127.0.0.1:8080";
-const BASE_URL = "https://959fb2ef6375.ngrok-free.app";
+const BASE_URL = "http://127.0.0.1:8080";
+//const BASE_URL = "https://959fb2ef6375.ngrok-free.app";
 
 const R_USUARIO   = "/usuario";
 const R_CONTA     = "/conta";
 const R_PROFESSOR = "/professor";
+const R_LOGIN     = "/auth"
 
 export const API_MAP = {
     BASE_URL: BASE_URL,
@@ -15,12 +16,18 @@ export const API_MAP = {
         DELETE: { path: `${BASE_URL}${R_USUARIO}/delete`, method: 'DELETE'}
     },
 
-    CONTA: {
-        CREATE: { path: `${BASE_URL}${R_CONTA}/create`, method: 'POST' },
-        BUSCAR: { path: `${BASE_URL}${R_CONTA}/read`,   method: 'POST' }
-    },
-
-    PROFESSOR: {
-        LISTAR: { path: `${BASE_URL}${R_PROFESSOR}/all`, method: 'GET' }
+    AUTH: {
+        LOGIN: { path: `${BASE_URL}${R_LOGIN}/login`, method: 'POST' }
     }
+
+    // CONTA: {
+    //     CREATE: { path: `${BASE_URL}${R_CONTA}/create`, method: 'POST' },
+    //     BUSCAR: { path: `${BASE_URL}${R_CONTA}/read`,   method: 'POST' }
+    // },
+
+    // PROFESSOR: {
+    //     LISTAR: { path: `${BASE_URL}${R_PROFESSOR}/all`, method: 'GET' }
+    // },
+
+
 };
