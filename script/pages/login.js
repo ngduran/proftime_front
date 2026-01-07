@@ -21,7 +21,26 @@ async function logar() {
 
         const resultado = response.ok 
                     ? await lerRespostaSucesso(response) 
-                    : await lerRespostaErro(response);  
+                    : await lerRespostaErro(response);
+                    
+        if (response.ok) {
+                   
+            if (resultado?.uuid) { SessionManager.salvar("token_uuid", resultado.uuid); }       
+
+            await Mensagem.sucesso("Login efetuado com sucesso!");          
+
+            navegarPara("login");            
+            
+        } else {
+            
+            const mensagemFinal = typeof resultado === 'object' 
+                ? (resultado.message || "Erro no servidor") 
+                : resultado;
+
+            await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
+        }
+
+
 
     } catch (error) {
 

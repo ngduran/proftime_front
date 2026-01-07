@@ -119,3 +119,60 @@ export function validarTelefone() {
 
     return true;
 }
+
+/**
+ * Valida se um ComboBox (select) possui uma opção selecionada.
+ * @param {string} id - O ID do elemento select.
+ * @param {string} mensagemErro - A mensagem a ser exibida caso esteja vazio.
+ * @returns {boolean} - True se for válido, False caso contrário.
+ */
+export function validarComboBox(id, mensagemErro) {
+    const elemento = document.getElementById(id);
+    
+    if (!elemento) {
+        console.error("Elemento com ID `${id}` não encontrado.");
+        return false;
+    }
+
+    // Se o valor for vazio (primeira option), marca erro
+    if (!elemento.value || elemento.value.trim() === "") {
+        marcarErro(elemento, mensagemErro);
+        return false;
+    }
+
+    marcarSucesso(elemento);
+    return true;
+}
+
+/**
+ * Valida se um número está dentro de um intervalo e exibe mensagem customizada.
+ * @param {string} id - O ID do input.
+ * @param {number} min - Valor mínimo.
+ * @param {number} max - Valor máximo.
+ * @param {string} mensagem - Mensagem personalizada de erro.
+ * @returns {boolean}
+ */
+export function validarPosicaoAula(id, min, max, mensagem) {
+    const input = document.getElementById(id);
+    if (!input) return false;
+
+    const valor = parseInt(input.value, 10);
+    const limiteMin = parseInt(min, 10); // Garante que seja número
+    const limiteMax = parseInt(max, 10); // Garante que seja número
+
+    // 1. Verifica se o campo está vazio ou não é número
+    if (isNaN(valor)) {
+        marcarErro(input, "Informe um valor numérico.");
+        return false;
+    }
+
+    // 2. Verifica se está fora do intervalo (agora com números reais)
+    if (valor < limiteMin || valor > limiteMax) {
+        marcarErro(input, mensagem);
+        return false;
+    }
+
+    // 3. Sucesso
+    marcarSucesso(input);
+    return true;
+}

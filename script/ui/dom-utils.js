@@ -17,6 +17,7 @@ export function marcarSucesso(input) {
 }
 
 export function marcarErro(input, mensagem) {
+    
     if (!input || !(input instanceof HTMLElement)) return;
 
     const container = input.closest('.input-group');

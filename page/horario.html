@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prof Time - Grade de Horários Responsiva</title>
+    <link rel="stylesheet" href="../asset/style/base/base-form.css">
     <link rel="stylesheet" href="../asset/style/horario.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -13,19 +14,27 @@
         <div class="form-card">
             <h1 class="header-title">Horário</h1>
 
-            <form id="horarioFiltroForm" class="responsive-grid">
-                <div class="input-group">
-                    <label for="instituicao">Instituição</label>
-                    <select id="instituicao" name="instituicao">
+            <form id="grade-professorForm" class="responsive-grid">                 
+                <div class="input-group ignore-base">
+                    <div class="label-row">
+                        <label class="ignore-base" for="instituicao">Instituição</label>
+                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Local onde leciona"></i>
+                        <span class="info-icon" title="Obrigatório"></span>
+                    </div>
+                    <select id="instituicao" name="instituicao" required>
                         <option value="">Selecione a instituição</option>
                         <option value="1">Colégio Estadual Marilis Faria Pirotelli</option>
                         <option value="2">Colégio Estadual Marechal Humberto de Alencar Castelo Branco - EFM</option>
                         <option value="3">Escola Municipal Professora Gladis Maria Tibola</option>
                     </select>
                 </div>
-                <div class="input-group">
-                    <label for="turno">Turno</label>
-                    <select id="turno" name="turno">
+                <div class="input-group ignore-base">
+                    <div class="label-row">
+                        <label class="ignore-base" for="turno">Turno</label>                        
+                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Período que leciona"></i>
+                        <span class="info-icon" title="Obrigatório"></span>
+                    </div>
+                    <select id="turno" name="turno" required>
                         <option value="">Selecione o turno</option>
                         <option value="1">Manhã</option>
                         <option value="2">Tarde</option>
@@ -34,16 +43,23 @@
                 </div>
             </form>
 
-            <div class="section-grade">
-                <h2 class="section-title">Grade das Aulas</h2>
+            <div class="section-grade">                
                 <form id="gradeForm" class="entry-grid">
-                    <div class="input-group">
-                        <label>Posição</label>
-                        <input type="number" name="posicao" value="1" min="1">
+                    <div class="input-group ignore-base">
+                        <div class="label-row">
+                            <label class="ignore-base">Posição</label>
+                            <i class="fa-solid fa-circle-question info-question" data-tooltip="Qual o horário da aula"></i>
+                            <span class="info-icon" title="Obrigatório"></span>
+                        </div>
+                        <input id="posicao" type="number" name="posicao" value="1" min="1" required>
                     </div>
-                    <div class="input-group">
-                        <label>Dia</label>
-                        <select name="diaSemana">
+                    <div class="input-group ignore-base">
+                        <div class="label-row">
+                            <label class="ignore-base">Dia</label>                            
+                            <i class="fa-solid fa-circle-question info-question" data-tooltip="Dia da Semana da aula"></i>
+                            <span class="info-icon" title="Obrigatório"></span>
+                        </div>
+                        <select id="diaSemana" name="diaSemana" required>
                             <option value="">Selecione o dia</option>
                             <option value="1">Segunda</option>
                             <option value="2">Terça</option>
@@ -54,9 +70,12 @@
                             <option value="7">Domingo</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label>Turma</label>
-                        <select name="turma">
+                    <div class="input-group ignore-base">
+                        <div class="label-row">                            
+                            <label class="ignore-base">Turma</label>
+                            <i class="fa-solid fa-circle-question info-question" data-tooltip="Turma que leciona"></i>
+                        </div>
+                        <select id="turma" name="turma" required>
                             <option value="">Selecione a Turma</option>
                             <option value="1">1º Técnico em Desenvolvimento de Sistemas</option>
                             <option value="2">2º Técnico em Desenvolvimento de Sistemas</option>
@@ -64,9 +83,12 @@
                             <option value="4">1º Técnico em Administração</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label>Matéria</label>
-                        <select name="materia">
+                    <div class="input-group ignore-base">
+                        <div class="label-row">                        
+                            <label class="ignore-base">Matéria</label>
+                            <i class="fa-solid fa-circle-question info-question" data-tooltip="Matéria que leciona"></i>
+                        </div>
+                        <select id="materia" name="materia" required>
                             <option value="">Selecione a matéria</option>
                             <option value="1">Análise e Projeto de Sistemas</option>
                             <option value="2">Banco de dados</option>
@@ -75,7 +97,7 @@
                             <option value="5">Datilografia</option>
                         </select>
                     </div>
-                    <button type="button" class="cta-button btn-add">Adicionar</button>
+                    <button type="button" id="adicionarBtn" class="cta-button btn-add">Adicionar</button>
                 </form>
             </div>
 
@@ -97,10 +119,14 @@
             </div>
 
             <div class="footer-actions">
-                <button type="button" class="cta-button secundario">Voltar ao Inicio</button>
+                <div class="button-group">
+                    <button type="button" id="cadastrarBtn" class="cta-button">Criar Conta</button>    
+                    <button type="button" id="voltarBtn"    class="cta-button">Voltar ao Inicio</button>
+                </div>
+                <!-- <button type="button" class="cta-button secundario">Voltar ao Inicio</button> -->
             </div>
         </div>
     </div>
-    <script src="../script/horario.js"></script>
+    <script type="module" src="../script/pages/horario.js"></script>
 </body>
 </html>

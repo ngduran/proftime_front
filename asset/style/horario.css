@@ -1,37 +1,17 @@
-:root {
-    --color-primary: #1748AF;
-    --color-accent: #ffc346;
-    --color-border: #BCBDC1;
-    --color-background-soft: #E0E4FD;
-    --color-text-dark: #2E2F33;
-    --color-card-bg: #FFFFFF;
+.container { 
+    width: 100% !important; 
+    max-width: 1100px !important; 
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
-
-body {
-    background-color: var(--color-background-soft);
-    padding: 10px;
-    display: flex;
-    justify-content: center;
+.input-group {
+    display: flex;   
+    align-items: flex-start;
+    position: relative;
+    margin-bottom: 15px;
+    width: 100%;
+    flex-direction: column;
 }
 
-.container { width: 100%; max-width: 1100px; }
-
-.form-card {
-    background: var(--color-card-bg);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.header-title {
-    color: var(--color-primary);
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Grids Responsivos */
 .responsive-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -43,36 +23,10 @@ body {
     display: grid;
     grid-template-columns: 0.5fr 1fr 1fr 1fr auto;
     gap: 10px;
-    align-items: flex-end;
+    align-items: anchor-center;
+    justify-content: space-between;
 }
 
-/* Estilo de Inputs */
-.input-group label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-input, select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-}
-
-/* Botões */
-.cta-button {
-    background: var(--color-primary);
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* CORREÇÃO PARA TABELA (O segredo da imagem 885aa6) */
 .table-responsive-container {
     width: 100%;
     overflow-x: auto; /* Permite scroll horizontal */
@@ -93,9 +47,11 @@ input, select {
     text-align: center;
 }
 
-.horario-table th { background: #f8f9fa; color: var(--color-primary); }
+.horario-table th { 
+    background: #f8f9fa; 
+    color: var(--color-primary);
+}
 
-/* Badges (Pills) */
 .badge {
     display: inline-block;
     padding: 5px 10px;
@@ -105,8 +61,15 @@ input, select {
     white-space: nowrap; /* Impede que o texto quebre linha dentro da badge */
 }
 
-.badge-blue { background: #d1e3ff; color: #1748af; }
-.badge-orange { background: #ffe8d1; color: #af6b17; }
+.badge-blue { 
+    background: #d1e3ff; 
+    color: #1748af; 
+}
+
+.badge-orange { 
+    background: #ffe8d1; 
+    color: #af6b17; 
+}
 
 /* MEDIA QUERIES PARA CELULAR */
 @media (max-width: 768px) {
@@ -117,4 +80,42 @@ input, select {
     .cta-button.secundario { width: 100%; }
     
     .form-card { padding: 15px; }
+}
+
+
+.tooltip-container {
+    position: absolute;
+    background-color: #444;
+    color: #fff;
+    padding: 10px 15px;
+    /* Canto arredondado invertido para a ponta do balão */
+    border-radius: 12px 0px 12px 0px !important; 
+    font-size: 13px;
+    line-height: 1.4;
+    z-index: 1000;
+    width: max-content;
+    max-width: 180px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    
+    /* Posicionamento inicial acima do ícone */
+    bottom: 100%; 
+    right: 0;
+    margin-bottom: 10px;
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(10px);
+}
+
+/* Pequena seta para o balão */
+.tooltip-container::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 118px !important;
+    border-width: 8px;
+    border-style: solid;
+    border-color: #444 transparent transparent transparent;
 }
