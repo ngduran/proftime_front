@@ -1,20 +1,35 @@
 import { inicializarTooltips } from "../ui/dom-utils.js";
 import { validarComboBox, validarFormulario, validarPosicaoAula } from "../utils/validador.js";
+import { Mensagem } from "../ui/mensageiro.js";
+import { coletarDadosForm } from "../utils/form-helper.js";
+
+const cabecalho = "cabecalhoGradeForm";
+const item      = "itemGradeForm";
+
+let gradeDeAulas = [];
+
+// Mapeamento para ligar o "value" do HTML ao nome da coluna na tabela
+const mapaDias = {
+    "1": "segunda",
+    "2": "terca",
+    "3": "quarta",
+    "4": "quinta",
+    "5": "sexta"
+};
 
 inicializarTooltips();
 
-async function adicionar() { 
-  
+async function adicionar() {   
     
-    if ( !validarFormulario( 'grade-professorForm'                               ) ) { return; }
-    if ( !validarComboBox  ( 'instituicao',         'Selecione a instituicao'    ) ) { return; }
-    if ( !validarComboBox  ( 'turno',               'Selecione o turno'          ) ) { return; }
+    if ( !validarFormulario( cabecalho                                ) ) { return; }
+    if ( !validarComboBox  ( 'instituicao', 'Selecione a instituicao' ) ) { return; }
+    if ( !validarComboBox  ( 'turno',       'Selecione o turno'       ) ) { return; }
     
-    if ( !validarFormulario ( 'gradeForm'                                        ) ) { return; }
-    if ( !validarPosicaoAula( 'posicao',             1, 6, 'Indique a aula'      ) ) { return; }
-    if ( !validarComboBox   ( 'diaSemana',           'Selecione o dia da Semana' ) ) { return; }
-    if ( !validarComboBox   ( 'turma',               'Selecione a turma'         ) ) { return; }
-    if ( !validarComboBox   ( 'materia',             'Selecione a materia'       ) ) { return; }
+    if ( !validarFormulario ( item                                      ) ) { return; }
+    if ( !validarPosicaoAula( 'posicao',    1, 6, 'Indique a aula'      ) ) { return; }
+    if ( !validarComboBox   ( 'diaSemana',  'Selecione o dia da Semana' ) ) { return; }
+    if ( !validarComboBox   ( 'turma',      'Selecione a turma'         ) ) { return; }
+    if ( !validarComboBox   ( 'materia',    'Selecione a materia'       ) ) { return; }
 }
 
 function voltarAoInicio() {
@@ -31,17 +46,7 @@ document.getElementById('diaSemana'     ).addEventListener('blur', () => { valid
 document.getElementById('turma'         ).addEventListener('blur', () => { validarComboBox   ( 'turma',       'Selecione a turma'         ); } );
 document.getElementById('materia'       ).addEventListener('blur', () => { validarComboBox   ( 'materia',     'Selecione a materia'       ); } );
 
-
-let gradeDeAulas = [];
-
-// Mapeamento para ligar o "value" do HTML ao nome da coluna na tabela
-const mapaDias = {
-    "1": "segunda",
-    "2": "terca",
-    "3": "quarta",
-    "4": "quinta",
-    "5": "sexta"
-};
+6
 
 document.addEventListener('DOMContentLoaded', () => {
     renderizarTabela();
@@ -50,7 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('adicionarBtn').addEventListener('click', adicionarAula);
 });
 
-function adicionarAula() {
+async function adicionarAula() {
+    //refatorar futuramente
     // Pegando os elementos conforme os IDs do seu HTML
     const campoPosicao = document.getElementById('posicao');
     const campoDia = document.getElementById('diaSemana');
@@ -65,8 +71,29 @@ function adicionarAula() {
 
     // Validação simples para o exemplo rodar
     if (!diaValue || !campoTurma.value) {
-        alert("Preencha todos os campos!");
+        //alert("Preencha todos os campos!");
+        await Mensagem.erro("Prencha todos os campos!");
         return;
+    }
+
+    // Dentro da função adicionarAula, antes de salvar:
+    let aulaExistente = gradeDeAulas.find(item => item.aula === posicao);
+
+    if (aulaExistente && aulaExistente[diaChave]) {
+        // if (!confirm(`Já existe uma aula na Posição ${posicao} de ${diaChave}. Deseja substituir?`)) {
+        //     return; // Cancela a operação
+        // }
+
+        // Substituímos o confirm nativo pela sua nova Mensagem
+        const desejaSubstituir = await Mensagem.confirmar(
+            `Já existe uma aula na Posição ${posicao} de ${diaChave}. Deseja substituir?`
+        );
+
+        if (!desejaSubstituir) {
+            return; // O usuário cancelou, para a execução aqui
+        }
+
+
     }
 
     // Lógica de inserção no Array
@@ -81,9 +108,10 @@ function adicionarAula() {
     }
 
     renderizarTabela();
+    await Mensagem.sucesso("Atualizado com sucesso");
 }
 
-function renderizarTabela() {
+async function renderizarTabela() {
     const corpo = document.getElementById('gradeCorpo');
     corpo.innerHTML = "";
     
@@ -99,8 +127,9 @@ function renderizarTabela() {
             <td>${formatBadge(dadosLinha.quinta)}</td>
             <td>${formatBadge(dadosLinha.sexta)}</td>
         `;
-        corpo.appendChild(tr);
+        corpo.appendChild(tr);        
     }
+
 }
 
 
@@ -127,87 +156,3 @@ function formatBadge(texto) {
     const classeAtribuida = mapaCoresTurmas[texto];
     return `<span class="badge ${classeAtribuida}">${texto}</span>`;
 }
-
-
-// function formatBadge(texto) {
-//     if (!texto) return "";
-//     let classe = "badge-blue";
-    
-//     // Suas regras de cores baseadas no texto da turma
-//     if (texto.includes("3º Técnico A")) classe = "badge-orange";
-//     if (texto.includes("3º Técnico C")) classe = "badge-purple";
-//     if (texto.includes("Atividade")) classe = "badge-activity";
-    
-//     return `<span class="badge ${classe}">${texto}</span>`;
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Dados simulados para preencher a tabela conforme a imagem
-// const dadosIniciais = [
-//     { aula: 1, segunda: "2º Técnico A", terca: "3º Técnico A", quarta: "3º Técnico C", quinta: "3º Técnico A", sexta: "2º Técnico A" },
-//     { aula: 2, segunda: "2º Técnico A", terca: "3º Técnico A", quarta: "3º Técnico C", quinta: "3º Técnico A", sexta: "Hora Atividade" },
-//     { aula: 3, segunda: "3º Técnico A", terca: "3º Técnico A", quarta: "Hora Atividddade", quinta: "Hora Atividade", sexta: "Hora Atividade" },
-// ];
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     renderizarTabela(dadosIniciais);
-// });
-
-// function renderizarTabela(dados) {
-//     const corpo = document.getElementById('gradeCorpo');
-//     corpo.innerHTML = "";
-    
-//     // Gerar 6 linhas conforme a imagem
-//     for (let i = 1; i <= 6; i++) {
-//         const rowData = dados.find(d => d.aula === i) || { aula: i };
-//         const tr = document.createElement('tr');
-        
-//         tr.innerHTML = `
-//         <td>${i}</td>
-//         <td>${formatBadge(rowData.segunda)}</td>
-//             <td>${formatBadge(rowData.terca)}</td>
-//             <td>${formatBadge(rowData.quarta)}</td>
-//             <td>${formatBadge(rowData.quinta)}</td>
-//             <td>${formatBadge(rowData.sexta)}</td>
-//             <td>${formatBadge(rowData.sabado)}</td>
-//             <td>${formatBadge(rowData.domingo)}</td>
-//         `;
-//         corpo.appendChild(tr);
-//     }
-// }
-
-
-// function formatBadge(texto) {
-//     if (!texto) return "";
-//     let classe = "badge-blue";
-//     if (texto.includes("3º Técnico A")) classe = "badge-orange";
-//     if (texto.includes("3º Técnico C")) classe = "badge-purple";
-//     if (texto.includes("Atividade") || texto.includes("Atividddade")) classe = "badge-activity";
-    
-//     return `<span class="badge ${classe}">${texto}</span>`;
-// }
-

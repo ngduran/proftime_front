@@ -67,3 +67,49 @@ export function navegarPara(nomePagina) {
 // document.getElementById('telefone').addEventListener('input', (e) => {
 //     e.target.value = aplicarMascaraTelefone(e.target.value);
 // });
+
+
+export function renderizarTabela() {
+    const corpo = document.getElementById('gradeCorpo');
+    corpo.innerHTML = "";
+    
+    for (let i = 1; i <= 6; i++) {
+        const dadosLinha = gradeDeAulas.find(d => d.aula === i) || { aula: i };
+        
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${i}</td>
+            <td>${formatBadge(dadosLinha.segunda)}</td>
+            <td>${formatBadge(dadosLinha.terca)}</td>
+            <td>${formatBadge(dadosLinha.quarta)}</td>
+            <td>${formatBadge(dadosLinha.quinta)}</td>
+            <td>${formatBadge(dadosLinha.sexta)}</td>
+        `;
+        corpo.appendChild(tr);
+    }
+}
+
+
+// Dicionário para guardar qual cor cada turma ganhou
+export const mapaCoresTurmas = {};
+// Array de classes CSS que você definiu no seu arquivo
+const classesDisponiveis = ["badge-blue", "badge-orange", "badge-purple", "badge-green", "badge-red"];
+let indiceCor = 0;
+
+function formatBadge(texto) {
+    if (!texto) return "";
+
+    // Caso especial para Hora Atividade (sempre cinza/estilo específico)
+    if (texto.toLowerCase().includes("atividade")) {
+        return `<span class="badge badge-activity">${texto}</span>`;
+    }
+
+    // Se a turma ainda não tem uma cor atribuída, damos uma a ela
+    if (!mapaCoresTurmas[texto]) {
+        mapaCoresTurmas[texto] = classesDisponiveis[indiceCor % classesDisponiveis.length];
+        indiceCor++; // Próxima turma terá a próxima cor
+    }
+
+    const classeAtribuida = mapaCoresTurmas[texto];
+    return `<span class="badge ${classeAtribuida}">${texto}</span>`;
+}

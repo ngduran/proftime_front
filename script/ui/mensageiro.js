@@ -44,5 +44,24 @@ export const Mensagem = {
             alert(texto);
             return Promise.resolve();
         }  
-    }
+    },
+
+    async confirmar(texto) {
+        if (typeof Swal !== 'undefined') {
+            const resultado = await window.Swal.fire({
+                icon: 'question',
+                title: 'Você tem certeza?',
+                text: texto,
+                showCancelButton: true,
+                confirmButtonText: 'Sim, substituir',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#1748AF', // Seu Azul Primário
+                cancelButtonColor: '#BCBDC1'  // Seu Cinza de Borda
+            });
+            
+            return resultado.isConfirmed; // Retorna true se clicou em Sim
+        } else {
+            return confirm(texto); // Fallback caso o Swal falhe
+        }
+    },
 };
