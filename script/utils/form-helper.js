@@ -20,12 +20,33 @@ export function limparFormulario(idFormulario) {
 }
 
 
+// export function coletarDadosForm(idFormulario) {
+//     const formulario = document.getElementById(idFormulario);
+//     const formData = new FormData(formulario);
+    
+//     // Converte o FormData em um objeto simples { nome: '...', email: '...' }
+//     return Object.fromEntries(formData.entries());
+// }
+
 export function coletarDadosForm(idFormulario) {
     const formulario = document.getElementById(idFormulario);
-    const formData = new FormData(formulario);
-    
-    // Converte o FormData em um objeto simples { nome: '...', email: '...' }
-    return Object.fromEntries(formData.entries());
+    const dados = {};
+
+    // Itera por todos os elementos que possuem o atributo 'name'
+    Array.from(formulario.elements).forEach(elemento => {
+        if (!elemento.name) return; // Ignora botões ou campos sem nome
+
+        if (elemento.tagName === 'SELECT') {
+            // Captura o TEXTO visível do ComboBox
+            const opcaoSelecionada = elemento.options[elemento.selectedIndex];
+            dados[elemento.name] = opcaoSelecionada ? opcaoSelecionada.text : "";
+        } else {
+            // Captura o VALOR dos inputs, textareas, etc.
+            dados[elemento.name] = elemento.value;
+        }
+    });
+
+    return dados;
 }
 
 export function aplicarMascaraTelefone(valor) {

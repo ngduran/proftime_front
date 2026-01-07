@@ -1,7 +1,10 @@
 import { inicializarTooltips } from "../ui/dom-utils.js";
 import { validarComboBox, validarFormulario, validarPosicaoAula } from "../utils/validador.js";
 import { Mensagem } from "../ui/mensageiro.js";
-import { coletarDadosForm } from "../utils/form-helper.js";
+import { bloquearButton, desbloquearButton, coletarDadosForm} from "../utils/form-helper.js";
+import { salvarAulaGradeProfessor } from "../services/api_service.js";
+import { unirDados } from "../utils/mapper.js";
+import { lerRespostaSucesso, lerRespostaErro } from "../api/api-client.js";
 
 const cabecalho = "cabecalhoGradeForm";
 const item      = "itemGradeForm";
@@ -21,9 +24,9 @@ inicializarTooltips();
 
 async function adicionar() {   
     
-    if ( !validarFormulario( cabecalho                                ) ) { return; }
-    if ( !validarComboBox  ( 'instituicao', 'Selecione a instituicao' ) ) { return; }
-    if ( !validarComboBox  ( 'turno',       'Selecione o turno'       ) ) { return; }
+    if ( !validarFormulario( cabecalho                                  ) ) { return; }
+    if ( !validarComboBox  ( 'instituicao', 'Selecione a instituicao'   ) ) { return; }
+    if ( !validarComboBox  ( 'turno',       'Selecione o turno'         ) ) { return; }
     
     if ( !validarFormulario ( item                                      ) ) { return; }
     if ( !validarPosicaoAula( 'posicao',    1, 6, 'Indique a aula'      ) ) { return; }
@@ -32,11 +35,78 @@ async function adicionar() {
     if ( !validarComboBox   ( 'materia',    'Selecione a materia'       ) ) { return; }
 }
 
+async function salvar() {
+
+    try {
+
+        bloquearButton("cadastrarBtn", "Salvando...");
+
+        const dadosCabecalho = coletarDadosForm(cabecalho);
+        let dadosItem = coletarDadosForm(item);
+
+        dadosItem.posicao = parseInt( dadosItem.posicao );      
+
+        console.log("---------------------------------------------");
+        console.log(dadosCabecalho);
+        console.log("---------------------------------------------");
+        console.log("---------------------------------------------");
+        console.log(dadosItem);
+        console.log("---------------------------------------------");
+    
+        const jsonFinal = unirDados(dadosCabecalho, dadosItem, 'itens-grade');
+
+        console.log("---------------------------------------------");
+        console.log(jsonFinal);
+        console.log("---------------------------------------------");
+       
+
+        const response = await salvarAulaGradeProfessor(jsonFinal);       
+                
+        const resultado = response.ok 
+            ? await lerRespostaSucesso(response) 
+            : await lerRespostaErro(response); 
+    
+        if (response.ok) {
+                   
+            if (resultado?.uuid) { SessionManager.salvar("usuario_uuid", resultado.uuid); }       
+    
+            await Mensagem.sucesso("Sua aula foi criada com sucesso!");          
+    
+            //navegarPara("login");            
+            
+        } else {
+                
+            const mensagemFinal = typeof resultado === 'object' 
+                ? (resultado.message || "Erro no servidor") 
+                : resultado;
+    
+            await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
+        }
+
+    } catch (error) {
+        // Se for erro de rede, o fetch lança TypeError. Se for código, é ReferenceError ou similar.
+        if (error.message.includes("fetch") || error.message.includes("Network")) {
+             await Mensagem.erro("Conexão", "Não foi possível alcançar o servidor.");
+        } else {
+             // Se o Swal falhar, ele mostra o erro do script aqui
+             alert("Erro no script de Mensagem: " + error.message);
+        }   
+
+    } finally {
+         desbloquearButton("cadastrarBtn", "Salvar");
+    }
+
+
+
+}
+
 function voltarAoInicio() {
     window.location.href='../page/login.html'
 }
 
 //document.getElementById('adicionarBtn'  ).addEventListener('click', adicionar      );
+
+document.getElementById('cadastrarBtn'  ).addEventListener('click', salvar         );
 document.getElementById('voltarBtn'     ).addEventListener('click', voltarAoInicio );
 
 document.getElementById('instituicao'   ).addEventListener('blur', () => { validarComboBox   ( 'instituicao', 'Selecione a instituição'   ); } );
