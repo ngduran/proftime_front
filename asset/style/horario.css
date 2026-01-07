@@ -35,10 +35,16 @@
     border-radius: 8px;
 }
 
-.horario-table {
+/* .horario-table {
     width: 100%;
-    min-width: 700px; /* Garante que a tabela não "esprema" os dados no celular */
+    min-width: 700px; 
     border-collapse: collapse;
+} */
+
+/* Garante que a tabela tenha um layout fixo para as colunas não "dançarem" */
+.horario-table {
+    table-layout: fixed; /* Força colunas de tamanhos iguais ou controlados */
+    width: 100%;
 }
 
 .horario-table th, .horario-table td {
@@ -52,14 +58,38 @@
     color: var(--color-primary);
 }
 
+/* Largura da coluna de numeração (Aula) */
+.horario-table th:first-child, 
+.horario-table td:first-child {
+    width: 60px;
+}
+
+/* Ajuste das colunas de dias da semana */
+.horario-table th:not(:first-child), 
+.horario-table td:not(:first-child) {
+    width: 180px; /* Largura mínima confortável para o nome da turma */
+}
+
+/* Ajuste da Badge para lidar com nomes longos */
 .badge {
+    display: block; /* Muda para block para preencher a célula */
+    white-space: normal; /* Permite quebra de linha se for muito grande */
+    word-wrap: break-word;
+    text-align: center;
+    line-height: 1.2;
+    padding: 8px;
+    margin: 2px auto;
+    max-width: 100%;
+}
+
+/* .badge {
     display: inline-block;
     padding: 5px 10px;
     border-radius: 15px;
     font-size: 0.75rem;
     font-weight: bold;
-    white-space: nowrap; /* Impede que o texto quebre linha dentro da badge */
-}
+    white-space: nowrap; 
+} */
 
 .badge-blue { 
     background: #d1e3ff; 

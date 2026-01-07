@@ -130,7 +130,7 @@ export function validarComboBox(id, mensagemErro) {
     const elemento = document.getElementById(id);
     
     if (!elemento) {
-        console.error("Elemento com ID `${id}` não encontrado.");
+        console.error(`Elemento com ID "${id}" não encontrado.`);
         return false;
     }
 
