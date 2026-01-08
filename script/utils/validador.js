@@ -176,3 +176,30 @@ export function validarPosicaoAula(id, min, max, mensagem) {
     marcarSucesso(input);
     return true;
 }
+
+/**
+ * Valida campos HTML do tipo <input type="time">
+ * @param {string} id - O ID do elemento no HTML
+ * @param {string} mensagemErro - A mensagem a ser exibida em caso de falha
+ * @returns {boolean}
+ */
+export function validarCampoTime(id, mensagemErro) {
+    const elemento = document.getElementById(id);
+
+    if (!elemento) {
+        console.error(`Elemento com ID "${id}" não encontrado.`);
+        return false;
+    }
+
+    const valor = elemento.value;
+
+    // Campos do tipo time retornam string vazia "" se não preenchidos
+    // Validamos também o "00:00" caso não seja um horário permitido no seu contexto
+    if (!valor || valor.trim() === "" || valor === "00:00") {
+        marcarErro(elemento, mensagemErro);
+        return false;
+    }
+
+    marcarSucesso(elemento);
+    return true;
+}

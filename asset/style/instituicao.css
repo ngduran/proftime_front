@@ -4,3 +4,12 @@
     appearance: none !important;
 }
 
+/* Dica visual: mudar o cursor para indicar que o campo é clicável em toda área */
+input[type="time"] {
+    cursor: pointer !important;
+}
+
+/* Garante que o container tenha espaço e não esconda o menu */
+.input-group {    
+    overflow: visible !important; /* Essencial para o pop-up não ser cortado */
+}

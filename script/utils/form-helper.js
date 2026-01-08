@@ -134,3 +134,27 @@ function formatBadge(texto) {
     const classeAtribuida = mapaCoresTurmas[texto];
     return `<span class="badge ${classeAtribuida}">${texto}</span>`;
 }
+
+/**
+ * Força a abertura do seletor de horas ao clicar em qualquer lugar do input
+ */
+export function configurarAbrirRelogioAoClicar(id) {
+    const campo = document.getElementById(id);
+    
+    if (campo) {
+        campo.addEventListener('click', () => {
+            try {
+                // Tenta abrir o seletor nativo do navegador
+                if ('showPicker' in HTMLInputElement.prototype) {
+                    campo.showPicker();
+                } else {
+                    // Fallback para navegadores antigos
+                    campo.focus();
+                    campo.click();
+                }
+            } catch (error) {
+                console.warn("showPicker não suportado ou erro ao abrir:", error);
+            }
+        });
+    }
+}

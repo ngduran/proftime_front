@@ -66,7 +66,7 @@ async function salvar() {
 }
 
 function voltarAoInicio() {
-    window.location.href='../page/login.html'
+    navegarPara('home');
 }
 
 // Validação em tempo real ao sair do campo (Blur)
