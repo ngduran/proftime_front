@@ -12,3 +12,7 @@ export async function efetuarLogin(dados) {
 export async function salvarAulaGradeProfessor(dados) {    
     return await apiFetch(API_MAP.PROFESSOR_GRADE.CREATE_ITEM, dados);
 }
+
+export async function cadastrarInstituicao(dados) {
+    return await apiFetch(API_MAP.INSTITUICAO.CREATE, dados);
+}

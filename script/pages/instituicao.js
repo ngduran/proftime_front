@@ -1,6 +1,10 @@
 import { inicializarTooltips } from "../ui/dom-utils.js";
-import { bloquearButton, configurarAbrirRelogioAoClicar, desbloquearButton, navegarPara } from "../utils/form-helper.js";
-import { validarNome, validarComboBox, validarCampoTime } from "../utils/validador.js";
+import { bloquearButton, configurarAbrirRelogioAoClicar, desbloquearButton, navegarPara, 
+         coletarDadosForm } from "../utils/form-helper.js";
+import { validarNome, validarComboBox, validarCampoTime, validarFormulario } from "../utils/validador.js";
+import { cadastrarInstituicao } from "../services/api_service.js";
+import { lerRespostaSucesso, lerRespostaErro } from "../api/api-client.js";
+import { Mensagem } from "../ui/mensageiro.js";
 
 inicializarTooltips();
 
@@ -21,9 +25,40 @@ async function salvar() {
     try {
 
         bloquearButton('cadastrarBtn', 'Salvando...');
+        
+        const dados = coletarDadosForm("instituicaoForm");
 
+        const response = await cadastrarInstituicao(dados);
+
+        const resultado = response.ok 
+                    ? await lerRespostaSucesso(response) 
+                    : await lerRespostaErro(response);  
+
+        if (response.ok) {
+                   
+            if (resultado?.uuid) { SessionManager.salvar("instituicao_id", resultado.uuid); }       
+
+            await Mensagem.sucesso("A Instituição foi criada com sucesso!");          
+
+            navegarPara("home");            
+            
+        } else {
+            
+            const mensagemFinal = typeof resultado === 'object' 
+                ? (resultado.message || "Erro no servidor") 
+                : resultado;
+
+            await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
+        }
+        
     } catch (error) {
-
+        // Se for erro de rede, o fetch lança TypeError. Se for código, é ReferenceError ou similar.
+        if (error.message.includes("fetch") || error.message.includes("Network")) {
+                await Mensagem.erro("Conexão", "Não foi possível alcançar o servidor.");
+        } else {
+                // Se o Swal falhar, ele mostra o erro do script aqui
+                alert("Erro no script de Mensagem: " + error.message);
+        }   
     } finally {
         desbloquearButton('cadastrarBtn', 'Salvar');
     }

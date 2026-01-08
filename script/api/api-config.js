@@ -6,6 +6,7 @@ const R_CONTA           = "/conta";
 const R_PROFESSOR       = "/professor";
 const R_LOGIN           = "/auth"
 const R_GRADE_PROFESSOR = "/grades-professores";
+const R_INSTITUICAO     = "/instituicoes"
 
 export const API_MAP = {
     BASE_URL: BASE_URL,
@@ -29,6 +30,10 @@ export const API_MAP = {
     PROFESSOR_GRADE: {
         CREATE_ITEM: { path: `${BASE_URL}${R_GRADE_PROFESSOR}/create-item`, method: 'POST' }
     },
+
+    INSTITUICAO: {
+        CREATE: { path: `${BASE_URL}${R_INSTITUICAO}/create`, method: 'POST' },
+    }
 
 
 };
