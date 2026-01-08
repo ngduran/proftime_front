@@ -178,6 +178,7 @@ async function adicionarAula() {
     }
 
     renderizarTabela();
+    salvar();
     await Mensagem.sucesso("Atualizado com sucesso");
 }
 
