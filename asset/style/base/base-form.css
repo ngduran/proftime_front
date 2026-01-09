@@ -239,6 +239,12 @@ input, select {
     transform: translateY(10px);
 }
 
+/* Adicione isso para garantir que o texto venha do atributo traduzido */
+.tooltip-container::before {
+    content: attr(data-tooltip); 
+    display: block;
+}
+
 .tooltip-container.visible {
     opacity: 1;
     visibility: visible;

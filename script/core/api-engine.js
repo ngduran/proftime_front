@@ -3,6 +3,7 @@ import { Mensagem } from "../utils/mensageiro.js";
 import { bloquearButton, desbloquearButton } from "../utils/form-helper.js";
 import { SessionManager } from "../utils/session-manager.js";
 
+import { getTranslation } from '../utils/i18n.js';
 
 
 /**
@@ -12,6 +13,7 @@ import { SessionManager } from "../utils/session-manager.js";
 export async function executarOperacao({
     idBotao,
     textoAguarde,
+    keyTextoAguarde,
     textoOriginal = "Salvar",
     apiCall,          // Função de API (ex: cadastrarInstituicao ou initialDataInstituicao)
     dados = null,      // Dados para enviar (null para GET)
@@ -23,7 +25,10 @@ export async function executarOperacao({
     if (validacao && !validacao()) return;
 
     try {
-        bloquearButton(idBotao, textoAguarde);
+        //bloquearButton(idBotao, textoAguarde);
+
+        // Busca a tradução dinamicamente
+        bloquearButton(idBotao, getTranslation(keyTextoAguarde));
 
         // 2. Chamada da API
         const response = await apiCall(dados);

@@ -65,3 +65,40 @@ input[type="time"] {
 /* .info-question {
     margin-left: 10px;
 } */
+
+
+/* Garante que o card aceite elementos posicionados dentro dele */
+.form-card {
+    position: relative;
+    padding-top: 50px; /* Dá espaço para os botões não atropelarem o título */
+}
+
+/* Seletor de idioma */
+.language-selector {
+    position: absolute; /* Em vez de fixed */
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+    display: flex;
+    gap: 5px;
+}
+
+/* .lang-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+} */
+
+.lang-btn:hover {
+    background: #f0f0f0;
+}
+
+/* .lang-btn.active {
+    background: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+} */
+
+.icon-flag {
+    width: 24px;
+    height: 24px;
+}

@@ -14,110 +14,94 @@
         <div class="form-card">
             <h1 class="header-title">Instituição</h1>
 
+            <!-- Botão de tradução no topo -->
+            <div class="language-selector">
+                <!-- <button type="button" id="btn-pt"  class="lang-btn active">🇧🇷 PT</button> -->
+                <button type="button" id="btn-pt"  class="lang-btn active">
+                    <img class="icon-flag" src="../asset/icon/bandeira-do-brasil.png" alt="Bandeira do Brasil">
+                </button>
+                <!-- <button type="button" id="btn-es"  class="lang-btn">🇵🇾 ES</button>        -->
+                <button type="button" id="btn-es"  class="lang-btn">
+                     <img class="icon-flag" src="../asset/icon/paraguai.png" alt="Bandeira do Paraguai">
+                </button>       
+            </div>
+            
             <form id="instituicaoForm" autocomplete="off">
+                
 
-
-                <!-- <div class="form-group">
-                    <label for="nome">Nome Alterado</label>
-                    <div class="input-group input-wrapper"> 
-                        <input type="text" id="nome" name="nome" placeholder="Ex: Escola Estadual XXX">
-                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação"></i>
-                        <button type="button" class="edit-button">                        
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="administracao">Administração Alterada</label>
-                    <div class="input-group input-wrapper">
-                        <select id="administracao" name="administracao" required>
-                            <option value="">Selecione o tipo de Administração</option>
-                            <option value="1">Federal</option>
-                        </select>
-                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe o tipo da administração"></i>
-                        <button type="button" class="edit-button">
-                            <i class="fa-solid fa-pencil"></i>
-                        </button>
-                    </div>
-                </div> -->
-
-
-                <!-- <div class="form-group"> -->
-                    <label for="instituicao">Nome</label>
+                
+                    <label for="instituicao" data-translate="lbl_nome">Nome da Instituição</label>
                     <div class="input-group">                        
-                        <input type="text" id="nome" name="nome" placeholder="Ex: Escola Estadual XXX">
-                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação"></i>                    
+                        <input type="text" id="nome" name="nome" data-translate="ph_nome" placeholder="Ex: Escola Estadual XXX">
+                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação" data-translate="tp_lbl_nome"></i>                    
                         <!-- <span class="info-icon" title="Obrigatório"></span> -->
                         <button type="button" class="edit-button">                        
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                     </div>
-                <!-- <div> -->
                 
-                <!-- <div class="form-group"> -->
-                    <label for="administracao">Administração</label>                       
+                    <label for="administracao" data-translate="lbl_administracao">Administração</label>                       
                     <div class="input-group">                        
                         <select id="administracao" name="administracao" required>
-                            <option value="">Selecione o tipo de Administração</option>
-                            <option value="1">Federal</option>
-                            <option value="2">Estadual</option>
-                            <option value="3">Municipal</option>
-                            <option value="4">Público Privada</option>
-                            <option value="5">Particular</option>
+                            <option value=""  data-translate="ph_administracao_op0">Selecione o tipo de Administração</option>
+                            <option value="1" data-translate="ph_administracao_op1">Federal</option>
+                            <option value="2" data-translate="ph_administracao_op2">Estadual</option>
+                            <option value="3" data-translate="ph_administracao_op3">Municipal</option>
+                            <option value="4" data-translate="ph_administracao_op4">Público Privada</option>
+                            <option value="5" data-translate="ph_administracao_op5">Particular</option>
                         </select>
-                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe o tipo da administração"></i>
+                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Qual é o tipo da administração?" data-translate="tp_lbl_administracao"></i>
                         <!-- <span class="info-icon" title="Obrigatório"></span> -->
                         <button type="button" class="edit-button">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>                        
                     </div>
-                <!-- </div> -->
+               
 
-                <label for="estado">Estado (UF)</label>                       
+                <label for="estado" data-translate="lbl_estado">Estado (UF)</label>                       
                 <div class="input-group">                        
                     <select id="estado" name="estado" required>
-                        <option value="">Selecione o estado</option>
+                        <option value="" data-translate="ph_estado_op0">Selecione o estado</option>
                         <option value="1">Paraná</option>
                         <option value="2">São Paulo</option>
                         <option value="3">Rio Grande do Sul</option>
                     </select>
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe o estado em que a Instituição fica"></i>
+                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Em qual estado fica?" data-translate="tp_lbl_estado"></i>
                     <!-- <span class="info-icon" title="Obrigatório"></span> -->
                     <button type="button" class="edit-button">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </button>
                 </div>         
                 
-                <label for="cidade">Cidade</label>                       
+                <label for="cidade" data-translate="lbl_cidade">Cidade</label>                       
                 <div class="input-group">                        
                     <select id="cidade" name="cidade" required>
-                        <option value="">Selecione a cidade</option>
+                        <option value="" data-translate="ph_cidade_op0">Selecione a cidade</option>
                         <option value="1">Cascavel</option>
                         <option value="2">Osasco</option>
                         <option value="3">Porto Alegre</option>
                     </select>
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe a cidade em que a Instituição fica"></i>
+                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Em qual cidade?" data-translate="tp_lbl_cidade"></i>
                     <!-- <span class="info-icon" title="Obrigatório"></span> -->
                     <button type="button" class="edit-button">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </button>
                 </div>
 
-                <label for="horarioInicial">Horário de Início das Atividades</label>
+                <label for="horarioInicial" data-translate="lbl_horario_inicial">Horário de Início das Atividades</label>
                 <div class="input-group">
                     <input type="time" id="horarioInicial" name="horarioInicial" value="07:30">
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe o horário inicial das aulas"></i>                    
+                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe o horário inicial das aulas" data-translate="tp_lbl_horario_inicial"></i>                    
                     <!-- <span class="info-icon" title="Obrigatório"></span> -->
                     <button type="button" class="edit-button">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </button>
                 </div>
 
-                <label for="horaAula">Duração Padrão da Aula</label>
+                <label for="horaAula" data-translate="lbl_hora_aula">Duração Padrão da Aula</label>
                 <div class="input-group">
                     <input type="time" id="horaAula" name="horaAula" value="00:50">                    
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe a duração de uma aula"></i>                    
+                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe a duração de uma aula" data-translate="tp_lbl_hora_aula"></i>                    
                     <!-- <span class="info-icon" title="Obrigatório"></span> -->
                     <button type="button" class="edit-button">
                        <i class="fa-regular fa-pen-to-square"></i>
@@ -125,8 +109,8 @@
                 </div>
                 
                 <div class="button-group">
-                    <button type="button" id="cadastrarBtn" class="cta-button">Salvar</button>
-                    <button type="button" id="voltarBtn"    class="cta-button">Voltar ao Inicio</button>
+                    <button type="button" id="cadastrarBtn" class="cta-button" data-translate="lbl_cadastrarBtn">Salvar</button>
+                    <button type="button" id="voltarBtn"    class="cta-button" data-translate="lbl_voltarBtn">Voltar ao Inicio</button>
                 </div>
 
             </form>

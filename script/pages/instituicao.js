@@ -4,6 +4,7 @@ import { configurarAbrirRelogioAoClicar, navegarPara,
 import { validarNome, validarComboBox, validarCampoTime, validarFormulario } from "../utils/validador.js";
 import { cadastrarInstituicao, initialDataInstituicao } from "../services/api_service.js";
 import { executarOperacao } from "../core/api-engine.js"
+import { changeLanguage } from "../utils/i18n.js";
 
 
 inicializarTooltips();
@@ -132,6 +133,15 @@ document.getElementById('horaAula'       ).addEventListener('blur', () => { vali
 
 document.getElementById('cadastrarBtn'  ).addEventListener('click', salvar         );
 document.getElementById('voltarBtn'     ).addEventListener('click', voltarAoInicio );
+
+
+//linguagem
+document.addEventListener('DOMContentLoaded', () => {
+    // Vincular cliques
+    document.getElementById('btn-pt').addEventListener('click', () => changeLanguage('pt'));
+    document.getElementById('btn-es').addEventListener('click', () => changeLanguage('es'));
+});
+
 
 
 async function salvar() {
