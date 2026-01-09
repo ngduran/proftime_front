@@ -1,10 +1,8 @@
 import { inicializarTooltips } from "../utils/dom-utils.js";
-import { bloquearButton, configurarAbrirRelogioAoClicar, desbloquearButton, navegarPara, 
+import { configurarAbrirRelogioAoClicar, navegarPara, 
          coletarDadosForm, popularFormulario } from "../utils/form-helper.js";
 import { validarNome, validarComboBox, validarCampoTime, validarFormulario } from "../utils/validador.js";
 import { cadastrarInstituicao, initialDataInstituicao } from "../services/api_service.js";
-import { lerRespostaSucesso, lerRespostaErro } from "../api/api-client.js";
-import { Mensagem } from "../utils/mensageiro.js";
 import { executarOperacao } from "../core/api-engine.js"
 
 

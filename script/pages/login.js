@@ -1,7 +1,7 @@
 import { efetuarLogin } from "../services/api_service.js";
-import { configurarMostrarSenha, inicializarTooltips } from "../ui/dom-utils.js";
 import { bloquearButton, coletarDadosForm } from "../utils/form-helper.js";
 import { validarEmail, validarForcaSenha } from "../utils/validador.js";
+import { configurarMostrarSenha, inicializarTooltips } from "../utils/dom-utils.js"
 
 inicializarTooltips();
 configurarMostrarSenha('mostrarSenha', ['senha', 'confirmarSenha']);
