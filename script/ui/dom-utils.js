@@ -40,26 +40,26 @@ export function marcarErro(input, mensagem) {
     }
 }
 
-export async function popularFormulario(idFormulario, dados) {
-    const formulario = document.getElementById(idFormulario);
-    if (!formulario || !dados) return;
+// export async function popularFormulario(idFormulario, dados) {
+//     const formulario = document.getElementById(idFormulario);
+//     if (!formulario || !dados) return;
 
-    // Iteramos sobre as chaves do objeto JSON (nome, email, etc)
-    Object.keys(dados).forEach(key => {
-        // Buscamos o input que tenha o atributo name EXATAMENTE igual à chave
-        const campo = formulario.querySelector(`[name="${key}"]`);
+//     // Iteramos sobre as chaves do objeto JSON (nome, email, etc)
+//     Object.keys(dados).forEach(key => {
+//         // Buscamos o input que tenha o atributo name EXATAMENTE igual à chave
+//         const campo = formulario.querySelector(`[name="${key}"]`);
 
-        if (campo) {
-            // Atribuímos o valor. O '?? ""' garante que se vier nulo do banco, o campo fique vazio
-            campo.value = dados[key] ?? "";
-            console.log(`Sucesso: Campo [${key}] preenchido.`);
-        } else {
-            console.warn(`Aviso: O JSON trouxe '${key}', mas não existe <input name="${key}"> no HTML.`);
-        }
-    });
+//         if (campo) {
+//             // Atribuímos o valor. O '?? ""' garante que se vier nulo do banco, o campo fique vazio
+//             campo.value = dados[key] ?? "";
+//             console.log(`Sucesso: Campo [${key}] preenchido.`);
+//         } else {
+//             console.warn(`Aviso: O JSON trouxe '${key}', mas não existe <input name="${key}"> no HTML.`);
+//         }
+//     });
     
-    await new Promise(resolve => setTimeout(resolve, 0));
-}
+//     await new Promise(resolve => setTimeout(resolve, 0));
+// }
 
 export async function inicializarTooltips() {
     document.querySelectorAll('.info-question').forEach(icon => {

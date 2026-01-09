@@ -141,8 +141,14 @@ input, select {
 }
 
 .info-question {
-    color: var(--color-accent);
+    margin-left: 04px;
+    color: var(--color-primary);   
 }
+
+.info-question:hover {
+    color: var(--color-accent)
+}
+
 
 /* Checkbox */
 .checkbox-group {
@@ -177,8 +183,7 @@ input, select {
 .cta-button {
     width: 100%;
     padding: 15px;
-    background-color: var(--color-primary); /* Cor Principal: Azul Escuro */     
-     
+    background-color: var(--color-primary); /* Cor Principal: Azul Escuro */ 
     color: var(--color-accent);  /* Texto do botão: Amarelo Ouro (Alto Contraste) */ 
     border: none;
     border-radius: 8px;

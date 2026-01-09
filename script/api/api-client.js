@@ -18,6 +18,29 @@ export async function apiFetch(endpoint, dados) {
     }
 }
 
+export async function apiFetchGet(endpoint) {
+    try {
+        const response = await fetch(endpoint.path, {
+            method: endpoint.method,
+            headers: { 
+                "Content-Type": "application/json",               
+                //"ngrok-skip-browser-warning": "true"
+            }
+        });
+        
+        console.log("-----------------------------------------");
+        console.log(response);
+        console.log("-----------------------------------------");
+        return response;
+        
+    } catch (error) {
+        // O único erro que tratamos é se o fetch falhar (ex: sem internet ou servidor offline)
+        console.error("Erro crítico de rede:", error);
+        throw new Error("Não foi possível conectar ao servidor. Verifique sua conexão.");
+    }
+}
+
+
 export async function lerRespostaSucesso(response) {
     return await extrairDados(response);
 }

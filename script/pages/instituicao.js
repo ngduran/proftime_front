@@ -1,8 +1,8 @@
 import { inicializarTooltips } from "../ui/dom-utils.js";
 import { bloquearButton, configurarAbrirRelogioAoClicar, desbloquearButton, navegarPara, 
-         coletarDadosForm } from "../utils/form-helper.js";
+         coletarDadosForm, popularFormulario, popularFormularioRefatorado, carregaFrom } from "../utils/form-helper.js";
 import { validarNome, validarComboBox, validarCampoTime, validarFormulario } from "../utils/validador.js";
-import { cadastrarInstituicao } from "../services/api_service.js";
+import { cadastrarInstituicao, initialDataInstituicao } from "../services/api_service.js";
 import { lerRespostaSucesso, lerRespostaErro } from "../api/api-client.js";
 import { Mensagem } from "../ui/mensageiro.js";
 
@@ -10,6 +10,8 @@ inicializarTooltips();
 
 configurarAbrirRelogioAoClicar('horarioInicial');
 configurarAbrirRelogioAoClicar('horaAula');
+
+read();
 
 async function salvar() {
 
@@ -62,9 +64,76 @@ async function salvar() {
     } finally {
         desbloquearButton('cadastrarBtn', 'Salvar');
     }
+}
 
+async function read() {
+
+    console.log("Chamando o read a entrar na página");
+    
+    try {
+
+        bloquearButton('cadastrarBtn', 'Consultando...');
+
+        const response = await initialDataInstituicao();
+
+        const resultado = response.ok 
+                    ? await lerRespostaSucesso(response) 
+                    : await lerRespostaErro(response);
+        
+        await carregaFrom('instituicaoForm', resultado);
+
+        if (response.ok) {
+
+            if (resultado?.id) { SessionManager.salvar("instituicao_id", resultado.id); }
+            
+            await Mensagem.sucesso("Os dados foram carregados com sucesso!");          
+
+            //navegarPara("login");            
+            
+        } else {
+            
+            const mensagemFinal = typeof resultado === 'object' 
+                ? (resultado.message || "Erro no servidor") 
+                : resultado;
+
+            await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
+        }
+
+    } catch (error) {
+        // Se for erro de rede, o fetch lança TypeError. Se for código, é ReferenceError ou similar.
+        if (error.message.includes("fetch") || error.message.includes("Network")) {
+             await Mensagem.erro("Conexão", "Não foi possível alcançar o servidor.");
+        } else {
+             // Se o Swal falhar, ele mostra o erro do script aqui
+             alert("Erro no script de Mensagem: " + error.message);
+        }
+    } finally {
+        desbloquearButton("cadastrarBtn", "Salvar");
+    }
+    
+    
+    
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function voltarAoInicio() {
     navegarPara('home');

@@ -15,27 +15,64 @@
             <h1 class="header-title">Instituição</h1>
 
             <form id="instituicaoForm" autocomplete="off">
-                
-                <label for="instituicao">Nome</label>
-                <div class="input-group">
-                    <input type="text" id="nome" name="nome" placeholder="Ex: Escola Estadual XXX">
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação"></i>                    
-                    <span class="info-icon" title="Obrigatório"></span>
+
+
+                <!-- <div class="form-group">
+                    <label for="nome">Nome Alterado</label>
+                    <div class="input-group input-wrapper"> 
+                        <input type="text" id="nome" name="nome" placeholder="Ex: Escola Estadual XXX">
+                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação"></i>
+                        <button type="button" class="edit-button">                        
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <label for="administracao">Administração</label>                       
-                <div class="input-group">                        
-                    <select id="administracao" name="administracao" required>
-                        <option value="">Selecione o tipo de Administração</option>
-                        <option value="1">Federal</option>
-                        <option value="2">Estadual</option>
-                        <option value="3">Municipal</option>
-                        <option value="4">Público Privada</option>
-                        <option value="5">Particular</option>
-                    </select>
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe o tipo da administração"></i>
-                    <span class="info-icon" title="Obrigatório"></span>
-                </div>      
+                <div class="form-group">
+                    <label for="administracao">Administração Alterada</label>
+                    <div class="input-group input-wrapper">
+                        <select id="administracao" name="administracao" required>
+                            <option value="">Selecione o tipo de Administração</option>
+                            <option value="1">Federal</option>
+                        </select>
+                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe o tipo da administração"></i>
+                        <button type="button" class="edit-button">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+                    </div>
+                </div> -->
+
+
+                <!-- <div class="form-group"> -->
+                    <label for="instituicao">Nome</label>
+                    <div class="input-group">                        
+                        <input type="text" id="nome" name="nome" placeholder="Ex: Escola Estadual XXX">
+                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação"></i>                    
+                        <!-- <span class="info-icon" title="Obrigatório"></span> -->
+                        <button type="button" class="edit-button">                        
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </button>
+                    </div>
+                <!-- <div> -->
+                
+                <!-- <div class="form-group"> -->
+                    <label for="administracao">Administração</label>                       
+                    <div class="input-group">                        
+                        <select id="administracao" name="administracao" required>
+                            <option value="">Selecione o tipo de Administração</option>
+                            <option value="1">Federal</option>
+                            <option value="2">Estadual</option>
+                            <option value="3">Municipal</option>
+                            <option value="4">Público Privada</option>
+                            <option value="5">Particular</option>
+                        </select>
+                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe o tipo da administração"></i>
+                        <!-- <span class="info-icon" title="Obrigatório"></span> -->
+                        <button type="button" class="edit-button">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </button>                        
+                    </div>
+                <!-- </div> -->
 
                 <label for="estado">Estado (UF)</label>                       
                 <div class="input-group">                        
@@ -46,7 +83,10 @@
                         <option value="3">Rio Grande do Sul</option>
                     </select>
                     <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe o estado em que a Instituição fica"></i>
-                    <span class="info-icon" title="Obrigatório"></span>
+                    <!-- <span class="info-icon" title="Obrigatório"></span> -->
+                    <button type="button" class="edit-button">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
                 </div>         
                 
                 <label for="cidade">Cidade</label>                       
@@ -58,21 +98,30 @@
                         <option value="3">Porto Alegre</option>
                     </select>
                     <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe a cidade em que a Instituição fica"></i>
-                    <span class="info-icon" title="Obrigatório"></span>
+                    <!-- <span class="info-icon" title="Obrigatório"></span> -->
+                    <button type="button" class="edit-button">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
                 </div>
 
                 <label for="horarioInicial">Horário de Início das Atividades</label>
                 <div class="input-group">
                     <input type="time" id="horarioInicial" name="horarioInicial" value="07:30">
                     <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe o horário inicial das aulas"></i>                    
-                    <span class="info-icon" title="Obrigatório"></span>
+                    <!-- <span class="info-icon" title="Obrigatório"></span> -->
+                    <button type="button" class="edit-button">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
                 </div>
 
                 <label for="horaAula">Duração Padrão da Aula</label>
                 <div class="input-group">
                     <input type="time" id="horaAula" name="horaAula" value="00:50">                    
                     <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe a duração de uma aula"></i>                    
-                    <span class="info-icon" title="Obrigatório"></span>
+                    <!-- <span class="info-icon" title="Obrigatório"></span> -->
+                    <button type="button" class="edit-button">
+                       <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
                 </div>
                 
                 <div class="button-group">

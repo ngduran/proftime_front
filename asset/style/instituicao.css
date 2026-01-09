@@ -13,3 +13,55 @@ input[type="time"] {
 .input-group {    
     overflow: visible !important; /* Essencial para o pop-up não ser cortado */
 }
+
+.edit-button {
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    //background-color: var(--color-primary);
+    background-color: var(--color-accent);
+    //background-color: var(--color-primary); /* Cor Principal: Azul Escuro */ 
+    color: var(--color-primary);
+    //color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    //z-index: 10;
+}
+
+.edit-button:hover {    
+    background-color: var(--color-primary);
+    color: var(--color-accent);
+
+}
+
+.edit-button:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.edit-button svg {
+    width: 16px;
+    height: 16px;
+}
+
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* .info-question {
+    margin-left: 10px;
+} */
