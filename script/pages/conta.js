@@ -3,10 +3,10 @@ import { bloquearButton, desbloquearButton, coletarDadosForm, configurarMascaraT
          navegarPara} from "../utils/form-helper.js";
 import { validarNome, validarUsuario, validarFormulario, validarEmail, 
          validarTelefone, validarForcaSenha, validarSenhasIguais } from "../utils/validador.js";
-import { inicializarTooltips, configurarMostrarSenha } from "../ui/dom-utils.js";
+import { inicializarTooltips, configurarMostrarSenha } from "../utils/dom-utils.js";
 import { SessionManager } from "../utils/session-manager.js";
 import { lerRespostaSucesso, lerRespostaErro } from "../api/api-client.js";
-import { Mensagem } from "../ui/mensageiro.js";
+import { Mensagem } from "../utils/mensageiro.js";
 
 
 inicializarTooltips();

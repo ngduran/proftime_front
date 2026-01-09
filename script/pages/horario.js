@@ -1,10 +1,11 @@
-import { inicializarTooltips } from "../ui/dom-utils.js";
 import { validarComboBox, validarFormulario, validarPosicaoAula } from "../utils/validador.js";
-import { Mensagem } from "../ui/mensageiro.js";
 import { bloquearButton, desbloquearButton, coletarDadosForm} from "../utils/form-helper.js";
 import { salvarAulaGradeProfessor } from "../services/api_service.js";
 import { unirDados } from "../utils/mapper.js";
 import { lerRespostaSucesso, lerRespostaErro } from "../api/api-client.js";
+import { inicializarTooltips} from "../utils/dom-utils.js"
+import { Mensagem } from "../utils/mensageiro.js"
+
 
 const cabecalho = "cabecalhoGradeForm";
 const item      = "itemGradeForm";
@@ -95,8 +96,6 @@ async function salvar() {
     } finally {
          desbloquearButton("cadastrarBtn", "Salvar");
     }
-
-
 
 }
 

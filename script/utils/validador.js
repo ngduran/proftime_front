@@ -1,4 +1,4 @@
-import { marcarErro, marcarSucesso } from "../ui/dom-utils.js";
+import { marcarErro, marcarSucesso } from "./dom-utils.js";
 
 export function validarNome() {
     const nome = document.getElementById('nome');
