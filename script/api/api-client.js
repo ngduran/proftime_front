@@ -40,6 +40,26 @@ export async function apiFetchGet(endpoint) {
     }
 }
 
+export async function apiFetchGetPaginado(endpoint, filtros = {}) {
+    try {
+        // Converte o objeto de filtros em uma string: ?estado=PR&cidade=Cascavel&page=0
+        const params = new URLSearchParams(filtros).toString();
+        const urlCompleta = params ? `${endpoint.path}?${params}` : endpoint.path;
+
+        const response = await fetch(urlCompleta, {
+            method: endpoint.method, // GET
+            headers: { "Content-Type": "application/json" }
+        });
+
+        return response;
+    } catch (error) {
+        console.error("Erro crítico de rede:", error);
+        throw new Error("Não foi possível conectar ao servidor.");
+    }
+}
+
+
+
 
 export async function lerRespostaSucesso(response) {
     return await extrairDados(response);

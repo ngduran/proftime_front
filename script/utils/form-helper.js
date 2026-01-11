@@ -19,15 +19,6 @@ export function limparFormulario(idFormulario) {
     }    
 }
 
-
-// export function coletarDadosForm(idFormulario) {
-//     const formulario = document.getElementById(idFormulario);
-//     const formData = new FormData(formulario);
-    
-//     // Converte o FormData em um objeto simples { nome: '...', email: '...' }
-//     return Object.fromEntries(formData.entries());
-// }
-
 export function coletarDadosForm(idFormulario) {
     const formulario = document.getElementById(idFormulario);
     const dados = {};
@@ -188,4 +179,96 @@ export function configurarAbrirRelogioAoClicar(id) {
             }
         });
     }
+}
+
+
+/**
+ * Popula uma tabela HTML dinamicamente.
+ * @param {string} idTabela - O ID do elemento <table>.
+ * @param {Array} lista - Array de objetos vindos da API.
+ * @param {Function} buildRow - Função que retorna o HTML (string) da linha (<tr>).
+ */
+export function popularTabela(idTabela, lista, buildRow) {
+    const tabela = document.getElementById(idTabela);
+    if (!tabela) {
+        console.error(`Tabela ${idTabela} não encontrada.`);
+        return;
+    }
+
+    const tbody = tabela.querySelector('tbody');
+    if (!tbody) {
+        console.error(`Tbody não encontrado na tabela ${idTabela}.`);
+        return;
+    }
+
+    // Limpa a tabela antes de popular (remove o "loading" ou dados antigos)
+    tbody.innerHTML = '';
+
+    if (!lista || lista.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="100%" style="text-align:center;">Nenhum registro encontrado.</td></tr>';
+        return;
+    }
+
+    // Itera sobre a lista e adiciona as linhas
+    lista.forEach(item => {
+        const rowHTML = buildRow(item);
+        tbody.insertAdjacentHTML('beforeend', rowHTML);
+    });
+}
+
+/**
+ * @param {Object} pageResponse - O objeto Page retornado pelo Spring
+ */
+export function renderizarTabelaInstituicoes(pageResponse) {
+    // 1. Popula os dados (usando a função popularTabela que criamos antes)
+    popularTabela('tabelaInstituicoes', pageResponse.content, (inst) => `
+        <tr>
+            <td>${inst.nome}</td>
+            <td>${inst.cidade}</td>
+            <td>${inst.estado}</td>
+            <td>
+                <button class="btn-action edit" onclick="editar('${inst.uuid}')"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-action delete" onclick="excluir('${inst.uuid}')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+        </tr>
+    `);
+
+    // 2. Aqui você pode atualizar indicadores de página (Ex: "Página 1 de 10")
+    console.log(`Página atual: ${pageResponse.number} de ${pageResponse.totalPages}`);
+}
+
+// export function popularSelect(idSelect, lista) {
+//     const select = document.getElementById(idSelect);
+//     if (!select) return;
+
+//     select.innerHTML = '<option value="">Selecione...</option>';
+//     lista.forEach(item => {
+//         const option = document.createElement('option');
+//         option.value = item.uuid; // O UUID que geramos no SQL!
+//         option.textContent = item.nome;
+//         select.appendChild(option);
+//     });
+// }
+
+
+/**
+ * Popula um elemento <select> com uma lista de objetos.
+ * @param {string} idSelect - ID do elemento no HTML
+ * @param {Array} dados - Lista de estados vinda da API (ex: [{uuid: '...', nome: 'Paraná'}])
+ */
+export function preencherSelect(idSelect, dados) {
+    const select = document.getElementById(idSelect);
+    if (!select) return;
+
+    // Preserva apenas a primeira opção (o "Selecione...")
+    select.length = 1; 
+
+    dados.forEach(item => {
+        const option = document.createElement('option');
+        // O value DEVE ser o UUID para bater com o seu banco de dados
+        option.value = item.uuid; 
+        // O texto que o usuário vê
+        option.textContent = item.nome; 
+        select.appendChild(option);
+    });
 }

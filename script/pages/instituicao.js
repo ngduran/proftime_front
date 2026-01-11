@@ -1,8 +1,9 @@
 import { inicializarTooltips } from "../utils/dom-utils.js";
 import { configurarAbrirRelogioAoClicar, navegarPara, 
-         coletarDadosForm, popularFormulario } from "../utils/form-helper.js";
+         coletarDadosForm,
+         preencherSelect} from "../utils/form-helper.js";
 import { validarNome, validarComboBox, validarCampoTime, validarFormulario } from "../utils/validador.js";
-import { cadastrarInstituicao, initialDataInstituicao } from "../services/api_service.js";
+import { cadastrarInstituicao, initialDataInstituicao, listarEstados } from "../services/api_service.js";
 import { executarOperacao } from "../core/api-engine.js"
 import { changeLanguage } from "../utils/i18n.js";
 
@@ -12,110 +13,9 @@ inicializarTooltips();
 configurarAbrirRelogioAoClicar('horarioInicial');
 configurarAbrirRelogioAoClicar('horaAula');
 
-// read();
+//carregarListaInstituicoes();
 
-//-------------------------------------------------------------------------------------------
-// async function salvar() {
-    
-//     if ( !validarFormulario( 'instituicaoForm'                             ) ) { return; }
-//     if ( !validarNome()                                                      ) { return; }
-//     if ( !validarComboBox  ( 'administracao',  'Selecione a administracao' ) ) { return; }
-//     if ( !validarComboBox  ( 'estado',         'Selecione o estado'        ) ) { return; }
-//     if ( !validarComboBox  ( 'cidade',         'Selecione a cidade'        ) ) { return; }
-//     if ( !validarCampoTime ( 'horarioInicial', 'Selecione uma hora válida' ) ) { return; }
-//     if ( !validarCampoTime ( 'horaAula',       'Selecione uma hora válida' ) ) { return; }
-    
-    
-//     try {
-        
-//         bloquearButton('cadastrarBtn', 'Salvando...');
-        
-//         const dados = coletarDadosForm("instituicaoForm");
-
-//         const response = await cadastrarInstituicao(dados);
-
-//         const resultado = response.ok 
-//         ? await lerRespostaSucesso(response) 
-//         : await lerRespostaErro(response);  
-        
-//         if (response.ok) {
-            
-//             if (resultado?.uuid) { SessionManager.salvar("instituicao_id", resultado.uuid); }       
-            
-//             await Mensagem.sucesso("A Instituição foi criada com sucesso!");          
-            
-//             navegarPara("home");            
-            
-//         } else {
-            
-//             const mensagemFinal = typeof resultado === 'object' 
-//                 ? (resultado.message || "Erro no servidor") 
-//                 : resultado;
-                
-//                 await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
-//             }
-            
-//         } catch (error) {
-//         // Se for erro de rede, o fetch lança TypeError. Se for código, é ReferenceError ou similar.
-//         if (error.message.includes("fetch") || error.message.includes("Network")) {
-//             await Mensagem.erro("Conexão", "Não foi possível alcançar o servidor.");
-//         } else {
-//             // Se o Swal falhar, ele mostra o erro do script aqui
-//             alert("Erro no script de Mensagem: " + error.message);
-//         }   
-//     } finally {
-//         desbloquearButton('cadastrarBtn', 'Salvar');
-//     }
-// }
-
-// async function read() {
-    
-//     console.log("Chamando o read a entrar na página");
-    
-//     try {
-        
-//         bloquearButton('cadastrarBtn', 'Consultando...');
-        
-//         const response = await initialDataInstituicao();
-        
-//         const resultado = response.ok 
-//         ? await lerRespostaSucesso(response) 
-//         : await lerRespostaErro(response);
-        
-//         await popularFormulario('instituicaoForm', resultado);
-        
-//         if (response.ok) {
-
-//             if (resultado?.id) { SessionManager.salvar("instituicao_id", resultado.id); }
-            
-//             await Mensagem.sucesso("Os dados foram carregados com sucesso!");          
-
-//             //navegarPara("login");            
-            
-//         } else {
-            
-//             const mensagemFinal = typeof resultado === 'object' 
-//                 ? (resultado.message || "Erro no servidor") 
-//                 : resultado;
-
-//             await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
-//         }
-        
-//     } catch (error) {
-//         // Se for erro de rede, o fetch lança TypeError. Se for código, é ReferenceError ou similar.
-//         if (error.message.includes("fetch") || error.message.includes("Network")) {
-//              await Mensagem.erro("Conexão", "Não foi possível alcançar o servidor.");
-//         } else {
-//              // Se o Swal falhar, ele mostra o erro do script aqui
-//              alert("Erro no script de Mensagem: " + error.message);
-//         }
-//     } finally {
-//         desbloquearButton("cadastrarBtn", "Salvar");
-//     }
-    
-    
-// }
-//-------------------------------------------------------------------------------------------
+readEstados();
 
 
 
@@ -164,13 +64,154 @@ async function salvar() {
     });
 }
 
-async function read() {
+async function readEstados() {
     await executarOperacao({
         idBotao: 'cadastrarBtn',
         textoAguarde: 'Consultando...',
-        apiCall: initialDataInstituicao,
+        apiCall: listarEstados,
         onSuccess: async (resultado) => {
-            await popularFormulario('instituicaoForm', resultado);
-        }
+            preencherSelect('estado', resultado.data);
+        }     
     });
 }
+
+
+// async function read() {
+//     await executarOperacao({
+//         idBotao: 'cadastrarBtn',
+//         textoAguarde: 'Consultando...',
+//         apiCall: listarEstados,
+//         onSuccess: async (resultado) => {
+//             preencherSelect('estado', resultado.data);
+//         }        
+//     });
+// }
+
+
+// async function carregarListaInstituicoes() {
+//     await executarOperacao({
+//         idBotao: 'btnAtualizarTabela', // Um botão de refresh ou o próprio carregamento da página
+//         keyTextoAguarde: 'lbl_carregando',
+//         apiCall: listarInstituicoesApi, // Sua função que faz o fetch GET
+//         onSuccess: (dados) => {
+//             popularTabela('tabelaInstituicoes', dados, (inst) => `
+//                 <tr>
+//                     <td>${inst.nome}</td>
+//                     <td>${inst.cidade}</td>
+//                     <td>${inst.estado}</td>
+//                     <td>
+//                         <button class="btn-action edit" onclick="editar('${inst.uuid}')">
+//                             <i class="fa-solid fa-pen"></i>
+//                         </button>
+//                         <button class="btn-action delete" onclick="excluir('${inst.uuid}')">
+//                             <i class="fa-solid fa-trash"></i>
+//                         </button>
+//                     </td>
+//                 </tr>
+//             `);
+//         }
+//     });
+// }
+
+
+
+// async function carregarDados(pagina) {
+//     // Pegamos os valores dos inputs de filtro da tela
+//     const filtroEstado = document.getElementById('filtroEstado').value;
+//     const filtroCidade = document.getElementById('filtroCidade').value;
+
+//     await executarOperacao({
+//         idBotao: 'btnFiltrar',
+//         keyTextoAguarde: 'lbl_buscando',
+//         // Passamos uma função anônima para a apiCall conseguir receber os parâmetros
+//         apiCall: () => apiFetchGetPaginado(
+//             { path: '/api/instituicoes/listar', method: 'GET' }, 
+//             { 
+//                 estado: filtroEstado, 
+//                 cidade: filtroCidade, 
+//                 page: pagina, 
+//                 size: 10 
+//             }
+//         ),
+//         onSuccess: (resultado) => {
+//             renderizarTabelaInstituicoes(resultado);
+//         }
+//     });
+// }
+
+// async function carregarDados(pagina) {
+//     // Filtros (pegue os IDs dos seus inputs de busca)
+//     const filtroEstado = document.getElementById('inputFiltroEstado')?.value || "";
+//     const filtroCidade = document.getElementById('inputFiltroCidade')?.value || "";
+
+//     await executarOperacao({
+//         idBotao: 'btnFiltrar', // ou algum ID de carregamento
+//         keyTextoAguarde: 'lbl_buscando',
+//         apiCall: () => apiFetchGetPaginado(
+//             { path: '/api/instituicoes/listar', method: 'GET' }, 
+//             { 
+//                 estado: filtroEstado, 
+//                 cidade: filtroCidade, 
+//                 page: pagina, 
+//                 size: 5 // Quantidade por página
+//             }
+//         ),
+//         onSuccess: (resultado) => {
+//             // 1. Atualiza os estados globais
+//             paginaAtual = resultado.number;
+//             totalDePaginas = resultado.totalPages;
+
+//             // 2. Popula a tabela
+//             renderizarTabela(resultado.content);
+
+//             // 3. Atualiza os botões (Habilita/Desabilita)
+//             atualizarControlesPaginacao(resultado);
+//         }
+//     });
+// }
+
+// function atualizarControlesPaginacao(pageData) {
+//     const btnAnterior = document.getElementById('btnAnterior');
+//     const btnProximo = document.getElementById('btnProximo');
+//     const info = document.getElementById('infoPagina');
+
+//     // Atualiza o texto: "Página 1 de 10" (Somamos 1 pois o Java começa em 0)
+//     info.innerText = `Página ${pageData.number + 1} de ${pageData.totalPages || 1}`;
+
+//     // Desabilita botões se não houver para onde ir
+//     btnAnterior.disabled = pageData.first;
+//     btnProximo.disabled = pageData.last;
+
+//     // Adiciona uma classe visual de desabilitado se desejar
+//     btnAnterior.style.opacity = pageData.first ? "0.5" : "1";
+//     btnProximo.style.opacity = pageData.last ? "0.5" : "1";
+// }
+
+// function renderizarTabela(lista) {
+//     popularTabela('tabelaInstituicoes', lista, (inst) => `
+//         <tr>
+//             <td>${inst.nome}</td>
+//             <td>${inst.cidade}</td>
+//             <td>${inst.estado}</td>
+//             <td>
+//                 <button class="btn-action edit" onclick="editar('${inst.uuid}')"><i class="fa-solid fa-pen"></i></button>
+//                 <button class="btn-action delete" onclick="excluir('${inst.uuid}')"><i class="fa-solid fa-trash"></i></button>
+//             </td>
+//         </tr>
+//     `);
+// }
+
+// let paginaAtual = 0;
+// let totalDePaginas = 0;
+
+// // Função chamada pelos botões
+// async function mudarPagina(direcao) {
+//     const novaPagina = paginaAtual + direcao;
+    
+//     // Evita navegar para páginas inexistentes
+//     if (novaPagina >= 0 && novaPagina < totalDePaginas) {
+//         paginaAtual = novaPagina;
+//         await carregarDados(paginaAtual);
+//     }
+// }
+

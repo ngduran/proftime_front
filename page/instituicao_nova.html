@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituição</title>
+    <link rel="stylesheet" href="../asset/style/base/base-form.css">    
+    <link rel="stylesheet" href="../asset/style/base/instituicao.css">    
+    
+    <link rel="stylesheet" href="../asset/style/instituicao_nova.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>    
+    
+
+    <div class="container">
+        <div class="form-card">
+            <h1 class="header-title">Instituição</h1>
+
+            <form id="instituicaoForm" autocomplete="off">
+                <div class="form-grid-container">
+                    
+                    <div class="form-control full-width">
+                        <label for="nome" data-translate="lbl_nome">Nome da Instituição</label>
+                        <div class="input-group">
+                            <input type="text" id="nome" name="nome" data-translate="ph_nome" placeholder="Ex: Escola Estadual XXX">
+                            <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação" data-translate="tp_lbl_nome"></i>
+                            <button type="button" class="edit-button">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="administracao" data-translate="lbl_administracao">Administração</label>                       
+                        <div class="input-group">                        
+                            <select id="administracao" name="administracao" required>
+                                <option value="" data-translate="ph_administracao_op0">Selecione...</option>
+                                <option value="1" data-translate="ph_administracao_op1">Federal</option>
+                                <option value="2" data-translate="ph_administracao_op2">Estadual</option>
+                                <option value="3" data-translate="ph_administracao_op3">Municipal</option>
+                                <option value="4" data-translate="ph_administracao_op4">Público Privada</option>
+                                <option value="5" data-translate="ph_administracao_op5">Particular</option>
+                            </select>
+                            <i class="fa-solid fa-circle-question info-question" data-tooltip="Qual é o tipo da administração?" data-translate="tp_lbl_administracao"></i>
+                            <button type="button" class="edit-button">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>                        
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script type="module" src="../script/pages/instituicao.js"></script> 
+</body>
+</html>

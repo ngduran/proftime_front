@@ -27,45 +27,51 @@
             </div>
             
             <form id="instituicaoForm" autocomplete="off">
-                
-
-                
-                    <label for="instituicao" data-translate="lbl_nome">Nome da Instituição</label>
-                    <div class="input-group">                        
-                        <input type="text" id="nome" name="nome" data-translate="ph_nome" placeholder="Ex: Escola Estadual XXX">
-                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação" data-translate="tp_lbl_nome"></i>                    
-                        <!-- <span class="info-icon" title="Obrigatório"></span> -->
-                        <button type="button" class="edit-button">                        
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </button>
-                    </div>
-                
-                    <label for="administracao" data-translate="lbl_administracao">Administração</label>                       
-                    <div class="input-group">                        
-                        <select id="administracao" name="administracao" required>
-                            <option value=""  data-translate="ph_administracao_op0">Selecione o tipo de Administração</option>
-                            <option value="1" data-translate="ph_administracao_op1">Federal</option>
-                            <option value="2" data-translate="ph_administracao_op2">Estadual</option>
-                            <option value="3" data-translate="ph_administracao_op3">Municipal</option>
-                            <option value="4" data-translate="ph_administracao_op4">Público Privada</option>
-                            <option value="5" data-translate="ph_administracao_op5">Particular</option>
-                        </select>
-                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Qual é o tipo da administração?" data-translate="tp_lbl_administracao"></i>
-                        <!-- <span class="info-icon" title="Obrigatório"></span> -->
-                        <button type="button" class="edit-button">
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </button>                        
-                    </div>
+                                
+                <label for="instituicao" data-translate="lbl_nome">Nome da Instituição</label>
+                <div class="input-group">                        
+                    <input type="text" id="nome" name="nome" data-translate="ph_nome" placeholder="Ex: Escola Estadual XXX">
+                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação" data-translate="tp_lbl_nome"></i>                    
+                    <!-- <span class="info-icon" title="Obrigatório"></span> -->
+                    <button type="button" class="edit-button">                        
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                </div>
+            
+                <label for="administracao" data-translate="lbl_administracao">Administração</label>                       
+                <div class="input-group">                        
+                    <select id="administracao" name="administracao" required>
+                        <option value=""  data-translate="ph_administracao_op0">Selecione o tipo de Administração</option>
+                        <option value="1" data-translate="ph_administracao_op1">Federal</option>
+                        <option value="2" data-translate="ph_administracao_op2">Estadual</option>
+                        <option value="3" data-translate="ph_administracao_op3">Municipal</option>
+                        <option value="4" data-translate="ph_administracao_op4">Público Privada</option>
+                        <option value="5" data-translate="ph_administracao_op5">Particular</option>
+                    </select>
+                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Qual é o tipo da administração?" data-translate="tp_lbl_administracao"></i>
+                    <!-- <span class="info-icon" title="Obrigatório"></span> -->
+                    <button type="button" class="edit-button">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>                        
+                </div>
                
 
                 <label for="estado" data-translate="lbl_estado">Estado (UF)</label>                       
                 <div class="input-group">                        
-                    <select id="estado" name="estado" required>
+                    <!-- <select id="estado" name="estado" required>
                         <option value="" data-translate="ph_estado_op0">Selecione o estado</option>
                         <option value="1">Paraná</option>
                         <option value="2">São Paulo</option>
                         <option value="3">Rio Grande do Sul</option>
+                    </select> -->
+
+
+                    <select id="estado" name="estado" required>
+                        <option value="" data-translate="ph_estado_op0">Selecione o estado</option>
                     </select>
+
+
+
                     <i class="fa-solid fa-circle-question info-question" data-tooltip="Em qual estado fica?" data-translate="tp_lbl_estado"></i>
                     <!-- <span class="info-icon" title="Obrigatório"></span> -->
                     <button type="button" class="edit-button">

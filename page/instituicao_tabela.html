@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituição</title>
+    <link rel="stylesheet" href="../asset/style/base/base-form.css">
+    <link rel="stylesheet" href="../asset/style/instituicao_tabela.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container">
+        <div class="form-card">
+            <h1 class="header-title">Instituição</h1>           
+
+            <div class="language-selector">
+                <button type="button" id="btn-pt" class="lang-btn active">
+                    <img class="icon-flag" src="../asset/icon/bandeira-do-brasil.png" alt="Bandeira do Brasil">
+                </button>
+                <button type="button" id="btn-es" class="lang-btn">
+                     <img class="icon-flag" src="../asset/icon/paraguai.png" alt="Bandeira do Paraguai">
+                </button>       
+            </div>
+            
+            <form id="instituicaoForm" autocomplete="off">
+                <div class="form-grid">
+
+
+                    <div class="container-misto">
+
+                        <div class="form-item flex-80">
+                            <div class="label-container">
+                                <label for="nome" data-translate="lbl_nome">Nome da Instituição</label>
+                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação" data-translate="tp_lbl_nome"></i>
+                            </div>
+                            <div class="input-group">                        
+                                <input type="text" id="nome" name="nome" data-translate="ph_nome" placeholder="Ex: Escola Estadual XXX">
+                                <button type="button" class="edit-button">                        
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+                            </div>
+                        </div>
+    
+    
+                        <div class="form-item">
+                            <div class="label-container">
+                                <label for="horarioInicial" data-translate="lbl_horario_inicial">Horário de Início</label>
+                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Horário inicial das aulas" data-translate="tp_lbl_horario_inicial"></i>                    
+                            </div>
+                            <div class="input-group">
+                                <input type="time" id="horarioInicial" name="horarioInicial" value="07:30">
+                                <button type="button" class="edit-button">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="container-misto">
+                        <div class="form-item flex-80">
+                            <div class="label-container">
+                                <label for="administracao" data-translate="lbl_administracao">Administração</label>                       
+                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Qual é o tipo da administração?" data-translate="tp_lbl_administracao"></i>
+                            </div>
+                            <div class="input-group">                        
+                                <select id="administracao" name="administracao" required>
+                                    <option value="" data-translate="ph_administracao_op0">Selecione...</option>
+                                    <option value="1" data-translate="ph_administracao_op1">Federal</option>
+                                    <option value="2" data-translate="ph_administracao_op2">Estadual</option>
+                                    <option value="3" data-translate="ph_administracao_op3">Municipal</option>
+                                    <option value="4" data-translate="ph_administracao_op4">Público Privada</option>
+                                    <option value="5" data-translate="ph_administracao_op5">Particular</option>
+                                </select>
+                                <button type="button" class="edit-button">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>                        
+                            </div>
+                        </div>
+
+
+                        <div class="form-item">
+                            <div class="label-container">
+                                <label for="horaAula" data-translate="lbl_hora_aula">Duração da Aula</label>
+                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Duração de uma aula" data-translate="tp_lbl_hora_aula"></i>                    
+                            </div>
+                            <div class="input-group">
+                                <input type="time" id="horaAula" name="horaAula" value="00:50">                    
+                                <button type="button" class="edit-button">
+                                   <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+                    <div class="container-regiao">
+                        
+                        <div class="form-item">
+                            <div class="label-container">
+                                <label for="estado" data-translate="lbl_estado">Estado (UF)</label>                       
+                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Em qual estado fica?" data-translate="tp_lbl_estado"></i>
+                            </div>
+                            <div class="input-group">                        
+                                <select id="estado" name="estado" required>
+                                    <option value="" data-translate="ph_estado_op0">Selecione...</option>
+                                    <option value="1">Paraná</option>
+                                    <option value="2">São Paulo</option>
+                                    <option value="3">Rio Grande do Sul</option>
+                                </select>
+                                <button type="button" class="edit-button">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+                            </div>         
+                        </div>
+                        
+                        <div class="form-item">
+                            <div class="label-container">
+                                <label for="cidade" data-translate="lbl_cidade">Cidade</label>                       
+                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Em qual cidade?" data-translate="tp_lbl_cidade"></i>
+                            </div>
+                            <div class="input-group">                        
+                                <select id="cidade" name="cidade" required>
+                                    <option value="" data-translate="ph_cidade_op0">Selecione...</option>
+                                    <option value="1">Cascavel</option>
+                                    <option value="2">Osasco</option>
+                                    <option value="3">Porto Alegre</option>
+                                </select>
+                                <button type="button" class="edit-button">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="button-group horizontal">
+                    <button type="button" id="voltarBtn" class="cta-button secondary" data-translate="lbl_voltarBtn">Voltar</button>
+                    <button type="button" id="cadastrarBtn" class="cta-button" data-translate="lbl_cadastrarBtn">Salvar</button>
+                </div>
+            </form>
+
+            <div class="table-section">
+                <h2 class="table-title" data-translate="lbl_lista_instituicoes">Instituições Cadastradas</h2>
+                <div class="table-wrapper">
+                    <table id="tabelaInstituicoes">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Cidade</th>
+                                <th>Estado</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Escola Adolival Pian</td>
+                                <td>Cascavel</td>
+                                <td>Paraná</td>
+                                <td>
+                                    <button class="btn-action edit"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-action delete"><i class="fa-solid fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination-container">
+                    <button id="btnAnterior" class="btn-pagination" onclick="mudarPagina(-1)">
+                        <i class="fa-solid fa-chevron-left"></i> Anterior
+                    </button>
+                    <span id="infoPagina">Página 1 de 1</span>
+                    <button id="btnProximo" class="btn-pagination" onclick="mudarPagina(1)">
+                        Próximo <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script type="module" src="../script/pages/instituicao.js"></script> 
+</body>
+</html>

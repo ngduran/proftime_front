@@ -1,4 +1,4 @@
-import { lerRespostaSucesso } from "../api/api-client.js";
+import { lerRespostaErro, lerRespostaSucesso } from "../api/api-client.js";
 import { Mensagem } from "../utils/mensageiro.js";
 import { bloquearButton, desbloquearButton } from "../utils/form-helper.js";
 import { SessionManager } from "../utils/session-manager.js";

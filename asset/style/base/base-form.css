@@ -28,7 +28,7 @@ body {
 
 .container {
     width: 100%;
-    max-width: 400px; /* Largura típica para formulários mobile/card */
+    max-width: 400px; /* Largura típica para formulários mobile/card */    
 }
 
 .form-card {
@@ -43,7 +43,7 @@ body {
     font-size: 1.5rem;
     color: var(--color-primary);
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     font-weight: 500;
 }
 
@@ -62,7 +62,7 @@ label:not(.ignore-base) {
     justify-content: flex-start;
     align-items: center;
     position: relative;
-    margin-bottom: 15px;
+    margin-bottom: 4px;
     width: 100%;
 }
 
@@ -287,4 +287,25 @@ input, select {
     justify-content: flex-start;
     align-items: center;
     gap: 10px;   
+}
+
+/* Container para alinhar label e ícone na mesma linha */
+.label-container {
+    display: flex;
+    align-items: center;
+    gap: 2px; /* Espaço entre o texto e a interrogação */
+}
+
+/* Estilo do ícone de interrogação agora ao lado do label */
+.label-container .info-question {
+    margin-top: 10px; /* Compensa o margin-top do label para alinhar verticalmente */
+    color: var(--color-primary);
+    font-size: 0.9rem;
+    cursor: help;
+}
+
+/* Remova o position absolute antigo que jogava ele para dentro do input */
+.info-question {
+    position: static !important; 
+    transform: none !important;
 }

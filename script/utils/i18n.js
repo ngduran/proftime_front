@@ -31,7 +31,7 @@ export const translations = {
         lbl_administracao: "Administração",
         lbl_estado: "Estado (UF)",
         lbl_cidade: "Cidade",
-        lbl_horario_inicial: "Horário de Início das Atividades",
+        lbl_horario_inicial: "Hora de Início",
         lbl_hora_aula: "Hora Aula",
         
         // Placeholders
@@ -77,7 +77,7 @@ export const translations = {
         lbl_administracao: "Administración",
         lbl_estado: "Estado (UF)",
         lbl_cidade: "Ciudad",
-        lbl_horario_inicial: "Hora de inicio de la actividad",
+        lbl_horario_inicial: "Hora de inicio",
         lbl_hora_aula: "Duración estándar de la lección",
         
         // Placeholders

@@ -1,12 +1,13 @@
-//const BASE_URL = "http://127.0.0.1:8080";
-const BASE_URL = "https://959fb2ef6375.ngrok-free.app";
+const BASE_URL = "http://127.0.0.1:8080";
+//const BASE_URL = "https://959fb2ef6375.ngrok-free.app";
 
 const R_USUARIO         = "/usuario";
 const R_CONTA           = "/conta";
 const R_PROFESSOR       = "/professor";
-const R_LOGIN           = "/auth"
+const R_LOGIN           = "/auth";
 const R_GRADE_PROFESSOR = "/grades-professores";
-const R_INSTITUICAO     = "/instituicoes"
+const R_INSTITUICAO     = "/instituicoes";
+const R_ESTADO          = "/estados";
 
 export const API_MAP = {
     BASE_URL: BASE_URL,
@@ -34,6 +35,10 @@ export const API_MAP = {
     INSTITUICAO: {
         CREATE:  { path: `${BASE_URL}${R_INSTITUICAO}/create`, method: 'POST' },
         INITIAL: { path: `${BASE_URL}${R_INSTITUICAO}/initial`, method: 'GET' },
+    },
+
+    ESTADO: {
+        FINDALL:  { path: `${BASE_URL}${R_ESTADO}/find-all`, method: 'GET' },
     }
 
 

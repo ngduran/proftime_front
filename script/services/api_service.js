@@ -20,3 +20,8 @@ export async function cadastrarInstituicao(dados) {
 export async function initialDataInstituicao() {
     return await apiFetchGet(API_MAP.INSTITUICAO.INITIAL);
 }
+
+export async function listarEstados() {
+    return await apiFetchGet(API_MAP.ESTADO.FINDALL);
+
+}
