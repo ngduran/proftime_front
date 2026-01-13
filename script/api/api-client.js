@@ -26,11 +26,31 @@ export async function apiFetchGet(endpoint) {
                 "Content-Type": "application/json",               
                 //"ngrok-skip-browser-warning": "true"
             }
-        });
+        });        
         
-        console.log("-----------------------------------------");
-        console.log(response);
-        console.log("-----------------------------------------");
+        return response;
+        
+    } catch (error) {
+        // O único erro que tratamos é se o fetch falhar (ex: sem internet ou servidor offline)
+        console.error("Erro crítico de rede:", error);
+        throw new Error("Não foi possível conectar ao servidor. Verifique sua conexão.");
+    }
+}
+
+export async function apiFetchGetWithId(endpoint, id, termoBusca) {
+    try {
+
+        //const urlCompleta = `${endpoint.path}?idEstado=${id}`;
+        const urlCompleta = `${endpoint.path}?idEstado=${id}&nome=${termoBusca}`;
+
+        const response = await fetch(urlCompleta, {
+            method: endpoint.method,
+            headers: { 
+                "Content-Type": "application/json",               
+                //"ngrok-skip-browser-warning": "true"
+            }
+        });        
+        
         return response;
         
     } catch (error) {

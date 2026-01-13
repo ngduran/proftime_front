@@ -8,6 +8,7 @@ const R_LOGIN           = "/auth";
 const R_GRADE_PROFESSOR = "/grades-professores";
 const R_INSTITUICAO     = "/instituicoes";
 const R_ESTADO          = "/estados";
+const R_MUNICIPIO       = "/municipios";
 
 export const API_MAP = {
     BASE_URL: BASE_URL,
@@ -39,6 +40,10 @@ export const API_MAP = {
 
     ESTADO: {
         FINDALL:  { path: `${BASE_URL}${R_ESTADO}/find-all`, method: 'GET' },
+    },
+
+    MUNICIPIO: {
+        POR_ESTADO:  { path: `${BASE_URL}${R_MUNICIPIO}/find-estado`, method: 'GET' },
     }
 
 

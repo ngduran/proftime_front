@@ -266,7 +266,9 @@ export function preencherSelect(idSelect, dados) {
     dados.forEach(item => {
         const option = document.createElement('option');
         // O value DEVE ser o UUID para bater com o seu banco de dados
-        option.value = item.uuid; 
+        //option.value = item.uuid; 
+        option.value = item.id; 
+        
         // O texto que o usuário vê
         option.textContent = item.nome; 
         select.appendChild(option);

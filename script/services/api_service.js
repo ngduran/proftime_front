@@ -1,4 +1,4 @@
-import { apiFetch, apiFetchGet } from "../api/api-client.js";
+import { apiFetch, apiFetchGet, apiFetchGetWithId } from "../api/api-client.js";
 import { API_MAP } from "../api/api-config.js";
 
 export async function cadastrarUsuario(dados) {    
@@ -23,5 +23,10 @@ export async function initialDataInstituicao() {
 
 export async function listarEstados() {
     return await apiFetchGet(API_MAP.ESTADO.FINDALL);
+
+}
+
+export async function listarMunicipiosPorEstado(idEstado, termoBusca) {
+    return await apiFetchGetWithId(API_MAP.MUNICIPIO.POR_ESTADO, idEstado, termoBusca);
 
 }

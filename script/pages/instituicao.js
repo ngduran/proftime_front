@@ -3,7 +3,7 @@ import { configurarAbrirRelogioAoClicar, navegarPara,
          coletarDadosForm,
          preencherSelect} from "../utils/form-helper.js";
 import { validarNome, validarComboBox, validarCampoTime, validarFormulario } from "../utils/validador.js";
-import { cadastrarInstituicao, initialDataInstituicao, listarEstados } from "../services/api_service.js";
+import { cadastrarInstituicao, initialDataInstituicao, listarEstados, listarMunicipiosPorEstado } from "../services/api_service.js";
 import { executarOperacao } from "../core/api-engine.js"
 import { changeLanguage } from "../utils/i18n.js";
 
@@ -16,8 +16,7 @@ configurarAbrirRelogioAoClicar('horaAula');
 //carregarListaInstituicoes();
 
 readEstados();
-
-
+// readMuniciposPorEstados();
 
 function voltarAoInicio() {
     navegarPara('home');
@@ -33,6 +32,8 @@ document.getElementById('horaAula'       ).addEventListener('blur', () => { vali
 
 document.getElementById('cadastrarBtn'  ).addEventListener('click', salvar         );
 document.getElementById('voltarBtn'     ).addEventListener('click', voltarAoInicio );
+
+
 
 
 //linguagem
@@ -59,9 +60,9 @@ async function salvar() {
                    validarComboBox('cidade', 'Selecione a cidade') &&
                    validarCampoTime('horarioInicial', 'Selecione uma hora válida') &&
                    validarCampoTime('horaAula', 'Selecione uma hora válida');
-        },
-        onSuccess: () => navegarPara("home")
-    });
+                },
+                onSuccess: () => navegarPara("home")
+            });
 }
 
 async function readEstados() {
@@ -74,6 +75,112 @@ async function readEstados() {
         }     
     });
 }
+
+
+              
+async function readMunicipiosPorEstado(idEstado, termoBusca) {
+    await executarOperacao({
+        idBotao: 'cadastrarBtn',
+        textoAguarde: 'Consultando...',
+        apiCall: listarMunicipiosPorEstado(idEstado, termoBusca),
+        onSuccess: async (resultado) => {
+            preencherSelect('cidade', resultado.data);
+        }     
+    });
+}
+
+// // Captura o elemento select de estado
+// const selectEstado = document.getElementById('estado');
+
+// if (selectEstado) {
+    
+//     selectEstado.addEventListener('change', (event) => {
+//         const idSelecionado = event.target.value;
+        
+//         if (idSelecionado) {
+//             // Chama a busca de municípios passando o ID do estado selecionado
+//             readMunicipiosPorEstado(idSelecionado);
+//         } else {
+//             // Se o usuário voltar para "Selecione o estado", limpamos o combo de cidades
+//             const selectCidade = document.getElementById('cidade');
+//             if (selectCidade) selectCidade.length = 1;
+//         }
+//     });
+// }
+
+// async function readMunicipiosPorEstado(idEstado, termoBusca) {
+//     if (!idEstado) return; // Segurança caso o valor venha vazio
+
+//     await executarOperacao({
+//         idBotao: 'cadastrarBtn',
+//         textoAguarde: 'Consultando cidades...',
+//         // Passamos uma função anônima para injetar o parâmetro idEstado na chamada da API
+//         apiCall: () => listarMunicipiosPorEstado(idEstado, termoBusca), 
+//         onSuccess: async (resultado) => {
+//             //preencherSelect('cidade', resultado.data);
+//             atualizarDatalist('listaMunicipios', resultado.data);
+//         }     
+//     });
+// }
+
+
+document.getElementById('estado').addEventListener('change', async (e) => {
+    debugger;
+
+    const idEstado = document.getElementById('estado').value;
+    if (!idEstado) return; // Segurança caso o valor venha vazio
+
+    const idCidade = document.getElementById('cidade').value;
+
+
+
+    const termoBusca = e.target.value;
+    //const idEstado = document.getElementById('estado').value;
+
+    if (termoBusca.length >= 3 && idEstado) {
+        // Chamamos a função de busca passando o ID do estado e o termo digitado
+        const resultado = await readMunicipiosPorEstado(idEstado, termoBusca);
+        //atualizarDatalist('listaMunicipios', resultado.data);
+    }
+});
+
+function atualizarDatalist(idDatalist, dados) {
+    const list = document.getElementById(idDatalist);
+    list.innerHTML = ""; // Limpa as sugestões anteriores
+    
+    dados.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item.nome; // O que o usuário vê e seleciona
+        option.dataset.id = item.uuid; // Guardamos o ID real
+        list.appendChild(option);
+    });
+}
+
+
+
+
+// PARA ESCUTAR O COMPONENTE SELECT ESTADO
+const selectEstadoComp = document.querySelector('select-estado');
+
+// Escutando o "grito" do componente
+selectEstadoComp.addEventListener('estado-selecionado', (e) => {
+    const id = e.detail.id;
+    console.log("Opa! O usuário escolheu o estado:", id);
+
+    // Agora você chama sua função de busca de municípios passando o ID
+    if (id) {
+        // Ex: sua função que preenche o datalist ou a lista customizada
+        atualizarListaMunicipios(id);
+    }
+});
+
+
+
+
+
+
+
+
 
 
 // async function read() {
