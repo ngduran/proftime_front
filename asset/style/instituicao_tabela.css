@@ -212,15 +212,7 @@ instituicao-input {
     margin-top: 20px;
 }
 
-/* Estilo para o botão "Voltar" não competir com o "Salvar" */
-.cta-button.secondary {
-    background-color: var(--color-border);
-    color: var(--color-text-dark);
-}
 
-.cta-button.secondary:hover {
-    background-color: #aeb0b5;
-}
 
 /* --- Estilos Originais Mantidos/Ajustados --- */
 
@@ -264,6 +256,40 @@ instituicao-input {
 .edit-button:active {
     transform: translateY(-50%) scale(0.95);
 }
+
+
+/* Botão CTA (Call to Action) */
+.cta-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-primary); /* Cor Principal: Azul Escuro */     
+     
+    color: var(--color-accent);  /* Texto do botão: Amarelo Ouro (Alto Contraste) */ 
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.cta-button:hover {
+    /* Levemente mais escuro ou opaco no hover */
+    background-color: #0A2A6E; /* Um tom mais escuro de azul da sua paleta */
+}
+
+.cta-button:active {
+    opacity: 0.9;
+}
+
+
+
+
+
+
+
+
+
 
 /* --- Tabela --- */
 .table-section {
