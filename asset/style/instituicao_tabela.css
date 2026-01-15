@@ -19,6 +19,29 @@ input[type="time"] {
     cursor: pointer !important;
 }
 
+/* No seu arquivo instituicao.css ou similar */
+.container-regiao {
+    display: flex;
+    flex-flow: row wrap !important;
+    gap: 20px; 
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Alvo: Seus componentes customizados */
+instituicao-input, estado-select, administracao-select, municipio-select {
+    /* (100% / 2) - metade do gap (10px) */
+    flex: 1 1 calc(50% - 10px); 
+    min-width: 300px; /* Garante que em telas pequenas eles empilhem */
+    display: block !important;
+    min-height: 85px; /* Reserva o espaço vertical para não pular */
+}
+
+
+
+
+
 /* Garante que o container tenha espaço e não esconda o menu */
 /* .input-group {    
     overflow: visible !important; 
@@ -136,24 +159,6 @@ input[type="time"] {
 
 
 
-/* No seu arquivo instituicao.css ou similar */
-.container-regiao {
-    display: flex;
-    flex-flow: row wrap !important;
-    gap: 20px; 
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-}
-
-/* Alvo: Seus componentes customizados */
-instituicao-input, estado-select, administracao-select, cidade-select {
-    /* (100% / 2) - metade do gap (10px) */
-    flex: 1 1 calc(50% - 10px); 
-    min-width: 300px; /* Garante que em telas pequenas eles empilhem */
-    display: block !important;
-    min-height: 85px; /* Reserva o espaço vertical para não pular */
-}
 
 /* Isso garante que o componente ocupe todo o espaço da div .flex-80 */
 instituicao-input {

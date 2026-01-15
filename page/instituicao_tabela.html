@@ -30,7 +30,7 @@
                     <div class="container-misto">                   
 
                         <div class="form-item flex-80">
-                            <instituicao-input 
+                            <instituicao-field 
                                     label                  = "Nome da Instituição" 
                                     data-translate_label   = "lbl_nome"
                                     id                     = "nome"
@@ -41,13 +41,14 @@
                                     data-translate-tooltip = "tp_lbl_nome"
                                     placeholder            = "Ex: Escola Estadual XXX"
                                     icon-edicao            = "fa-regular fa-pen-to-square"
-                                    required>
-                            </instituicao-input>                            
+                                    required
+                            >
+                            </instituicao-field>                     
                             
                         </div>
                         
                         <div class="form-item">
-                            <hora-inicio-input
+                            <hora-inicio-field
                                 label = "Hora Início"
                                 data-translate_label   = "lbl_horario_inicial"
                                 id                     = "horarioInicial"
@@ -57,7 +58,7 @@
                                 data-translate-tooltip = "tp_lbl_horario_inicial"                                
                                 icon-edicao            = "fa-regular fa-pen-to-square"
                                 required>
-                            </hora-inicio-input>
+                            </hora-inicio-field>
 
                         </div>
 
@@ -66,30 +67,26 @@
 
 
                     <div class="container-misto">
-                        <div class="form-item flex-80">
-                            
-                            
-                            <div class="label-container">
-                                <label for="administracao" data-translate="lbl_administracao">Administração</label>                       
-                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Qual é o tipo da administração?" data-translate="tp_lbl_administracao"></i>
-                            </div>  
-                            <div class="input-group">                        
-                                <select id="administracao" name="administracao" required>
-                                    <option value="" data-translate="ph_administracao_op0">Selecione...</option>
-                                    <option value="1" data-translate="ph_administracao_op1">Federal</option>
-                                    <option value="2" data-translate="ph_administracao_op2">Estadual</option>
-                                    <option value="3" data-translate="ph_administracao_op3">Municipal</option>
-                                    <option value="4" data-translate="ph_administracao_op4">Público Privada</option>
-                                    <option value="5" data-translate="ph_administracao_op5">Particular</option>
-                                </select>
-                                <button type="button" class="edit-button">
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                </button>                        
-                            </div>
+                        <div class="form-item flex-80">     
+
+                            <administracao-select                        
+                                label="Administração" 
+                                data-translate_label="lbl_administracao"
+                                id="administracao"    
+                                name="administracao"
+                                data-translate_op="ph_administracao_op0"                   
+                                icon-question="fa-solid fa-circle-question info-question"
+                                data-tooltip_balao="Qual é o tipo da administração?"
+                                data-translate-tooltip="tp_lbl_administracao"
+                                button-edicao="fa-regular fa-pen-to-square"
+                                required>
+                            </administracao-select>
+                        
+                        
                         </div>
 
 
-                        <div class="form-item">
+                        <!-- <div class="form-item">
                             <div class="label-container">
                                 <label for="horaAula" data-translate="lbl_hora_aula">Duração da Aula</label>
                                 <i class="fa-solid fa-circle-question info-question" data-tooltip="Duração de uma aula" data-translate="tp_lbl_hora_aula"></i>                    
@@ -100,7 +97,20 @@
                                    <i class="fa-regular fa-pen-to-square"></i>
                                 </button>
                             </div>
-                        </div>
+                        </div> -->
+
+
+                        <hora-aula-time                        
+                                label = "Hora Aula"
+                                data-translate_label   = "lbl_hora_aula"
+                                id                     = "horaAula"
+                                name                   = "horaAula" 
+                                icon-question          = "fa-solid fa-circle-question info-question"                                
+                                data-tooltip_balao     = "Duração de uma aula"
+                                data-translate-tooltip = "tp_lbl_hora_aula"                                
+                                icon-edicao            = "fa-regular fa-pen-to-square"
+                                required>
+                            </hora-aula-time>
 
 
 
@@ -120,7 +130,7 @@
                             required>
                         </estado-select>
 
-                         <estado-select 
+                         <municipio-select 
                             label="Cidade" data-translate_label="lbl_cidade"
                             id="cidade"         name_select="cidade"
                             data-translate_op="ph_estado_op0"                   
@@ -129,7 +139,7 @@
                             data-translate-tooltip="tp_lbl_cidade"
                             button-edicao="fa-regular fa-pen-to-square"
                             required>
-                        </estado-select>
+                        </municipio-select>
                     </div>
                     <!-- **************************************************************************** -->
 
@@ -184,9 +194,11 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-    <script type="module" src="../script/pages/instituicao.js"></script>
-    <script type="module" src="../script/components/form/EstadoSelect.js"></script>
-    <script type="module" src="../script/components/form/InstituicaoInput.js"></script> 
-    <script type="module" src="../script/components/form/HoraInicioInput.js"></script> 
+    <script type="module" src="../script/components/form/Instituicao_Field.js"></script> 
+    <script type="module" src="../script/components/form/Hora_Inicio_Field.js"></script>
+    <script type="module" src="../script/components/form/Administracao_Field.js"></script>
+    <script type="module" src="../script/components/form/Hora_Aula_Time.js"></script>
+    <script type="module" src="../script/components/form/Estado_Select.js"></script>
+    <script type="module" src="../script/components/form/Municipio_Field.js"></script> 
 </body>
 </html>

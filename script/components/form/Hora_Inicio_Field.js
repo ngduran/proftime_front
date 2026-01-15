@@ -1,12 +1,12 @@
-import { BaseInput } from '../base/BaseInput.js';
+import { Base_Input } from '../base/Base_Input.js';
 
-class HoraInicioInput extends BaseInput {
+class Hora_Inicio_Field extends Base_Input {
     constructor() {
         super(); 
     }
     
     connectedCallback() {
-        this.render();
+        //this.render();
         // super.connectedCallback();
     }
 
@@ -32,7 +32,7 @@ class HoraInicioInput extends BaseInput {
                 <i class="${icon_question}" data-tooltip="${data_tooltip_balao}" data-translate="${data_translate_tooltip}" ></i>
             </div>
             <div class="input-group">
-                <input type="time" id="${id}" name="${name}">
+                <input type="time" id="${id}" name="${name}" ${isRequired}>
                 <button type="button" class="edit-button">
                     <i class="${icon_edicao}"></i>
                 </button>
@@ -42,4 +42,4 @@ class HoraInicioInput extends BaseInput {
    
 }
 
-customElements.define('hora-inicio-input', HoraInicioInput);
+customElements.define('hora-inicio-field', Hora_Inicio_Field);

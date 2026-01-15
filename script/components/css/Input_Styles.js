@@ -1,6 +1,6 @@
-export const selectCss = new CSSStyleSheet();
+export const fieldCss = new CSSStyleSheet();
 
-selectCss.replaceSync(`
+fieldCss.replaceSync(`
 
     /* ===== 1 =====*/
     .input-group {
@@ -103,79 +103,17 @@ selectCss.replaceSync(`
         margin-top: 15px;      /* Espaço superior do bloco */
         margin-bottom: 5px;    /* Espaço entre o rótulo e o campo de input/select */
     }
-
-    //  .label-container {
-    //     position: relative; 
-    //     display: flex;
-    //     align-items: center;
-    //     gap: 5px;
-    // }
-
-    // .info-question {
-    //     color: var(--color-primary);
-    //     font-size: 0.9rem;          
-    // }
-
-    .info-question {
-        
+  
+    .info-question {        
         color: var(--color-primary);
         position: relative;
     }
-
 
     .edit-button svg {
         width: 16px;
         height: 16px;
     }
-
-    .tooltip-container {
-        /* Posicionamento e Fluxo */
-        position: absolute;
-        bottom: 20%;
         
-        //margin-bottom: 10px;
-        z-index: 1000;
-        left: 50%;
-
-        /* Dimensões e Alinhamento de Texto */
-        width: max-content;
-        max-width: 180px;
-        text-align: center;
-        line-height: 1.4;
-
-        /* Estilização Visual (Cores e Bordas) */
-        background-color: #444;
-        color: #fff;
-        padding: 10px 15px;
-        border-radius: 12px 12px 12px 12px; 
-        font-size: 13px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    }
-
-    // /* O estado visível corrige o transform para o lugar original */
-    // .tooltip-container.visible {
-    //     opacity: 1;
-    //     transform: translateX(-50%) translateY(0);
-    // }
-
-    // /* Triângulo (Seta) do balão */
-    // .tooltip-container::after {
-    //     content: "";
-    //     position: absolute;
-    //     top: 100%; /* Na parte de baixo do balão */
-    //     left: 50%;
-    //     margin-left: -5px;
-    //     border-width: 5px;
-    //     border-style: solid;
-    //     border-color: #333 transparent transparent transparent;
-    // }
-
-    //   /* Adicione isso para garantir que o texto venha do atributo traduzido */
-    // .tooltip-container::before {
-    //     content: attr(data-tooltip); 
-    //     display: block;
-    // }
-
 `);
 
 /* @description: Reset de UI nativa e padronização do box model para elementos select.

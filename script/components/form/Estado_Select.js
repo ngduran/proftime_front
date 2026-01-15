@@ -2,16 +2,20 @@ import { executarOperacao } from '../../core/api-engine.js';
 import { listarEstados } from '../../services/api_service.js';
 
 import { validarComboBox } from '../../utils/validador.js';
-import { BaseSelect } from '../base/BaseSelect.js';
+import { Base_Select } from '../base/Base_Select.js';
 
 
-class EstadoSelect extends BaseSelect {
+class Estado_Select extends Base_Select {
     
     constructor() {
-        super();
-    
+        super();  
     }
     
+    connectedCallback() {   
+        super.render(); 
+        super.setupBase(); 
+    }
+
     configurarValidacao() {
         const select = this.shadowRoot.getElementById('main-select');    
         select.addEventListener('blur', () => {
@@ -62,4 +66,4 @@ class EstadoSelect extends BaseSelect {
 
 }
 
-customElements.define('estado-select', EstadoSelect);
+customElements.define('estado-select', Estado_Select);
