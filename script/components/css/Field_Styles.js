@@ -66,15 +66,13 @@ fieldCss.replaceSync(`
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background-color 0.2s;
-        
+        transition: background-color 0.2s;        
     }
 
     /* ===== 6 =====*/
     .edit-button:hover {    
         background-color: var(--color-primary);
         color: var(--color-accent);
-
     }
 
     /* ===== 7 =====*/

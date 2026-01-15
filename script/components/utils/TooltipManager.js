@@ -30,11 +30,11 @@ export const TooltipManager = {
     },
 
     hide(icon, shadowRoot) {
-        const container = icon.closest('.label-container');
-        const tooltip = container?.querySelector('.tooltip-container');
-        if (tooltip) {
-            tooltip.classList.remove('visible');
-            setTimeout(() => tooltip.remove(), 300);
-        }
+        // const container = icon.closest('.label-container');
+        // const tooltip = container?.querySelector('.tooltip-container');
+        // if (tooltip) {
+        //     tooltip.classList.remove('visible');
+        //     setTimeout(() => tooltip.remove(), 300);
+        // }
     }
 };

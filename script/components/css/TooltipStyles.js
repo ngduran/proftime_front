@@ -9,10 +9,18 @@ tooltipCss.replaceSync(`
         left: 50%;
         
         /* Dimensões e Alinhamento de Texto */
-        width: max-content;
-        max-width: 180px;
+        /* Ajuste Dinâmico de Tamanho */
+        width: max-content;         /* Tenta ocupar a largura do texto */
+        max-width: 250px;           /* Limite máximo para não virar uma linha infinita */
+        min-width: 50px;            /* Garante um tamanho mínimo estético */
+        white-space: normal;        /* Permite quebra de linha se atingir o max-width */
+        word-wrap: break-word;      /* Quebra palavras longas se necessário */
+        
+        
         text-align: center;
         line-height: 1.4;
+        //white-space: nowrap; /* Evita quebra de linha que deforma o balão */
+
 
         /* Estilização Visual (Cores e Bordas) */
         background-color: #444;
@@ -25,7 +33,6 @@ tooltipCss.replaceSync(`
         opacity: 0;
         pointer-events: none;
         transition: all 0.3s ease;
-        white-space: nowrap; /* Evita quebra de linha que deforma o balão */
     }
 
     /* O estado visível corrige o transform para o lugar original */
