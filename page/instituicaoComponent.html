@@ -28,7 +28,7 @@
             
             <form id="instituicaoForm" autocomplete="off">
                                 
-                <label for="instituicao" data-translate="lbl_nome">Nome da Instituição</label>
+                <label for="nome" data-translate="lbl_nome">Nome da Instituição</label>
                 <div class="input-group">                        
                     <input type="text" id="nome" name="nome" data-translate="ph_nome" placeholder="Ex: Escola Estadual XXX">
                     <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação" data-translate="tp_lbl_nome"></i>                    
@@ -53,31 +53,19 @@
                     <button type="button" class="edit-button">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </button>                        
-                </div>
-               
-
-                <!-- <label for="estado" data-translate="lbl_estado">Estado (UF)</label>                       
-                <div class="input-group"> 
-                    <select id="estado" name="estado" required>
-                        <option value="" data-translate="ph_estado_op0">Selecione o estado</option>
-                    </select>
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Em qual estado fica?" data-translate="tp_lbl_estado"></i>                    
-                    <button type="button" class="edit-button">
-                        <i class="fa-regular fa-pen-to-square"></i>
-                    </button>
-                </div>     -->
+                </div>             
                 
-                <select-estado>Estado (UF)</select-estado>
-
-
-
-
-
-
-
-
-
-
+                <estado-select 
+                    label="Estado (UF)" data-translate_label="lbl_estado"
+                    id="estado"         name_select="estado"
+                    data-translate_op="ph_estado_op0"                   
+                    icon-question="fa-solid fa-circle-question info-question"
+                    data-tooltip_balao="Em qual estado fica?"
+                    data-translate-tooltip="tp_lbl_estado"
+                    button-edicao="fa-regular fa-pen-to-square"
+                    required>
+                </estado-select>
+                
                 
                 <label for="cidade" data-translate="lbl_cidade">Cidade</label>                       
                 <div class="input-group">                        
@@ -108,7 +96,7 @@
 
 
 
-                <label for="horarioInicial" data-translate="lbl_horario_inicial">Horário de Início das Atividades</label>
+                <label for="horarioInicial" data-translate="lbl_horario_inicial">Hora de Início</label>
                 <div class="input-group">
                     <input type="time" id="horarioInicial" name="horarioInicial" value="07:30">
                     <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe o horário inicial das aulas" data-translate="tp_lbl_horario_inicial"></i>                    
@@ -118,7 +106,7 @@
                     </button>
                 </div>
 
-                <label for="horaAula" data-translate="lbl_hora_aula">Duração Padrão da Aula</label>
+                <label for="horaAula" data-translate="lbl_hora_aula">Hora Aula</label>
                 <div class="input-group">
                     <input type="time" id="horaAula" name="horaAula" value="00:50">                    
                     <i class="fa-solid fa-circle-question info-question" data-tooltip="Informe a duração de uma aula" data-translate="tp_lbl_hora_aula"></i>                    
@@ -138,6 +126,6 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script type="module" src="../script/pages/instituicao.js"></script> 
-    <script type="module" src="./components/SelectEstado.js"></script>
+    <script type="module" src="../script/components/EstadoSelect.js"></script>
 </body>
 </html>

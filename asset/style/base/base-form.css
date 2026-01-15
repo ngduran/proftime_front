@@ -48,53 +48,53 @@ body {
 }
 
 /* Labels e Inputs */
-label:not(.ignore-base) {
+/* label:not(.ignore-base) {
     display: block;
     font-size: 0.85rem;
     font-weight: 500;
     color: var(--color-text-dark);
     margin-top: 15px;
     margin-bottom: 5px;
-}
+} */
 
-.input-group:not(.ignore-base) {
+/* .input-group:not(.ignore-base) {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     position: relative;
     margin-bottom: 4px;
     width: 100%;
-}
+} */
 
-input, select {
+/* input, select {
     width: 100%;
     padding: 10px;
     border: 1px solid var(--color-border);
     border-radius: 6px;
-}
+} */
 
 
 /* Mantenha o vermelho assim para comparar o peso */
-.input-group input.invalid,
+/* .input-group input.invalid,
 .input-group select.invalid {
     border: 1px solid #ff4d4d !important;
     outline: none;
-    background-color: #fffafa; /* Um fundinho avermelhado leve opcional */
-}
+    background-color: #fffafa;
+} */
 
 
 
 /* Ajuste para garantir que o verde apareça */
-.input-group input.valid,
+/* .input-group input.valid,
 .input-group select.valid {
     border: 1px solid #28a745 !important; 
     background-color: #f8fff9 !important;
     outline: none;
-}
+} */
 
-.input-group input {
+/* .input-group input {
     width: 100%;
-    padding: 12px 40px 12px 15px; /* Espaço para o ícone de informação */
+    padding: 12px 40px 12px 15px;
     //border: 1px solid var(--color-border);
     border: 1px solid var(--color-accent);
     border-radius: 8px;
@@ -102,11 +102,11 @@ input, select {
     color: var(--color-text-dark);
     background-color: var(--color-input-bg);
     transition: border-color 0.2s, box-shadow 0.2s;
-}
+} */
 
-.input-group select {
+/* .input-group select {
     width: 100%;
-    padding: 12px 40px 12px 15px; /* Espaço para o ícone de informação */
+    padding: 12px 40px 12px 15px; 
     //border: 1px solid var(--color-border);
     border: 1px solid var(--color-accent);
     border-radius: 8px;
@@ -114,20 +114,20 @@ input, select {
     color: var(--color-text-dark);
     background-color: var(--color-input-bg);
     transition: border-color 0.2s, box-shadow 0.2s;
-}
+} */
 
 /* Efeito de Foco Aplicando a Cor de Destaque */
-.input-group input:focus {
-    border-color: var(--color-accent); /* Borda fica Ouro */
+/* .input-group input:focus {
+    border-color: var(--color-accent);
     box-shadow: 0 0 0 2px rgba(175, 126, 23, 0.2);
     outline: none;
-}
+} */
 
-.input-group select:focus {
-    border-color: var(--color-accent); /* Borda fica Ouro */
+/* .input-group select:focus {
+    border-color: var(--color-accent);
     box-shadow: 0 0 0 2px rgba(175, 126, 23, 0.2);
     outline: none;
-}
+} */
 
 
 .info-icon {
@@ -174,7 +174,7 @@ input, select {
     border-color: var(--color-primary);
 }
 
-.checkbox-group label {
+.checkbox-group label {;
     margin: 0;
     font-weight: 400;
 }
@@ -213,54 +213,7 @@ input, select {
     color: #ff4d4d;
 }
 
-.tooltip-container {
-    position: absolute;
-    background-color: #444;
-    color: #fff;
-    padding: 10px 15px;
-    /* Canto arredondado invertido para a ponta do balão */
-    border-radius: 12px 12px 0px 12px; 
-    font-size: 13px;
-    line-height: 1.4;
-    z-index: 1000;
-    width: max-content;
-    max-width: 180px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    
-    /* Posicionamento inicial acima do ícone */
-    bottom: 100%; 
-    right: 0;
-    margin-bottom: 10px;
-    
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    transform: translateY(10px);
-}
 
-/* Adicione isso para garantir que o texto venha do atributo traduzido */
-.tooltip-container::before {
-    content: attr(data-tooltip); 
-    display: block;
-}
-
-.tooltip-container.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-/* Pequena seta para o balão */
-.tooltip-container::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    right: 5px;
-    border-width: 8px;
-    border-style: solid;
-    border-color: #444 transparent transparent transparent;
-}
 
 /* =======================================================
  * NOVO: MEDIA QUERY (RESPONSIVIDADE)
@@ -290,22 +243,22 @@ input, select {
 }
 
 /* Container para alinhar label e ícone na mesma linha */
-.label-container {
+/* .label-container {
     display: flex;
     align-items: center;
-    gap: 2px; /* Espaço entre o texto e a interrogação */
-}
+    gap: 2px; 
+} */
 
 /* Estilo do ícone de interrogação agora ao lado do label */
-.label-container .info-question {
-    margin-top: 10px; /* Compensa o margin-top do label para alinhar verticalmente */
+/* .label-container .info-question {
+    margin-top: 10px; 
     color: var(--color-primary);
     font-size: 0.9rem;
     cursor: help;
-}
+} */
 
 /* Remova o position absolute antigo que jogava ele para dentro do input */
-.info-question {
+/* .info-question {
     position: static !important; 
     transform: none !important;
-}
+} */

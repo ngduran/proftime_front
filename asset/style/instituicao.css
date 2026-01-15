@@ -102,3 +102,12 @@ input[type="time"] {
     width: 24px;
     height: 24px;
 }
+
+/* No seu arquivo .css principal */
+estado-select:not(:defined) {
+    display: block;
+    height: 78px; 
+    opacity: 0;
+}
+
+/* estado-select { contain: initial; display: block; height: 100px; } */

@@ -27,33 +27,38 @@
                 <div class="form-grid">
 
 
-                    <div class="container-misto">
+                    <div class="container-misto">                   
 
                         <div class="form-item flex-80">
-                            <div class="label-container">
-                                <label for="nome" data-translate="lbl_nome">Nome da Instituição</label>
-                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação" data-translate="tp_lbl_nome"></i>
-                            </div>
-                            <div class="input-group">                        
-                                <input type="text" id="nome" name="nome" data-translate="ph_nome" placeholder="Ex: Escola Estadual XXX">
-                                <button type="button" class="edit-button">                        
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                </button>
-                            </div>
+                            <instituicao-input 
+                                    label                  = "Nome da Instituição" 
+                                    data-translate_label   = "lbl_nome"
+                                    id                     = "nome"
+                                    name                   = "nome"                                
+                                    icon-question          = "fa-solid fa-circle-question info-question"
+                                    data-translate_ph      = "ph_nome"
+                                    data-tooltip_balao     = "Nome utilizado para identificação"
+                                    data-translate-tooltip = "tp_lbl_nome"
+                                    placeholder            = "Ex: Escola Estadual XXX"
+                                    icon-edicao            = "fa-regular fa-pen-to-square"
+                                    required>
+                            </instituicao-input>                            
+                            
                         </div>
-    
-    
+                        
                         <div class="form-item">
-                            <div class="label-container">
-                                <label for="horarioInicial" data-translate="lbl_horario_inicial">Horário de Início</label>
-                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Horário inicial das aulas" data-translate="tp_lbl_horario_inicial"></i>                    
-                            </div>
-                            <div class="input-group">
-                                <input type="time" id="horarioInicial" name="horarioInicial" value="07:30">
-                                <button type="button" class="edit-button">
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                </button>
-                            </div>
+                            <hora-inicio-input
+                                label = "Hora Início"
+                                data-translate_label   = "lbl_horario_inicial"
+                                id                     = "horarioInicial"
+                                name                   = "horarioInicial" 
+                                icon-question          = "fa-solid fa-circle-question info-question"                                
+                                data-tooltip_balao     = "Horário inicial das aulas"
+                                data-translate-tooltip = "tp_lbl_horario_inicial"                                
+                                icon-edicao            = "fa-regular fa-pen-to-square"
+                                required>
+                            </hora-inicio-input>
+
                         </div>
 
 
@@ -62,10 +67,12 @@
 
                     <div class="container-misto">
                         <div class="form-item flex-80">
+                            
+                            
                             <div class="label-container">
                                 <label for="administracao" data-translate="lbl_administracao">Administração</label>                       
                                 <i class="fa-solid fa-circle-question info-question" data-tooltip="Qual é o tipo da administração?" data-translate="tp_lbl_administracao"></i>
-                            </div>
+                            </div>  
                             <div class="input-group">                        
                                 <select id="administracao" name="administracao" required>
                                     <option value="" data-translate="ph_administracao_op0">Selecione...</option>
@@ -100,46 +107,31 @@
                     </div>
 
 
+                    <!-- ******************************************************************** -->
+                    <div class="container-regiao">   
+                        <estado-select 
+                            label="Estado (UF)" data-translate_label="lbl_estado"
+                            id="estado"         name_select="estado"
+                            data-translate_op="ph_estado_op0"                   
+                            icon-question="fa-solid fa-circle-question info-question"
+                            data-tooltip_balao="Em qual estado fica?"
+                            data-translate-tooltip="tp_lbl_estado"
+                            button-edicao="fa-regular fa-pen-to-square"
+                            required>
+                        </estado-select>
 
-                    <div class="container-regiao">
-                        
-                        <div class="form-item">
-                            <div class="label-container">
-                                <label for="estado" data-translate="lbl_estado">Estado (UF)</label>                       
-                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Em qual estado fica?" data-translate="tp_lbl_estado"></i>
-                            </div>
-                            <div class="input-group">                        
-                                <select id="estado" name="estado" required>
-                                    <option value="" data-translate="ph_estado_op0">Selecione...</option>
-                                    <option value="1">Paraná</option>
-                                    <option value="2">São Paulo</option>
-                                    <option value="3">Rio Grande do Sul</option>
-                                </select>
-                                <button type="button" class="edit-button">
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                </button>
-                            </div>         
-                        </div>
-                        
-                        <div class="form-item">
-                            <div class="label-container">
-                                <label for="cidade" data-translate="lbl_cidade">Cidade</label>                       
-                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Em qual cidade?" data-translate="tp_lbl_cidade"></i>
-                            </div>
-                            <div class="input-group">                        
-                                <select id="cidade" name="cidade" required>
-                                    <option value="" data-translate="ph_cidade_op0">Selecione...</option>
-                                    <option value="1">Cascavel</option>
-                                    <option value="2">Osasco</option>
-                                    <option value="3">Porto Alegre</option>
-                                </select>
-                                <button type="button" class="edit-button">
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                </button>
-                            </div>
-                        </div>
+                         <estado-select 
+                            label="Cidade" data-translate_label="lbl_cidade"
+                            id="cidade"         name_select="cidade"
+                            data-translate_op="ph_estado_op0"                   
+                            icon-question="fa-solid fa-circle-question info-question"
+                            data-tooltip_balao="Em qual cidade?"
+                            data-translate-tooltip="tp_lbl_cidade"
+                            button-edicao="fa-regular fa-pen-to-square"
+                            required>
+                        </estado-select>
                     </div>
-
+                    <!-- **************************************************************************** -->
 
                 </div>
 
@@ -192,6 +184,9 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-    <script type="module" src="../script/pages/instituicao.js"></script> 
+    <script type="module" src="../script/pages/instituicao.js"></script>
+    <script type="module" src="../script/components/form/EstadoSelect.js"></script>
+    <script type="module" src="../script/components/form/InstituicaoInput.js"></script> 
+    <script type="module" src="../script/components/form/HoraInicioInput.js"></script> 
 </body>
 </html>

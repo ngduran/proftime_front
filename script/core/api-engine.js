@@ -29,6 +29,7 @@ export async function executarOperacao({
 
         // Busca a tradução dinamicamente
         bloquearButton(idBotao, getTranslation(keyTextoAguarde));
+       
 
         // 2. Chamada da API
         const response = await apiCall(dados);

@@ -1,11 +1,45 @@
+const CONFIG_NGROK = {
+    usarNgrok: true // Altere para false quando não quiser mais o header
+};
+
+function obterHeadersBase() {
+    const headers = {
+        "Content-Type": "application/json"
+    };
+
+    // Adiciona o header do ngrok apenas se a configuração global for true
+    if (CONFIG_NGROK.usarNgrok) {
+        headers["ngrok-skip-browser-warning"] = "true";
+    }
+
+    return headers;
+}
+
+// export async function apiFetch(endpoint, dados) {
+//     try {
+//         const response = await fetch(endpoint.path, {
+//             method: endpoint.method,
+//             headers: { 
+//                 "Content-Type": "application/json",               
+//                 "ngrok-skip-browser-warning": "true"
+//             },
+//             body: JSON.stringify(dados)
+//         });
+      
+//         return response;
+        
+//     } catch (error) {
+//         // O único erro que tratamos é se o fetch falhar (ex: sem internet ou servidor offline)
+//         console.error("Erro crítico de rede:", error);
+//         throw new Error("Não foi possível conectar ao servidor. Verifique sua conexão.");
+//     }
+// }
+
 export async function apiFetch(endpoint, dados) {
     try {
         const response = await fetch(endpoint.path, {
             method: endpoint.method,
-            headers: { 
-                "Content-Type": "application/json",               
-                //"ngrok-skip-browser-warning": "true"
-            },
+            headers: obterHeadersBase(),
             body: JSON.stringify(dados)
         });
       
@@ -22,10 +56,7 @@ export async function apiFetchGet(endpoint) {
     try {
         const response = await fetch(endpoint.path, {
             method: endpoint.method,
-            headers: { 
-                "Content-Type": "application/json",               
-                //"ngrok-skip-browser-warning": "true"
-            }
+            headers: obterHeadersBase()
         });        
         
         return response;
@@ -45,10 +76,7 @@ export async function apiFetchGetWithId(endpoint, id, termoBusca) {
 
         const response = await fetch(urlCompleta, {
             method: endpoint.method,
-            headers: { 
-                "Content-Type": "application/json",               
-                //"ngrok-skip-browser-warning": "true"
-            }
+            headers: obterHeadersBase()
         });        
         
         return response;
@@ -68,7 +96,7 @@ export async function apiFetchGetPaginado(endpoint, filtros = {}) {
 
         const response = await fetch(urlCompleta, {
             method: endpoint.method, // GET
-            headers: { "Content-Type": "application/json" }
+            headers: obterHeadersBase()
         });
 
         return response;

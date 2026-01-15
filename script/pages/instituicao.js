@@ -8,14 +8,14 @@ import { executarOperacao } from "../core/api-engine.js"
 import { changeLanguage } from "../utils/i18n.js";
 
 
-inicializarTooltips();
+//inicializarTooltips();
 
 configurarAbrirRelogioAoClicar('horarioInicial');
 configurarAbrirRelogioAoClicar('horaAula');
 
 //carregarListaInstituicoes();
 
-readEstados();
+//readEstados();
 // readMuniciposPorEstados();
 
 function voltarAoInicio() {
@@ -25,9 +25,9 @@ function voltarAoInicio() {
 // Validação em tempo real ao sair do campo (Blur)
 document.getElementById('nome'           ).addEventListener('blur',         validarNome                                                       );
 document.getElementById('administracao'  ).addEventListener('blur', () => { validarComboBox   ( 'administracao',  'Selecione a instituição'   ); } );
-document.getElementById('estado'         ).addEventListener('blur', () => { validarComboBox   ( 'estado',         'Selecione o estado'        ); } );
+//document.getElementById('estado'         ).addEventListener('blur', () => { validarComboBox   ( 'estado',         'Selecione o estado'        ); } );
 document.getElementById('cidade'         ).addEventListener('blur', () => { validarComboBox   ( 'cidade',         'Selecione a cidade'        ); } );
-document.getElementById('horarioInicial' ).addEventListener('blur', () => { validarCampoTime  ( 'horarioInicial', 'Selecione uma hora válida' ); } );
+//document.getElementById('horarioInicial' ).addEventListener('blur', () => { validarCampoTime  ( 'horarioInicial', 'Selecione uma hora válida' ); } );
 document.getElementById('horaAula'       ).addEventListener('blur', () => { validarCampoTime  ( 'horaAula',       'Selecione uma hora válida' ); } );
 
 document.getElementById('cadastrarBtn'  ).addEventListener('click', salvar         );
@@ -56,7 +56,7 @@ async function salvar() {
             return validarFormulario('instituicaoForm') &&
                    validarNome() &&
                    validarComboBox('administracao', 'Selecione a administracao') &&
-                   validarComboBox('estado', 'Selecione o estado') &&
+                   //validarComboBox('estado', 'Selecione o estado') &&
                    validarComboBox('cidade', 'Selecione a cidade') &&
                    validarCampoTime('horarioInicial', 'Selecione uma hora válida') &&
                    validarCampoTime('horaAula', 'Selecione uma hora válida');
@@ -89,39 +89,7 @@ async function readMunicipiosPorEstado(idEstado, termoBusca) {
     });
 }
 
-// // Captura o elemento select de estado
-// const selectEstado = document.getElementById('estado');
 
-// if (selectEstado) {
-    
-//     selectEstado.addEventListener('change', (event) => {
-//         const idSelecionado = event.target.value;
-        
-//         if (idSelecionado) {
-//             // Chama a busca de municípios passando o ID do estado selecionado
-//             readMunicipiosPorEstado(idSelecionado);
-//         } else {
-//             // Se o usuário voltar para "Selecione o estado", limpamos o combo de cidades
-//             const selectCidade = document.getElementById('cidade');
-//             if (selectCidade) selectCidade.length = 1;
-//         }
-//     });
-// }
-
-// async function readMunicipiosPorEstado(idEstado, termoBusca) {
-//     if (!idEstado) return; // Segurança caso o valor venha vazio
-
-//     await executarOperacao({
-//         idBotao: 'cadastrarBtn',
-//         textoAguarde: 'Consultando cidades...',
-//         // Passamos uma função anônima para injetar o parâmetro idEstado na chamada da API
-//         apiCall: () => listarMunicipiosPorEstado(idEstado, termoBusca), 
-//         onSuccess: async (resultado) => {
-//             //preencherSelect('cidade', resultado.data);
-//             atualizarDatalist('listaMunicipios', resultado.data);
-//         }     
-//     });
-// }
 
 
 document.getElementById('estado').addEventListener('change', async (e) => {
@@ -160,7 +128,7 @@ function atualizarDatalist(idDatalist, dados) {
 
 
 // PARA ESCUTAR O COMPONENTE SELECT ESTADO
-const selectEstadoComp = document.querySelector('select-estado');
+const selectEstadoComp = document.querySelector('estado-select');
 
 // Escutando o "grito" do componente
 selectEstadoComp.addEventListener('estado-selecionado', (e) => {
@@ -170,7 +138,7 @@ selectEstadoComp.addEventListener('estado-selecionado', (e) => {
     // Agora você chama sua função de busca de municípios passando o ID
     if (id) {
         // Ex: sua função que preenche o datalist ou a lista customizada
-        atualizarListaMunicipios(id);
+        //atualizarListaMunicipios(id);
     }
 });
 

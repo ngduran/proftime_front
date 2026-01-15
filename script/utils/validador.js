@@ -127,7 +127,13 @@ export function validarTelefone() {
  * @returns {boolean} - True se for válido, False caso contrário.
  */
 export function validarComboBox(id, mensagemErro) {
-    const elemento = document.getElementById(id);
+    console.log("Chamou o validar combobox");
+    let elemento = document.getElementById(id);
+    if (elemento.shadowRoot) {
+        // Se for um componente, buscamos o select dentro dele
+        elemento = elemento.shadowRoot.getElementById('main-select');
+        
+    }
     
     if (!elemento) {
         console.error(`Elemento com ID "${id}" não encontrado.`);

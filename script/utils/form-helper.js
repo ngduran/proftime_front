@@ -1,7 +1,7 @@
 export function bloquearButton(btnId, textoButton) {
     const btn = document.getElementById(btnId);
     btn.disabled = true;
-    btn.innerText = textoButton;
+    btn.innerText = textoButton;    
 }
 
 export function desbloquearButton(btnId, textoButton) {

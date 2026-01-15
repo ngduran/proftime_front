@@ -3,12 +3,16 @@
     max-width: 768px !important; /* Largura típica para formulários mobile/card */
 }
 
+.container {
+    max-width: 800px; /* Aumentado para comportar o layout lado a lado */
+    transition: max-width 0.3s ease;
+}
 
-.input-group input, .input-group select {    
+/* .input-group input, .input-group select {    
     -webkit-appearance: none !important; 
     -moz-appearance: none !important; 
     appearance: none !important;
-}
+} */
 
 /* Dica visual: mudar o cursor para indicar que o campo é clicável em toda área */
 input[type="time"] {
@@ -16,11 +20,11 @@ input[type="time"] {
 }
 
 /* Garante que o container tenha espaço e não esconda o menu */
-.input-group {    
-    overflow: visible !important; /* Essencial para o pop-up não ser cortado */
-}
+/* .input-group {    
+    overflow: visible !important; 
+} */
 
-.edit-button {
+/* .edit-button {
     position: absolute;
     right: 5px !important;
     top: 50%;
@@ -31,7 +35,7 @@ input[type="time"] {
     border: none;
     //background-color: var(--color-primary);
     background-color: var(--color-accent);
-    //background-color: var(--color-primary); /* Cor Principal: Azul Escuro */ 
+    //background-color: var(--color-primary); 
     color: var(--color-primary);
     //color: white;
     cursor: pointer;
@@ -40,9 +44,9 @@ input[type="time"] {
     justify-content: center;
     transition: background-color 0.2s;
     //z-index: 10;
-}
+} */
 
-.edit-button:hover {    
+/* .edit-button:hover {    
     background-color: var(--color-primary);
     color: var(--color-accent);
 
@@ -55,7 +59,7 @@ input[type="time"] {
 .edit-button svg {
     width: 16px;
     height: 16px;
-}
+} */
 
 
 .input-wrapper {
@@ -112,25 +116,49 @@ input[type="time"] {
 //***********************************************************************************************
 /* --- Ajustes de Layout e Grid --- */
 
-.container {
-    max-width: 800px; /* Aumentado para comportar o layout lado a lado */
-    transition: max-width 0.3s ease;
-}
+
 
 .form-grid {
     display: flex;
     flex-direction: column
 }
 
-.container-regiao {
+/* .container-regiao {
     display: flex;
     flex-flow: row wrap !important;
-    gap: 20px; /* Define um espaço fixo entre os campos */
-    justify-content: flex-start; /* Alinha no início para o gap funcionar melhor */
+    gap: 20px; 
+    justify-content: flex-start; 
 }
 
 .container-regiao div {
     flex: 1;
+}  */
+
+
+
+/* No seu arquivo instituicao.css ou similar */
+.container-regiao {
+    display: flex;
+    flex-flow: row wrap !important;
+    gap: 20px; 
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Alvo: Seus componentes customizados */
+instituicao-input, estado-select, administracao-select, cidade-select {
+    /* (100% / 2) - metade do gap (10px) */
+    flex: 1 1 calc(50% - 10px); 
+    min-width: 300px; /* Garante que em telas pequenas eles empilhem */
+    display: block !important;
+    min-height: 85px; /* Reserva o espaço vertical para não pular */
+}
+
+/* Isso garante que o componente ocupe todo o espaço da div .flex-80 */
+instituicao-input {
+    display: block !important;
+    width: 100%;
 }
 
 .container-misto {
@@ -140,21 +168,24 @@ input[type="time"] {
     width: 100%;
 }
 
-/* Campo Nome (Alvo: 80%) */
 .flex-80 {
     flex: 4; 
-    min-width: 60%; /* Ele tentará ser 80%, mas nunca cairá abaixo de 60% na mesma linha */
+    min-width: 60%; 
 }
 
-/* Campo Horário (Alvo: 20%) */
+.flex-50 {
+    flex: 6;
+    min-width: 50%;
+}
+
 .flex-20 {
     flex: 1;
-    min-width: 15%; /* Garante um espaço mínimo para o seletor de tempo */
+    min-width: 15%;
 }
 
-.form-item.full-width {
-    grid-column: span 2; /* Nome da Instituição ocupa a linha toda */
-}
+/* .form-item.full-width {
+    //grid-column: span 2; 
+} */
 
 /* Responsividade do Grid: Volta para 1 coluna em telas menores */
 @media (max-width: 650px) {
@@ -188,21 +219,21 @@ input[type="time"] {
 
 /* --- Estilos Originais Mantidos/Ajustados --- */
 
-.input-group input, .input-group select {    
+/* .input-group input, .input-group select {    
     -webkit-appearance: none !important; 
     -moz-appearance: none !important; 
     appearance: none !important;
-}
+} */
 
-input[type="time"] {
+/* input[type="time"] {
     cursor: pointer !important;
-}
+} */
 
-.input-group {    
+/* .input-group {    
     overflow: visible !important;
-}
+} */
 
-.edit-button {
+/* .edit-button {
     position: absolute;
     right: 25px;
     top: 50%;
@@ -218,7 +249,7 @@ input[type="time"] {
     align-items: center;
     justify-content: center;
     transition: background-color 0.2s;
-}
+} */
 
 .edit-button:hover {    
     background-color: var(--color-primary);
@@ -346,3 +377,4 @@ tr:hover {
 .btn-pagination i {
     font-size: 12px;
 }
+

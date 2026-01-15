@@ -4,9 +4,21 @@ let currentLang = sessionStorage.getItem('lang') || 'pt';
 
 export const translations = {
     pt: {
+
+        // Campos do Formulário Instituição
+        lbl_nome: "Nome da Instituição",
+        lbl_administracao: "Administração",
+        lbl_estado: "Estado (UF)",
+        lbl_cidade: "Cidade",
+        lbl_horario_inicial: "Hora de Início",
+        lbl_hora_aula: "Hora Aula",
+
+
         // Geral
         lbl_cadastrarBtn: "Salvar",
         lbl_cadastrarBtn_saving: "Salvando...",
+
+        lbl_cadastrarBtn_consulting: "Consultando...",
 
         lbl_voltarBtn: "Voltar ao Início",
 
@@ -14,8 +26,7 @@ export const translations = {
         tp_lbl_nome: "Nome utilizado para identificação",
         tp_lbl_administracao: "Qual é o tipo da administração",
         tp_lbl_estado: "Em qual estado fica?",
-        tp_lbl_cidade: "Em qual cidade?",
-        tp_lbl_cidade: "Em qual cidade?",
+        tp_lbl_cidade: "Em qual cidade?",        
         tp_lbl_horario_inicial: "Informe o horário inicial das aulas",
         tp_lbl_hora_aula: "Informe a duração de uma aula",
         tp_lbl_hora_aula: "Informe a duração de uma aula",
@@ -26,13 +37,6 @@ export const translations = {
         success_save: "A Instituição foi criada com sucesso!",
         success_load: "Os dados foram carregados com sucesso!",
         
-        // Campos do Formulário Instituição
-        lbl_nome: "Nome da Instituição",
-        lbl_administracao: "Administração",
-        lbl_estado: "Estado (UF)",
-        lbl_cidade: "Cidade",
-        lbl_horario_inicial: "Hora de Início",
-        lbl_hora_aula: "Hora Aula",
         
         // Placeholders
         ph_nome: "Ex: Escola Estadual XXX",
@@ -55,9 +59,21 @@ export const translations = {
         err_network: "Não foi possível alcançar o servidor."
     },
     es: {
+
+        // Campos do Formulário Instituição
+        lbl_nome: "Nombre de la Institución",
+        lbl_administracao: "Administración",
+        lbl_estado: "Estado (UF)",
+        lbl_cidade: "Ciudad",
+        lbl_horario_inicial: "Hora de inicio",
+        lbl_hora_aula: "Duración estándar de la lección",
+        
         // Geral
         lbl_cadastrarBtn: "Guardar",
         lbl_cadastrarBtn_saving: "Guardando...",
+
+        lbl_cadastrarBtn_consulting: "consultante...",
+
 
         lbl_voltarBtn: "Volver arriba",
 
@@ -72,13 +88,6 @@ export const translations = {
         success_save: "¡La Institución fue creada con éxito!",
         success_load: "¡Los datos se cargaron correctamente!",
         
-        // Campos do Formulário Instituição
-        lbl_nome: "Nombre de la Institución",
-        lbl_administracao: "Administración",
-        lbl_estado: "Estado (UF)",
-        lbl_cidade: "Ciudad",
-        lbl_horario_inicial: "Hora de inicio",
-        lbl_hora_aula: "Duración estándar de la lección",
         
         // Placeholders
         // Placeholders y Opciones
