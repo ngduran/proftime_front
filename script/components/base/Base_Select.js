@@ -44,7 +44,7 @@ export class Base_Select extends HTMLElement {
                     <i class="${icon_question}" data-tooltip="${data_tooltip_balao}" data-translate="${data_translate_tooltip}"></i>
                 </div>
                 <div class="input-group">
-                    <select id="main-select" name="${name_select}" ${is_required}>
+                    <select id="main-select" name="${name_select}" autocomplete="off" ${is_required}>
                         <option value="" data-translate="${data_translate_op}">Selecione o estado</option>
                     </select>
 

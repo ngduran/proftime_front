@@ -1,7 +1,7 @@
 import { fieldCss } from '../css/Input_Styles.js';
 import { TooltipManager } from '../utils/TooltipManager.js';
 
-export class Base_Input extends HTMLElement {
+export class Base_Time extends HTMLElement {
     
     constructor() {
         super();
@@ -42,8 +42,7 @@ export class Base_Input extends HTMLElement {
                     <i class="${icon_question}" data-tooltip="${data_tooltip_balao}" data-translate="${data_translate_tooltip}"></i>
                 </div>
                 <div class="input-group">
-                    <input type="text" id="${id}" name="${name}" data-translate="${data_translate_ph}" 
-                            placeholder="${placeholder}" autocomplete="off" ${is_required}>  
+                    <input type="time" id="${id}" name="${name}" data-translate="${data_translate_ph}" placeholder="${placeholder}" autocomplete="off" ${is_required}>  
                     <button type="button" class="edit-button">
                         <i class="${icon_edicao}"></i>
                     </button>   
@@ -53,4 +52,4 @@ export class Base_Input extends HTMLElement {
         
     }     
 }
-customElements.define('base-input', Base_Input);
+customElements.define('base-time', Base_Time);

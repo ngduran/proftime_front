@@ -23,7 +23,7 @@
                 </button>       
             </div>
             
-            <form id="instituicaoForm" autocomplete="off">
+            <form id="instituicaoForm" autocomplete="off" novalidate>
                 <div class="form-grid">
 
 
@@ -47,9 +47,9 @@
                             
                         </div>
                         
-                        <div class="form-item">
+                        <div class="form-item flex-20">
                             <hora-inicio-field
-                                label = "Hora Início"
+                                label                  = "Hora Início"
                                 data-translate_label   = "lbl_horario_inicial"
                                 id                     = "horarioInicial"
                                 name                   = "horarioInicial" 
@@ -69,51 +69,36 @@
                     <div class="container-misto">
                         <div class="form-item flex-80">     
 
-                            <administracao-select                        
-                                label="Administração" 
-                                data-translate_label="lbl_administracao"
-                                id="administracao"    
-                                name="administracao"
-                                data-translate_op="ph_administracao_op0"                   
-                                icon-question="fa-solid fa-circle-question info-question"
-                                data-tooltip_balao="Qual é o tipo da administração?"
-                                data-translate-tooltip="tp_lbl_administracao"
-                                button-edicao="fa-regular fa-pen-to-square"
+                            <administracao-field                        
+                                label                  = "Administração" 
+                                data-translate_label   = "lbl_administracao"
+                                id                     = "administracao"    
+                                name                   = "administracao"
+                                data-translate_op      = "ph_administracao_op0"                   
+                                icon-question          = "fa-solid fa-circle-question info-question"
+                                data-tooltip_balao     = "Qual é o tipo da administração?"
+                                data-translate-tooltip = "tp_lbl_administracao"
+                                button-edicao          = "fa-regular fa-pen-to-square"
                                 required>
-                            </administracao-select>
+                            </administracao-field>
                         
                         
                         </div>
 
-
-                        <!-- <div class="form-item">
-                            <div class="label-container">
-                                <label for="horaAula" data-translate="lbl_hora_aula">Duração da Aula</label>
-                                <i class="fa-solid fa-circle-question info-question" data-tooltip="Duração de uma aula" data-translate="tp_lbl_hora_aula"></i>                    
-                            </div>
-                            <div class="input-group">
-                                <input type="time" id="horaAula" name="horaAula" value="00:50">                    
-                                <button type="button" class="edit-button">
-                                   <i class="fa-regular fa-pen-to-square"></i>
-                                </button>
-                            </div>
-                        </div> -->
-
-
-                        <hora-aula-time                        
-                                label = "Hora Aula"
-                                data-translate_label   = "lbl_hora_aula"
-                                id                     = "horaAula"
-                                name                   = "horaAula" 
-                                icon-question          = "fa-solid fa-circle-question info-question"                                
-                                data-tooltip_balao     = "Duração de uma aula"
-                                data-translate-tooltip = "tp_lbl_hora_aula"                                
-                                icon-edicao            = "fa-regular fa-pen-to-square"
-                                required>
-                            </hora-aula-time>
-
-
-
+                        <div class="form-item flex-20">
+                            <hora-aula-field                        
+                                    label = "Hora Aula"
+                                    data-translate_label   = "lbl_hora_aula"
+                                    id                     = "horaAula"
+                                    name                   = "horaAula" 
+                                    icon-question          = "fa-solid fa-circle-question info-question"                                
+                                    data-tooltip_balao     = "Duração de uma aula"
+                                    data-translate-tooltip = "tp_lbl_hora_aula"                                
+                                    icon-edicao            = "fa-regular fa-pen-to-square"
+                                    required>
+                            </hora-aula-field>
+                        </div> 
+                        
                     </div>
 
 
@@ -197,7 +182,7 @@
     <script type="module" src="../script/components/form/Instituicao_Field.js"></script> 
     <script type="module" src="../script/components/form/Hora_Inicio_Field.js"></script>
     <script type="module" src="../script/components/form/Administracao_Field.js"></script>
-    <script type="module" src="../script/components/form/Hora_Aula_Time.js"></script>
+    <script type="module" src="../script/components/form/Hora_Aula_Field.js"></script>
     <script type="module" src="../script/components/form/Estado_Select.js"></script>
     <script type="module" src="../script/components/form/Municipio_Field.js"></script> 
 </body>
