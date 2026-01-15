@@ -40,16 +40,11 @@ async function logar() {
             await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
         }
 
-
-
     } catch (error) {
 
     } finally {
 
     }
-
-
-
 
 }
 

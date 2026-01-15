@@ -124,89 +124,6 @@ export function setLanguage(lang) {
     applyTranslations();
 }
 
-// export function applyTranslations() {
-//     const elements = document.querySelectorAll('[data-translate]');
-//     elements.forEach(el => {
-//         const key = el.getAttribute('data-translate');
-//         if (translations[currentLang][key]) {
-//             // Se for um input/select com placeholder
-//             if (el.placeholder) {
-//                 el.placeholder = translations[currentLang][key];
-//             } else {
-//                 el.textContent = translations[currentLang][key];
-//             }
-//         }
-//     });
-// }
-
-// // Função para trocar idioma
-// export function changeLanguage(lang) {
-//     currentLanguage = lang;
-    
-//     // Atualizar botões de idioma
-//     document.querySelectorAll('.lang-btn').forEach(btn => {
-//         btn.classList.remove('active');
-//     });
-//     document.getElementById(`btn-${lang}`).classList.add('active');
-    
-//     // Aplicar traduções
-//     applyTranslations();
-// }
-
-
-
-
-
-// 1. Unificar o nome da variável (usar apenas currentLang)
-//let currentLang = localStorage.getItem('lang') || 'pt';
-
-// export function applyTraducao() {
-//     const elements = document.querySelectorAll('[data-translate]');
-    
-//     elements.forEach(el => {
-//         const key = el.getAttribute('data-translate');
-//         const tradutor = translations[currentLang];
-
-//         if (tradutor && tradutor[key]) {
-//             const textoTraduzido = tradutor[key];
-
-            
-//             // Se o elemento tem o atributo data-tooltip, atualizamos ele!
-//             if (el.hasAttribute('data-tooltip')) {
-//                 el.setAttribute('data-tooltip', textoTraduzido);
-                
-//                 // PENTE FINO: Se o balão já estiver aberto na tela, 
-//                 // precisamos achar a div do tooltip e atualizar o texto dela também
-//                 const balaoAberto = document.querySelector('.tooltip-container');
-//                 if (balaoAberto) {
-//                     balaoAberto.setAttribute('data-tooltip', textoTraduzido);
-//                     // Se você não usa attr(data-tooltip) no CSS, use:
-//                     // balaoAberto.textContent = traducao;
-//                 }
-//             }
-
-//                 // 1. Se for o ícone de ajuda (tooltip), alteramos APENAS o atributo
-//             if (el.classList.contains('info-question')) {
-//                 el.setAttribute('data-tooltip', textoTraduzido);
-//                 // IMPORTANTE: Garantir que o interior da tag <i> continue vazio
-//                 el.textContent = ''; 
-//             }
-
-
-//             // 2. Melhoria na lógica: Traduz placeholder E texto se existirem
-//             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-//                 el.placeholder = textoTraduzido;
-//             } else if (el.tagName === 'SELECT') {
-//                 // Para o select, traduzimos a primeira opção (o prompt)
-//                 if (el.options[0]) el.options[0].textContent = textoTraduzido;
-//             } else {
-//                 el.textContent = textoTraduzido;
-//             }
-//         }
-//     });
-// }
-
-
 export function applyTranslations() {
     const elements = document.querySelectorAll('[data-translate]');
     const tradutor = translations[currentLang];
@@ -241,21 +158,6 @@ export function applyTranslations() {
         }
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export function changeLanguage(lang) {
     currentLang = lang; // Atualiza a variável correta

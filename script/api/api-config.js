@@ -24,11 +24,6 @@ export const API_MAP = {
         LOGIN: { path: `${BASE_URL}${R_LOGIN}/login`, method: 'POST' }
     },
 
-    // CONTA: {
-    //     CREATE: { path: `${BASE_URL}${R_CONTA}/create`, method: 'POST' },
-    //     BUSCAR: { path: `${BASE_URL}${R_CONTA}/read`,   method: 'POST' }
-    // },
-
     PROFESSOR_GRADE: {
         CREATE_ITEM: { path: `${BASE_URL}${R_GRADE_PROFESSOR}/create-item`, method: 'POST' }
     },
@@ -45,6 +40,5 @@ export const API_MAP = {
     MUNICIPIO: {
         POR_ESTADO:  { path: `${BASE_URL}${R_MUNICIPIO}/find-estado`, method: 'GET' },
     }
-
 
 };

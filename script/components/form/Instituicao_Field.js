@@ -8,8 +8,7 @@ class Instituicao_Field extends Base_Input {
     connectedCallback() {
         super.render(); 
         super.setupBase();
-    }  
-   
+    }     
 }
 
 customElements.define('instituicao-field', Instituicao_Field);

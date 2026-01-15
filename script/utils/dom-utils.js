@@ -40,27 +40,6 @@ export function marcarErro(input, mensagem) {
     }
 }
 
-// export async function popularFormulario(idFormulario, dados) {
-//     const formulario = document.getElementById(idFormulario);
-//     if (!formulario || !dados) return;
-
-//     // Iteramos sobre as chaves do objeto JSON (nome, email, etc)
-//     Object.keys(dados).forEach(key => {
-//         // Buscamos o input que tenha o atributo name EXATAMENTE igual à chave
-//         const campo = formulario.querySelector(`[name="${key}"]`);
-
-//         if (campo) {
-//             // Atribuímos o valor. O '?? ""' garante que se vier nulo do banco, o campo fique vazio
-//             campo.value = dados[key] ?? "";
-//             console.log(`Sucesso: Campo [${key}] preenchido.`);
-//         } else {
-//             console.warn(`Aviso: O JSON trouxe '${key}', mas não existe <input name="${key}"> no HTML.`);
-//         }
-//     });
-    
-//     await new Promise(resolve => setTimeout(resolve, 0));
-// }
-
 export async function inicializarTooltips() {
     document.querySelectorAll('.info-question').forEach(icon => {
         icon.addEventListener('mouseenter', () => {
@@ -91,14 +70,6 @@ export async function inicializarTooltips() {
         });
     });
 }
-
-// export async function configurarMostrarSenha() {
-//     document.getElementById('mostrarSenha').addEventListener('change', function() {
-//         const tipo = this.checked ? 'text' : 'password';
-//         document.getElementById('senha').type = tipo;
-//         document.getElementById('confirmarSenha').type = tipo;
-//     });
-// }
 
 /**
  * Configura a lógica de mostrar/esconder senha para qualquer formulário.

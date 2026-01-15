@@ -24,13 +24,12 @@ class Estado_Select extends Base_Select {
     }
 
     async readEstados() {
-        // Usamos a lógica que você já tem, mas adaptada para o componente
+        
         await executarOperacao({
             idBotao: 'cadastrarBtn',
             keyTextoAguarde: 'Consultando...',
             apiCall: listarEstados,
-            onSuccess: async (resultado) => {
-                // Em vez de preencherSelect('estado', ...), usamos o método interno
+            onSuccess: async (resultado) => {              
                 this.preencherSelect(this.id, resultado.data);
             }     
         });
@@ -54,11 +53,8 @@ class Estado_Select extends Base_Select {
 
         dados.forEach(item => {
             const option = document.createElement('option');
-            // O value DEVE ser o UUID para bater com o seu banco de dados
-            //option.value = item.uuid; 
-            option.value = item.id; 
-            
-            // O texto que o usuário vê
+            // O value DEVE ser o UUID para bater com o seu banco de dados         
+            option.value = item.id;
             option.textContent = item.nome; 
             select.appendChild(option);
         });

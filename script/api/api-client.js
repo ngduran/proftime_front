@@ -1,39 +1,18 @@
 const CONFIG_NGROK = {
-    usarNgrok: true // Altere para false quando não quiser mais o header
+    usarNgrok: true
 };
 
 function obterHeadersBase() {
     const headers = {
         "Content-Type": "application/json"
     };
-
-    // Adiciona o header do ngrok apenas se a configuração global for true
+ 
     if (CONFIG_NGROK.usarNgrok) {
         headers["ngrok-skip-browser-warning"] = "true";
     }
 
     return headers;
 }
-
-// export async function apiFetch(endpoint, dados) {
-//     try {
-//         const response = await fetch(endpoint.path, {
-//             method: endpoint.method,
-//             headers: { 
-//                 "Content-Type": "application/json",               
-//                 "ngrok-skip-browser-warning": "true"
-//             },
-//             body: JSON.stringify(dados)
-//         });
-      
-//         return response;
-        
-//     } catch (error) {
-//         // O único erro que tratamos é se o fetch falhar (ex: sem internet ou servidor offline)
-//         console.error("Erro crítico de rede:", error);
-//         throw new Error("Não foi possível conectar ao servidor. Verifique sua conexão.");
-//     }
-// }
 
 export async function apiFetch(endpoint, dados) {
     try {
@@ -61,8 +40,7 @@ export async function apiFetchGet(endpoint) {
         
         return response;
         
-    } catch (error) {
-        // O único erro que tratamos é se o fetch falhar (ex: sem internet ou servidor offline)
+    } catch (error) { 
         console.error("Erro crítico de rede:", error);
         throw new Error("Não foi possível conectar ao servidor. Verifique sua conexão.");
     }
@@ -71,7 +49,6 @@ export async function apiFetchGet(endpoint) {
 export async function apiFetchGetWithId(endpoint, id, termoBusca) {
     try {
 
-        //const urlCompleta = `${endpoint.path}?idEstado=${id}`;
         const urlCompleta = `${endpoint.path}?idEstado=${id}&nome=${termoBusca}`;
 
         const response = await fetch(urlCompleta, {
@@ -82,7 +59,6 @@ export async function apiFetchGetWithId(endpoint, id, termoBusca) {
         return response;
         
     } catch (error) {
-        // O único erro que tratamos é se o fetch falhar (ex: sem internet ou servidor offline)
         console.error("Erro crítico de rede:", error);
         throw new Error("Não foi possível conectar ao servidor. Verifique sua conexão.");
     }
@@ -90,7 +66,6 @@ export async function apiFetchGetWithId(endpoint, id, termoBusca) {
 
 export async function apiFetchGetPaginado(endpoint, filtros = {}) {
     try {
-        // Converte o objeto de filtros em uma string: ?estado=PR&cidade=Cascavel&page=0
         const params = new URLSearchParams(filtros).toString();
         const urlCompleta = params ? `${endpoint.path}?${params}` : endpoint.path;
 
@@ -105,9 +80,6 @@ export async function apiFetchGetPaginado(endpoint, filtros = {}) {
         throw new Error("Não foi possível conectar ao servidor.");
     }
 }
-
-
-
 
 export async function lerRespostaSucesso(response) {
     return await extrairDados(response);

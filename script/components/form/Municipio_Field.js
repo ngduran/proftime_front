@@ -4,15 +4,13 @@ import { Base_Select } from '../base/Base_Select.js';
 class Municipio_Field extends Base_Select {
    
     constructor() {
-        super(); 
-              
+        super();               
     }
    
     connectedCallback() {
          super.render();
          super.setupBase();
     }
-   
 
 }
 

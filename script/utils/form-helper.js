@@ -237,20 +237,6 @@ export function renderizarTabelaInstituicoes(pageResponse) {
     console.log(`Página atual: ${pageResponse.number} de ${pageResponse.totalPages}`);
 }
 
-// export function popularSelect(idSelect, lista) {
-//     const select = document.getElementById(idSelect);
-//     if (!select) return;
-
-//     select.innerHTML = '<option value="">Selecione...</option>';
-//     lista.forEach(item => {
-//         const option = document.createElement('option');
-//         option.value = item.uuid; // O UUID que geramos no SQL!
-//         option.textContent = item.nome;
-//         select.appendChild(option);
-//     });
-// }
-
-
 /**
  * Popula um elemento <select> com uma lista de objetos.
  * @param {string} idSelect - ID do elemento no HTML

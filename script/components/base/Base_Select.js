@@ -13,8 +13,7 @@ export class Base_Select extends HTMLElement {
         this.shadowRoot.adoptedStyleSheets = [fieldCss];   
     }
 
-    setupBase() {
-        // Aqui os elementos já foram renderizados pelo renderBase()
+    setupBase() {     
         TooltipManager.init(this.shadowRoot);
     }
 
