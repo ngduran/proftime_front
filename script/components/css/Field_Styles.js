@@ -1,6 +1,8 @@
-export const fieldCss = new CSSStyleSheet();
+export const field_style = new CSSStyleSheet();
 
-fieldCss.replaceSync(`
+// Existem classes compartilhas entre input e select
+
+field_style.replaceSync(`
 
     /* ===== 1 =====*/
     .input-group {
@@ -10,8 +12,8 @@ fieldCss.replaceSync(`
         align-items: center;
     }
 
-    select {
-        width: 100%;
+    input, select {
+        width: 100%;        
         padding: 12px 45px 12px 15px; /* 45px à direita reserva espaço para o botão de 32px */
         border: 1px solid var(--color-accent);
         border-radius: 8px;
@@ -23,9 +25,13 @@ fieldCss.replaceSync(`
         -webkit-appearance: none !important;        
         cursor: pointer;        
     }
+   
+    input[type="time"] {
+        height: 18px;
+    }
 
     /* ===== 2 =====*/
-    select:focus {
+    input:focus, select:focus {
         border-color: var(--color-accent);
         box-shadow: 0 0 0 2px rgba(175, 126, 23, 0.2);
         outline: none;
@@ -33,19 +39,19 @@ fieldCss.replaceSync(`
      
     /* ===== 3 =====*/
     /* Este talves possa retirar pois não vi nada de diferente */
-    select {
+    input, select {
         background-image: url("data:image/svg+xml,..."); 
         background-repeat: no-repeat;
         background-position: right 15px center;
     }
 
     /* ===== 4 =====*/
-    select.invalid {
+    input.invalid, select.invalid {
         border: 1px solid #ff4d4d !important;
         background-color: #fffafa !important;
     }
 
-    select.valid {
+    input.valid, select.valid {
         border: 1px solid #28a745 !important; 
         background-color: #f8fff9 !important;
     }

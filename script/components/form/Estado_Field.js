@@ -2,19 +2,27 @@ import { executarOperacao } from '../../core/api-engine.js';
 import { listarEstados } from '../../services/api_service.js';
 
 import { validarComboBox } from '../../utils/validador.js';
-import { Base_Select } from '../base/Base_Select.js';
+import { Base_Field } from '../base/Base_Field.js';
 
 
-class Estado_Select extends Base_Select {
+class Estado_Field extends Base_Field {
     
     constructor() {
-        super();  
+        super();        
     }
     
     connectedCallback() {   
         super.render(); 
         super.setupBase(); 
     }
+
+    renderControl(p) {       
+        return `<select id="main-select" name="${p.name}" autocomplete="off" ${p.is_required}>
+                    <option value="" data-translate="${p.data_translate_op}">Selecione o estado</option>
+                </select>`;      
+    }
+
+
 
     configurarValidacao() {
         const select = this.shadowRoot.getElementById('main-select');    
@@ -62,4 +70,4 @@ class Estado_Select extends Base_Select {
 
 }
 
-customElements.define('estado-select', Estado_Select);
+customElements.define('estado-field', Estado_Field);

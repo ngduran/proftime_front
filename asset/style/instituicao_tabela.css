@@ -1,89 +1,25 @@
-.container {
+/* .container {
     width: 100%;
-    max-width: 768px !important; /* Largura típica para formulários mobile/card */
-}
+    max-width: 768px !important;
+} */
 
 .container {
-    max-width: 800px; /* Aumentado para comportar o layout lado a lado */
+    max-width: 800px;
     transition: max-width 0.3s ease;
 }
 
-/* .input-group input, .input-group select {    
-    -webkit-appearance: none !important; 
-    -moz-appearance: none !important; 
-    appearance: none !important;
-} */
-
-/* Dica visual: mudar o cursor para indicar que o campo é clicável em toda área */
 input[type="time"] {
     cursor: pointer !important;
 }
 
-/* No seu arquivo instituicao.css ou similar */
-.container-regiao {
-    display: flex;
-    flex-flow: row wrap !important;
-    gap: 20px; 
-    justify-content: flex-start;
-    align-items: flex-start;
+
+
+instituicao-field, administracao-field, estado-field, municipio-field {
+    display: block;
     width: 100%;
+    min-height: 85px;    
+    min-width: 100px; 
 }
-
-/* Alvo: Seus componentes customizados */
-instituicao-input, estado-select, administracao-select, municipio-select {
-    /* (100% / 2) - metade do gap (10px) */
-    flex: 1 1 calc(50% - 10px); 
-    min-width: 300px; /* Garante que em telas pequenas eles empilhem */
-    display: block !important;
-    min-height: 85px; /* Reserva o espaço vertical para não pular */
-}
-
-
-
-
-
-/* Garante que o container tenha espaço e não esconda o menu */
-/* .input-group {    
-    overflow: visible !important; 
-} */
-
-/* .edit-button {
-    position: absolute;
-    right: 5px !important;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: none;
-    //background-color: var(--color-primary);
-    background-color: var(--color-accent);
-    //background-color: var(--color-primary); 
-    color: var(--color-primary);
-    //color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s;
-    //z-index: 10;
-} */
-
-/* .edit-button:hover {    
-    background-color: var(--color-primary);
-    color: var(--color-accent);
-
-}
-
-.edit-button:active {
-    transform: translateY(-50%) scale(0.95);
-}
-
-.edit-button svg {
-    width: 16px;
-    height: 16px;
-} */
-
 
 .input-wrapper {
     position: relative;
@@ -95,20 +31,13 @@ instituicao-input, estado-select, administracao-select, municipio-select {
     margin-bottom: 20px;
 }
 
-/* .info-question {
-    margin-left: 10px;
-} */
-
-
-/* Garante que o card aceite elementos posicionados dentro dele */
 .form-card {
     position: relative;
-    padding-top: 50px; /* Dá espaço para os botões não atropelarem o título */
+    padding-top: 50px;
 }
 
-/* Seletor de idioma */
 .language-selector {
-    position: absolute; /* Em vez de fixed */
+    position: absolute;
     top: 15px;
     right: 15px;
     z-index: 10;
@@ -116,84 +45,42 @@ instituicao-input, estado-select, administracao-select, municipio-select {
     gap: 5px;
 }
 
-/* .lang-btn {
-    padding: 5px 10px;
-    font-size: 12px;
-} */
-
 .lang-btn:hover {
     background: #f0f0f0;
 }
-
-/* .lang-btn.active {
-    background: #4CAF50;
-    color: white;
-    border-color: #4CAF50;
-} */
 
 .icon-flag {
     width: 24px;
     height: 24px;
 }
 
-//***********************************************************************************************
-/* --- Ajustes de Layout e Grid --- */
-
-
-
 .form-grid {
     display: flex;
     flex-direction: column
 }
 
-/* .container-regiao {
-    display: flex;
-    flex-flow: row wrap !important;
-    gap: 20px; 
-    justify-content: flex-start; 
-}
-
-.container-regiao div {
-    flex: 1;
-}  */
-
-
-
-
-/* Isso garante que o componente ocupe todo o espaço da div .flex-80 */
 instituicao-input {
     display: block !important;
     width: 100%;
 }
 
 .container-misto {
-    display: flex;
-    flex-wrap: wrap; /* Permite quebrar linha no mobile */
+    display: flex;    
+    flex-wrap: nowrap !important;
     gap: 20px;
     width: 100%;
+    Alterei as duas linhas abaixo
+    align-items: flex-start;
+    height: 85px;/
 }
 
-.flex-80 {
-    flex: 4; 
-    min-width: 60%; 
-}
-
-.flex-50 {
-    flex: 6;
-    min-width: 50%;
-}
-
-.flex-20 {
-    flex: 1;
-    min-width: 15%;
-}
-
-/* .form-item.full-width {
-    //grid-column: span 2; 
-} */
+.flex-80 { flex: 8; } 
+.flex-20 { flex: 2; }
+.flex-50 { flex: 5; }
 
 /* Responsividade do Grid: Volta para 1 coluna em telas menores */
-@media (max-width: 650px) {
+@media (max-width: 650px) {   
+    
     .form-grid {
         grid-template-columns: 1fr;
     }
@@ -205,6 +92,22 @@ instituicao-input {
     }
 }
 
+
+
+
+/* MEDIA QUERIES PARA CELULAR */
+/* @media (max-width: 768px) {
+    .responsive-grid, .entry-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-button.secundario { width: 100%; }
+    
+    .form-card { padding: 15px; }
+} */
+
+
+
 .button-group.horizontal {
     display: flex;
     flex-direction: row;
@@ -213,58 +116,12 @@ instituicao-input {
 }
 
 
-
-/* --- Estilos Originais Mantidos/Ajustados --- */
-
-/* .input-group input, .input-group select {    
-    -webkit-appearance: none !important; 
-    -moz-appearance: none !important; 
-    appearance: none !important;
-} */
-
-/* input[type="time"] {
-    cursor: pointer !important;
-} */
-
-/* .input-group {    
-    overflow: visible !important;
-} */
-
-/* .edit-button {
-    position: absolute;
-    right: 25px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: none;
-    background-color: var(--color-accent);
-    color: var(--color-primary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s;
-} */
-
-.edit-button:hover {    
-    background-color: var(--color-primary);
-    color: var(--color-accent);
-}
-
-.edit-button:active {
-    transform: translateY(-50%) scale(0.95);
-}
-
-
 /* Botão CTA (Call to Action) */
 .cta-button {
     width: 100%;
     padding: 15px;
-    background-color: var(--color-primary); /* Cor Principal: Azul Escuro */     
-     
-    color: var(--color-accent);  /* Texto do botão: Amarelo Ouro (Alto Contraste) */ 
+    background-color: var(--color-primary);     
+    color: var(--color-accent);
     border: none;
     border-radius: 8px;
     font-size: 1.1rem;
@@ -274,8 +131,8 @@ instituicao-input {
 }
 
 .cta-button:hover {
-    /* Levemente mais escuro ou opaco no hover */
-    background-color: #0A2A6E; /* Um tom mais escuro de azul da sua paleta */
+   
+    background-color: #0A2A6E;
 }
 
 .cta-button:active {

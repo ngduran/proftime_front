@@ -1,4 +1,4 @@
-import { fieldCss } from '../css/Field_Styles.js';
+import { field_style } from '../css/Field_Styles.js';
 import { TooltipManager } from '../utils/TooltipManager.js';
 
 export class Base_Select extends HTMLElement {
@@ -10,7 +10,7 @@ export class Base_Select extends HTMLElement {
             this.attachShadow({ mode: 'open' });
         }       
         
-        this.shadowRoot.adoptedStyleSheets = [fieldCss];   
+        this.shadowRoot.adoptedStyleSheets = [field_style];   
     }
 
     setupBase() {     
@@ -27,11 +27,9 @@ export class Base_Select extends HTMLElement {
         const icon_question          = this.getAttribute('icon-question');
         const data_tooltip_balao     = this.getAttribute('data-tooltip_balao');
         const data_translate_tooltip = this.getAttribute('data-translate-tooltip');
-        const button_edicao          = this.getAttribute('button-edicao');
-        const is_required            = this.hasAttribute('required') ? 'required' : '';
-        
-        // Note que agora o innerHTML não tem mais a tag <style>!
-        // Ele está muito mais limpo.
+        const icon_edicao          = this.getAttribute('button-edicao');
+        const is_required            = this.hasAttribute('required') ? 'required' : '';        
+     
         this.shadowRoot.innerHTML = `            
             <style>
                 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
@@ -49,7 +47,7 @@ export class Base_Select extends HTMLElement {
 
 
                     <button type="button" class="edit-button">
-                        <i class="${button_edicao}"></i>
+                        <i class="${icon_edicao}"></i>
                     </button>   
                 </div>
             </div>

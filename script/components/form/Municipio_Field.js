@@ -1,7 +1,7 @@
-import { Base_Select } from '../base/Base_Select.js';
+import { Base_Field } from '../base/Base_Field.js';
 
 
-class Municipio_Field extends Base_Select {
+class Municipio_Field extends Base_Field {
    
     constructor() {
         super();               
@@ -12,6 +12,12 @@ class Municipio_Field extends Base_Select {
          super.setupBase();
     }
 
+    renderControl(p) {       
+        return `<select id="main-select" name="${p.name}" autocomplete="off" ${p.is_required}>
+                    <option value="" data-translate="${p.data_translate_op}">Selecione o estado</option>
+                </select>`;      
+    }
+
 }
 
-customElements.define('municipio-select', Municipio_Field);
+customElements.define('municipio-field', Municipio_Field);

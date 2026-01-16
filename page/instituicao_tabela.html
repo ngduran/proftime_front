@@ -75,7 +75,7 @@
                                 icon-question          = "fa-solid fa-circle-question info-question"
                                 data-tooltip_balao     = "Qual é o tipo da administração?"
                                 data-translate-tooltip = "tp_lbl_administracao"
-                                button-edicao          = "fa-regular fa-pen-to-square"
+                                icon-edicao            = "fa-regular fa-pen-to-square"
                                 required>
                             </administracao-field>                        
                         
@@ -97,29 +97,38 @@
 
                     </div>
 
-                  
-                    <div class="container-regiao">   
-                        <estado-select 
-                            label="Estado (UF)" data-translate_label="lbl_estado"
-                            id="estado"         name_select="estado"
-                            data-translate_op="ph_estado_op0"                   
-                            icon-question="fa-solid fa-circle-question info-question"
-                            data-tooltip_balao="Em qual estado fica?"
-                            data-translate-tooltip="tp_lbl_estado"
-                            button-edicao="fa-regular fa-pen-to-square"
-                            required>
-                        </estado-select>
+                    <div class="container-misto">   
+                    <!-- <div class="container-regiao">    -->
+                         <div class="form-item flex-50">
+                             <estado-field 
+                                 label                  = "Estado (UF)" 
+                                 data-translate_label   = "lbl_estado"
+                                 id                     = "estado"
+                                 name                   = "estado"
+                                 data-translate_op      = "ph_estado_op0"                   
+                                 icon-question          = "fa-solid fa-circle-question info-question"
+                                 data-tooltip_balao     = "Em qual estado fica?"
+                                 data-translate-tooltip = "tp_lbl_estado"
+                                 icon-edicao            = "fa-regular fa-pen-to-square"
+                                 required>
+                             </estado-field>
+                         </div>
 
-                         <municipio-select 
-                            label="Cidade" data-translate_label="lbl_cidade"
-                            id="cidade"         name_select="cidade"
-                            data-translate_op="ph_estado_op0"                   
-                            icon-question="fa-solid fa-circle-question info-question"
-                            data-tooltip_balao="Em qual cidade?"
-                            data-translate-tooltip="tp_lbl_cidade"
-                            button-edicao="fa-regular fa-pen-to-square"
-                            required>
-                        </municipio-select>
+                         <div class="form-item flex-50">
+                             <municipio-field 
+                                label                   = "Cidade" 
+                                data-translate_label    = "lbl_cidade"
+                                id                      = "cidade"         
+                                name                    = "cidade"
+                                data-translate_op       = "ph_estado_op0"                   
+                                icon-question           = "fa-solid fa-circle-question info-question"
+                                data-tooltip_balao      = "Em qual cidade?"
+                                data-translate-tooltip  = "tp_lbl_cidade"
+                                icon-edicao             = "fa-regular fa-pen-to-square"
+                                required>
+                            </municipio-field>
+                         </div>
+                    
                     </div>
                    
 
@@ -178,7 +187,7 @@
     <script type="module" src="../script/components/form/Hora_Inicio_Field.js"></script>
     <script type="module" src="../script/components/form/Administracao_Field.js"></script>
     <script type="module" src="../script/components/form/Hora_Aula_Field.js"></script>
-    <script type="module" src="../script/components/form/Estado_Select.js"></script>
+    <script type="module" src="../script/components/form/Estado_Field.js"></script>
     <script type="module" src="../script/components/form/Municipio_Field.js"></script> 
 </body>
 </html>
