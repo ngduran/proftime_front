@@ -79,18 +79,6 @@ instituicao-input {
 .flex-50 { flex: 5; }
 
 /* Responsividade do Grid: Volta para 1 coluna em telas menores */
-@media (max-width: 650px) {   
-    
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-    .form-item.full-width {
-        grid-column: span 1;
-    }
-    .button-group.horizontal {
-        flex-direction: column;
-    }
-}
 
 
 
@@ -99,11 +87,11 @@ instituicao-input {
 /* @media (max-width: 768px) {
     .responsive-grid, .entry-grid {
         grid-template-columns: 1fr;
-    }
+        }
     
-    .cta-button.secundario { width: 100%; }
-    
-    .form-card { padding: 15px; }
+        .cta-button.secundario { width: 100%; }
+        
+        .form-card { padding: 15px; }
 } */
 
 
@@ -131,7 +119,7 @@ instituicao-input {
 }
 
 .cta-button:hover {
-   
+    
     background-color: #0A2A6E;
 }
 
@@ -257,3 +245,16 @@ tr:hover {
     font-size: 12px;
 }
 
+
+@media (max-width: 650px) {   
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-item.full-width {
+        grid-column: span 1;
+    }
+    .button-group.horizontal {
+        flex-direction: column;
+    }
+}
