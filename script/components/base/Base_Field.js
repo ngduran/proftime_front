@@ -1,5 +1,6 @@
 import { field_style } from '../css/Field_Styles.js';
 import { TooltipManager } from '../utils/TooltipManager.js';
+import { EditionManager } from '../utils/EditionManager.js';
 
 export class Base_Field extends HTMLElement {
     
@@ -14,9 +15,16 @@ export class Base_Field extends HTMLElement {
     }
 
     setupBase() {     
-        TooltipManager.init(this.shadowRoot);
+        
     }
-  
+    
+    initTooltip() {
+        TooltipManager.init(this.shadowRoot);        
+    }
+
+    initEdition() {
+        EditionManager.init(this.shadowRoot);
+    }
 
     // O "Buraco" que será preenchido
     renderControl(p) {
@@ -45,21 +53,16 @@ export class Base_Field extends HTMLElement {
                 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
             </style>
             
-            <div class="form-item">
-                <div class="label-container">                              
-                    <label for="${props.id}" data-translate="${props.data_translate_label}">${props.label}</label>
-                    <i class="${props.icon_question}" data-tooltip="${props.data_tooltip_balao}" data-translate="${props.data_translate_tooltip}"></i>
-                </div>
-                <div class="input-group">
-                    ${this.renderControl(props)}        
-                    <button type="button" class="edit-button">
-                        <i class="${props.icon_edicao}"></i>
-                    </button>   
-                </div>
-            </div>
+            ${this.renderControl(props)}        
+           
         `;
         
     }
 
 }
 customElements.define('base-input', Base_Field);
+
+/* Retirado pois é adicionado dinamicamente */
+/* <button type="button" class="edit-button">
+    <i class="${props.icon_edicao}"></i>
+</button>   */

@@ -1,55 +1,75 @@
 export const tooltipCss = new CSSStyleSheet();
 tooltipCss.replaceSync(`
-    .tooltip-container {  
-        
-        /* Posicionamento e Fluxo */
+    
+    /**
+     * @section Tooltip Layout
+     * Define a estrutura de ancoragem para os balões de informação.
+     * Nota: Deve respeitar o 'overflow: visible' do container pai para evitar cortes.
+     */
+
+    .info-question {
+        margin-left: 4px;
+        color: var(--color-primary);   
+    }
+
+    .info-question:hover {
+        color: var(--color-accent)
+    }
+
+    .tooltip-container {
         position: absolute;
-        bottom: 20%;        
-        z-index: 100;
-        left: 50%;
-        
-        /* Dimensões e Alinhamento de Texto */
-        /* Ajuste Dinâmico de Tamanho */
-        width: max-content;         /* Tenta ocupar a largura do texto */
-        max-width: 250px;           /* Limite máximo para não virar uma linha infinita */
-        min-width: 50px;            /* Garante um tamanho mínimo estético */
-        white-space: normal;        /* Permite quebra de linha se atingir o max-width */
-        word-wrap: break-word;      /* Quebra palavras longas se necessário */
-        
-        
-        text-align: center;
-        line-height: 1.4;
-        //white-space: nowrap; /* Evita quebra de linha que deforma o balão */
-
-
-        /* Estilização Visual (Cores e Bordas) */
         background-color: #444;
         color: #fff;
         padding: 10px 15px;
-        border-radius: 6px;
+        /* Canto arredondado invertido para a ponta do balão */
+        border-radius: 12px 12px 0px 12px; 
         font-size: 13px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);        
-        transform: translateX(-50%) translateY(10px);      
-        opacity: 0;
+        line-height: 1.4;
+        z-index: 10000;
+        width: max-content;
+        max-width: 180px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
         pointer-events: none;
-        transition: all 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        transform: translateY(10px);
     }
 
-    /* O estado visível corrige o transform para o lugar original */
+    /* Estado visível */
     .tooltip-container.visible {
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        visibility: visible;
+        transform: translateY(0);
     }
 
-    /* Triângulo (Seta) do balão */
+    /* Seta genérica (pseudo-elemento) */
+    /*
     .tooltip-container::after {
         content: "";
         position: absolute;
-        top: 100%; /* Na parte de baixo do balão */
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
+        top: 100%;
+        border-width: 8px;
         border-style: solid;
         border-color: #444 transparent transparent transparent;
     }
+    */
+
+    /* Estilo quando o balão está à ESQUERDA do campo (Seta na direita) */
+    .tooltip-left { 
+        border-radius: 12px 12px 0px 12px; 
+    }
+    .tooltip-left::after { 
+        right: 10px; 
+    }
+
+    /* Estilo quando o balão está à DIREITA do campo (Seta na esquerda) */
+    .tooltip-right { 
+        border-radius: 12px 12px 12px 0px; 
+    }
+    .tooltip-right::after { 
+        left: 10px; 
+    }
+
 `);

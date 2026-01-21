@@ -1,42 +1,12 @@
-/* .container {
-    width: 100%;
-    max-width: 768px !important;
-} */
-
-.container {
-    max-width: 800px;
-    transition: max-width 0.3s ease;
+.header-title {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 500;
 }
 
-input[type="time"] {
-    cursor: pointer !important;
-}
-
-
-
-instituicao-field, administracao-field, estado-field, municipio-field {
-    display: block;
-    width: 100%;
-    min-height: 85px;    
-    min-width: 100px; 
-}
-
-.input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-card {
-    position: relative;
-    padding-top: 50px;
-}
-
-.language-selector {
+.language-btn {
     position: absolute;
     top: 15px;
     right: 15px;
@@ -50,81 +20,8 @@ instituicao-field, administracao-field, estado-field, municipio-field {
 }
 
 .icon-flag {
-    width: 24px;
-    height: 24px;
-}
-
-.form-grid {
-    display: flex;
-    flex-direction: column
-}
-
-instituicao-input {
-    display: block !important;
-    width: 100%;
-}
-
-.container-misto {
-    display: flex;    
-    flex-wrap: nowrap !important;
-    gap: 20px;
-    width: 100%;
-    Alterei as duas linhas abaixo
-    align-items: flex-start;
-    height: 85px;/
-}
-
-.flex-80 { flex: 8; } 
-.flex-20 { flex: 2; }
-.flex-50 { flex: 5; }
-
-/* Responsividade do Grid: Volta para 1 coluna em telas menores */
-
-
-
-
-/* MEDIA QUERIES PARA CELULAR */
-/* @media (max-width: 768px) {
-    .responsive-grid, .entry-grid {
-        grid-template-columns: 1fr;
-        }
-    
-        .cta-button.secundario { width: 100%; }
-        
-        .form-card { padding: 15px; }
-} */
-
-
-
-.button-group.horizontal {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-
-/* Botão CTA (Call to Action) */
-.cta-button {
-    width: 100%;
-    padding: 15px;
-    background-color: var(--color-primary);     
-    color: var(--color-accent);
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.2s, opacity 0.2s;
-}
-
-.cta-button:hover {
-    
-    background-color: #0A2A6E;
-}
-
-.cta-button:active {
-    opacity: 0.9;
+    width: 16px;
+    height: 16px;
 }
 
 /* --- Tabela --- */
@@ -243,18 +140,4 @@ tr:hover {
 /* Ajuste opcional para ícones */
 .btn-pagination i {
     font-size: 12px;
-}
-
-
-@media (max-width: 650px) {   
-    
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-    .form-item.full-width {
-        grid-column: span 1;
-    }
-    .button-group.horizontal {
-        flex-direction: column;
-    }
 }
