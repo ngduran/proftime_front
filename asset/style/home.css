@@ -1,30 +1,76 @@
 :root {
-    --color-primary: #1748AF; /* Azul */
-    --color-accent: #ffc346;  /* Amarelo Ouro */
-    --color-bg: #E0E4FD;     /* Fundo Suave */
+    --color-primary: #1748AF;
+    --color-accent: #ffc346;
+    --color-bg: #E0E4FD;
     --sidebar-width: 260px;
+    --header-height: 60px;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+/* 1. Reset e Base - Removendo travas de overflow */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Roboto', sans-serif; 
+}
 
-body { background: var(--color-bg); height: 100vh; overflow: hidden; }
+body { 
+    background: var(--color-bg); 
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    /* overflow: hidden removido para permitir pull-to-refresh */
+}
 
-.main-wrapper { display: flex; height: 100vh; width: 100%; }
+/* 2. Header Mobile - Ajustado para Sticky */
+.mobile-header {
+    display: none; /* Padrão Desktop */
+    background: var(--color-primary);
+    color: white;
+    padding: 0 15px;
+    align-items: center;
+    gap: 15px;
+    height: var(--header-height);
+    position: sticky;
+    top: 0;
+    z-index: 1100;
+}
 
-/* --- SIDEBAR (DESKTOP) --- */
+.menu-btn { 
+    background: none; 
+    border: none; 
+    color: white; 
+    font-size: 1.5rem; 
+    cursor: pointer; 
+}
+
+/* 3. Estrutura Principal */
+.main-wrapper { 
+    display: flex; 
+    flex: 1;
+    width: 100%;
+}
+
+/* --- SIDEBAR --- */
 .sidebar {
     width: var(--sidebar-width);
     background: var(--color-primary);
     color: white;
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease;
     z-index: 1000;
 }
 
-.sidebar-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.sidebar-header { 
+    padding: 30px 20px; 
+    text-align: center; 
+    border-bottom: 1px solid rgba(255,255,255,0.1); 
+}
 
-.nav-links { list-style: none; padding-top: 20px; }
+.nav-links { 
+    list-style: none; 
+    padding-top: 20px; 
+}
 
 .nav-links li a {
     display: flex;
@@ -37,52 +83,83 @@ body { background: var(--color-bg); height: 100vh; overflow: hidden; }
     border-left: 4px solid transparent;
 }
 
-.nav-links li a i { margin-right: 15px; width: 20px; font-size: 1.1rem; }
-
-.nav-links li:hover a, .nav-links li.active a {
+.nav-links li:hover a, 
+.nav-links li.active a {
     background: rgba(255,255,255,0.1);
     color: var(--color-accent);
     border-left-color: var(--color-accent);
 }
 
-/* --- ÁREA DE CONTEÚDO --- */
-.content-area { flex: 1; height: 100%; position: relative; }
-iframe { width: 100%; height: 100%; border: none; }
-
-/* --- HEADER MOBILE --- */
-.mobile-header {
-    display: none; /* Escondido no desktop */
-    background: var(--color-primary);
-    padding: 15px;
-    color: white;
-    align-items: center;
-    gap: 15px;
+.nav-links li a i { 
+    margin-right: 15px; 
+    width: 20px; 
+    font-size: 1.1rem; 
 }
 
-.menu-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+/* --- ÁREA DE CONTEÚDO --- */
+.content-area { 
+    flex: 1; 
+    position: relative;
+    background: white; /* Garante fundo sólido */
+}
 
-/* --- RESPONSIVIDADE (TABLETS E CELULARES) --- */
+iframe { 
+    width: 100%; 
+    height: 100%; 
+    border: none; 
+    display: block;
+}
+
+/* --- RESPONSIVIDADE --- */
 @media (max-width: 768px) {
-    .mobile-header { display: flex; }
-    
+    .mobile-header { 
+        display: flex; 
+    }
+
+    /* Removendo overflow hidden do body no mobile para liberar o pull-to-refresh */
+    body {
+        height: auto;
+        overflow: visible; 
+    }
+
+    .main-wrapper {
+        min-height: calc(100dvh - var(--header-height));
+    }
+
     .sidebar {
         position: fixed;
         left: 0;
         top: 0;
-        height: 100%;
-        transform: translateX(-100%); /* Esconde a sidebar para fora da tela */
+        height: 100dvh;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 2000;
     }
 
-    .sidebar.open { transform: translateX(0); } /* Mostra quando aberto */
+    .sidebar.open { 
+        transform: translateX(0); 
+    }
 
     .overlay {
         display: none;
         position: fixed;
         inset: 0;
         background: rgba(0,0,0,0.5);
-        z-index: 999;
+        z-index: 1500;
     }
-    .overlay.active { display: block; }
 
-    .content-area { height: calc(100vh - 60px); }
+    .overlay.active { 
+        display: block; 
+    }
+
+    /* Crucial: A content area deve crescer para mostrar os botões */
+    .content-area { 
+        height: auto; 
+        min-height: 100%;
+    }
+
+    /* O Iframe precisa de uma altura que acompanhe o conteúdo para não travar o scroll */
+    iframe {
+        min-height: 800px; /* Ajuste conforme a altura média dos seus formulários */
+    }
 }

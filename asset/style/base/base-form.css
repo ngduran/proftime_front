@@ -38,6 +38,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    height: auto;       /* Deixe o conteúdo definir a altura */
+    overflow-y: auto;   /* Garante que a rolagem vertical exista */
+    padding-bottom: 80px; /* Margem extra no final para os botões não sumirem atrás de menus */
+
+
+
 }
 
 

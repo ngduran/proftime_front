@@ -98,12 +98,12 @@ field_style.replaceSync(`
         }
 
         /* ===== 4 =====*/
-        input.invalid {
+        input.invalid, select.invalid {
             border: 1px solid #ff4d4d !important;
             background-color: #fffafa !important;
         }
 
-        input.valid {
+        input.valid, select.valid {
             border: 1px solid #28a745 !important; 
             background-color: #f8fff9 !important;
         }

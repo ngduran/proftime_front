@@ -10,11 +10,12 @@ class Cidade_Field extends Base_Field {
         super.setupBase();
         super.initTooltip();
         super.initEdition();
+        this.configurarValidacao();
         this.configurarBusca();
     }
 
     renderControl(p) {       
-        return `<div>
+        return `<div class="campo">
                     <label class="field-label"  for="${p.id}" data-translate="${p.data_translate_label}">${p.label}</label>
                     <i class="${p.icon_question}" data-tooltip="${p.data_tooltip_balao}" data-translate="${p.data_translate_tooltip}"></i>
                     <input type="text" id="${p.id}" name="${p.name}" class="field-input" data-translate="${p.data_translate_ph}" placeholder="${p.placeholder}" autocomplete="off" ${p.is_required}>
@@ -50,6 +51,42 @@ class Cidade_Field extends Base_Field {
             });
         }
     }
+
+    async configurarValidacao() {
+        const input = this.shadowRoot.querySelector(".field-input");    
+        
+        if (input) {
+            input.addEventListener('blur', () => {
+                this.validarNome();
+            });
+        }
+       
+    }
+
+    async validarNome() {  
+        const input = this.control; // Usa o getter da Base_Field
+        if (!input) return;
+
+        // Formatação: Primeira letra de cada palavra em maiúscula
+        input.value = input.value.toLowerCase().replace(/(?:^|\s)\S/g, a => a.toUpperCase());
+        
+        const valor = input.value.trim();
+        const regexNome = /^[A-Za-zÀ-ÿ\s]+$/;
+
+        if (!regexNome.test(valor)) {
+            this.marcarErro("O nome deve conter apenas letras.");
+            return false;
+        }
+
+        if (valor.length < 3) {
+            this.marcarErro("O nome deve ter pelo menos 3 letras.");
+            return false;
+        }
+
+        this.marcarSucesso(); // Não precisa passar nada!
+        return true;
+    }
+
         
 }
 
