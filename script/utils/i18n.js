@@ -66,7 +66,7 @@ export const translations = {
         lbl_estado: "Estado (UF)",
         lbl_cidade: "Ciudad",
         lbl_horario_inicial: "Hora de inicio",
-        lbl_hora_aula: "Duración estándar de la lección",
+        lbl_hora_aula: "Duración",
         
         // Geral
         lbl_cadastrarBtn: "Guardar",
@@ -124,34 +124,94 @@ export function setLanguage(lang) {
     applyTranslations();
 }
 
-export function applyTranslations() {
-    const elements = document.querySelectorAll('[data-translate]');
-    const tradutor = translations[currentLang];
+// export function applyTranslations() {
+//     const elements = document.querySelectorAll('[data-translate]');
+//     const tradutor = translations[currentLang];
 
-    if (!tradutor) return;
+//     console.log("====================================================================");
+//     console.log(elements);
+//     console.log("====================================================================");
+
+//     console.log("--------------------------------------------------------------------");
+//     console.log(tradutor);
+//     console.log("--------------------------------------------------------------------");
+
+
+//     if (!tradutor) return;
+
+//     elements.forEach(el => {
+//         const key = el.getAttribute('data-translate');
+//         const textoTraduzido = tradutor[key];
+
+//         if (textoTraduzido) {
+//             // 1. TRATAMENTO PARA ÍCONES/TOOLTIPS
+//             // Se for o ícone, mudamos apenas o atributo e PARAMOS por aqui (usando return no foreach)
+//             if (el.classList.contains('info-question')) {
+//                 el.setAttribute('data-tooltip', textoTraduzido);
+//                 el.textContent = ''; // Limpa qualquer texto que tenha entrado por erro
+//                 return; // Pula para o próximo elemento do loop sem executar os códigos abaixo
+//             }
+
+//             // 2. TRATAMENTO PARA INPUTS
+//             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+//                 el.placeholder = textoTraduzido;
+//             } 
+//             // 3. TRATAMENTO PARA SELECTS
+//             else if (el.tagName === 'SELECT') {
+//                 if (el.options[0]) el.options[0].textContent = textoTraduzido;
+//             } 
+//             // 4. TRATAMENTO PARA TEXTOS GERAIS (Labels, H1, Botões)
+//             else {
+//                 el.textContent = textoTraduzido;
+//             }
+//         }
+//     });
+// }
+
+/**
+ * Aplica as traduções nos elementos da página ou de um componente específico.
+ * @param {Document|ShadowRoot} root - O ponto de partida para a busca (default: document)
+ */
+export function applyTranslations(root = document) {
+   
+    const tradutor = translations[currentLang];
+    
+    // Se o dicionário não existir para o idioma atual, interrompe a execução
+    if (!tradutor) {
+        console.warn(`Traduções não encontradas para o idioma: ${currentLang}`);
+        return;
+    }
+
+    // Busca apenas dentro do 'root' fornecido (crucial para Web Components)
+    const elements = root.querySelectorAll('[data-translate]');
 
     elements.forEach(el => {
         const key = el.getAttribute('data-translate');
         const textoTraduzido = tradutor[key];
 
+        // Só aplica se houver uma tradução definida para aquela chave
         if (textoTraduzido) {
+            
             // 1. TRATAMENTO PARA ÍCONES/TOOLTIPS
-            // Se for o ícone, mudamos apenas o atributo e PARAMOS por aqui (usando return no foreach)
             if (el.classList.contains('info-question')) {
                 el.setAttribute('data-tooltip', textoTraduzido);
-                el.textContent = ''; // Limpa qualquer texto que tenha entrado por erro
-                return; // Pula para o próximo elemento do loop sem executar os códigos abaixo
+                el.textContent = ''; 
+                return; 
             }
 
-            // 2. TRATAMENTO PARA INPUTS
+            // 2. TRATAMENTO PARA INPUTS E TEXTAREAS
             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                 el.placeholder = textoTraduzido;
             } 
-            // 3. TRATAMENTO PARA SELECTS
+            
+            // 3. TRATAMENTO PARA SELECTS (Primeira opção/Placeholder)
             else if (el.tagName === 'SELECT') {
-                if (el.options[0]) el.options[0].textContent = textoTraduzido;
+                if (el.options.length > 0) {
+                    el.options[0].textContent = textoTraduzido;
+                }
             } 
-            // 4. TRATAMENTO PARA TEXTOS GERAIS (Labels, H1, Botões)
+            
+            // 4. TRATAMENTO PARA TEXTOS GERAIS (Labels, H1, Botões, Spans)
             else {
                 el.textContent = textoTraduzido;
             }
@@ -159,20 +219,40 @@ export function applyTranslations() {
     });
 }
 
-export function changeLanguage(lang) {
-    currentLang = lang; // Atualiza a variável correta
-    sessionStorage.setItem('lang', lang);
+
+
+// export function changeLanguage(lang) {
+//     currentLang = lang; // Atualiza a variável correta
+//     sessionStorage.setItem('lang', lang);
     
-    // Atualizar visual dos botões
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('active');
+//     // Atualizar visual dos botões
+//     document.querySelectorAll('.lang-btn').forEach(btn => {
+//         btn.classList.remove('active');
+//     });
+    
+//     const btnAtivo = document.getElementById(`btn-${lang}`);
+//     if (btnAtivo) btnAtivo.classList.add('active');
+    
+//     applyTranslations();
+// }
+
+export function changeLanguage(newLang) {
+    currentLang = newLang; // Atualiza sua variável global de idioma
+    
+    // 1. Traduz o que está fora do Shadow DOM (Light DOM)
+    applyTranslations(); 
+
+    // 2. Dispara um evento global para os Web Components (Shadow DOM)
+    const event = new CustomEvent('languageChanged', { 
+        detail: { lang: newLang },
+        bubbles: true, 
+        composed: true // Permite que o evento atravesse as fronteiras do Shadow DOM
     });
-    
-    const btnAtivo = document.getElementById(`btn-${lang}`);
-    if (btnAtivo) btnAtivo.classList.add('active');
-    
-    applyTranslations();
+    window.dispatchEvent(event);
 }
+
+
+
 
 // Inicialização automática ao carregar o script
 document.addEventListener('DOMContentLoaded', () => {

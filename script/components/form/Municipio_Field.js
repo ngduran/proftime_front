@@ -1,5 +1,6 @@
 import { executarOperacao } from '../../core/api-engine.js';
 import { listarMunicipiosPorEstado } from '../../services/api_service.js';
+import { applyTranslations } from '../../utils/i18n.js';
 import { Mensagem } from '../../utils/mensageiro.js';
 import { Base_Field } from '../base/Base_Field.js';
 
@@ -11,14 +12,23 @@ class Municipio_Field extends Base_Field {
     }
    
     connectedCallback() {
-         super.render();
-         super.setupBase();
-         super.initTooltip();
-         super.initEdition();
+        super.render();
+
+        // Tradução inicial na carga do componente
+        applyTranslations(this.shadowRoot);
+
+        // Escuta a mudança global de idioma
+        window.addEventListener('languageChanged', () => {
+            applyTranslations(this.shadowRoot);            
+        });
+
+        super.setupBase();
+        super.initTooltip();
+        super.initEdition();
          
-         // Inicia a escuta de eventos externos
-         this.adicionarListenersGlobais();
-         this.configurarValidacao();
+        // Inicia a escuta de eventos externos
+        this.adicionarListenersGlobais();
+        this.configurarValidacao();
     }
 
     renderControl(p) {       

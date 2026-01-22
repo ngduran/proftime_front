@@ -1,3 +1,4 @@
+import { applyTranslations } from '../../utils/i18n.js';
 import { Base_Field } from '../base/Base_Field.js';
 
 class Instituicao_Field extends Base_Field {
@@ -7,6 +8,15 @@ class Instituicao_Field extends Base_Field {
     
     connectedCallback() {
         super.render(); 
+
+        // Tradução inicial na carga do componente
+        applyTranslations(this.shadowRoot);
+
+        // Escuta a mudança global de idioma
+        window.addEventListener('languageChanged', () => {
+            applyTranslations(this.shadowRoot);            
+        });
+
         super.setupBase();
         super.initTooltip();
         super.initEdition();
