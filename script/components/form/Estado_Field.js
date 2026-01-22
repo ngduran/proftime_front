@@ -35,15 +35,12 @@ class Estado_Field extends Base_Field {
         `;     
     }
 
-
-
-    // configurarValidacao() {
-    //     const select = this.shadowRoot.getElementById('estado');    
-    //     select.addEventListener('blur', () => {
-    //         validarComboBox(this.id, 'Selecione o estado');
-    //     });
-    // }
-
+    // Utilizado pelo formulário page intituicao.js
+    // Sobrescreve o validar do Bae_Field
+    validar() {        
+        return this.validarSelect(); 
+    }
+ 
     configurarValidacao() {
         const select = this.shadowRoot.getElementById('estado');
         const scope = this.getAttribute('scope'); // Captura o atributo 'scope'  
@@ -99,7 +96,10 @@ class Estado_Field extends Base_Field {
         dados.forEach(item => {
             const option = document.createElement('option');
             // O value DEVE ser o UUID para bater com o seu banco de dados         
-            option.value = item.id;
+            //option.value = item.id;
+            
+            option.value = item.uuid;
+            
             option.textContent = item.nome; 
             select.appendChild(option);
         });

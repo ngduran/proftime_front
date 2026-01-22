@@ -31,6 +31,30 @@ export class Base_Field extends HTMLElement {
         return ``;
     }
 
+    get value() {
+        // Busca o input, select ou textarea que está dentro do Shadow DOM
+        const control = this.shadowRoot.querySelector('input, select, textarea');
+        return control ? control.value : '';
+    }
+
+    // Dentro da classe Base_Field
+    validar() {
+        // Se o componente tiver um select interno, usa a validação de select
+        if (this.shadowRoot && this.shadowRoot.querySelector('select')) {
+            return this.validarSelect(); 
+        }
+        
+        // Se for um input de tempo (como Hora Início), usa a de tempo
+        if (this.control && this.control.type === 'time') {
+            return this.validarCampoTime("Selecione uma hora válida");
+        }
+
+        // Caso contrário, valida como um campo de texto normal (Nome, etc.)
+        return this.validarNome(); 
+    }
+
+
+
 
    async render() {
         const props = {
@@ -107,79 +131,6 @@ export class Base_Field extends HTMLElement {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // marcarErro(input, mensagem) {
-       
-    //     console.log("Chamou o marcar Erro...");        
-
-    //     const container = this.container;
-
-    //     console.log("---------------------------------------------------------");
-    //     console.log(container);
-    //     console.log("---------------------------------------------------------");
-
-    //     if (!input) return;
-
-    //     input.classList.remove("valid");
-    //     input.classList.add("invalid");
-       
-    //     if (container) {
-    //         container.classList.add('has-error');
-    //         let msgErro = container.querySelector('.error-message');
-    //         if (!msgErro) {
-    //             msgErro = document.createElement('span');
-    //             msgErro.className = 'error-message';
-    //             container.appendChild(msgErro);
-    //         }
-    //         msgErro.innerText = mensagem;
-    //     }
-    // }
-
-    // marcarSucesso() {
-    //     const input = this.control;
-    //     const container = this.container;
-
-    //     if (!input) return;
-
-    //     input.classList.remove("invalid");
-    //     input.classList.add("valid");
-
-    //     if (container) {
-    //         container.classList.remove('has-error');
-    //         const msgErro = container.querySelector('.error-message');
-    //         if (msgErro) msgErro.remove();
-    //     }
-    // }
 
 
 }

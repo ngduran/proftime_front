@@ -21,6 +21,13 @@ class Administracao_Field extends Base_Field {
                     <select id="${p.id}" name="${p.name}" class="field-select"
                         autocomplete="off" ${p.is_required}>
                         <option value="" data-translate="${p.data_translate_op}">${p.placeholder}</option>
+
+                        <option value="FEDERAL">Federal</option>
+                        <option value="ESTADUAL">Estadual</option>
+                        <option value="MUNICIPAL">Municipal</option>
+                        <option value="PRIVADA">Privada</option>
+                        <option value="PUBLICO_PRIVADA">Público Privada</option>
+                        <option value="PARTICULAR">Particular</option>
                     </select>
                     <button type="button" class="edit-button">
                         <i class="${p.icon_edicao}"></i>
@@ -28,6 +35,13 @@ class Administracao_Field extends Base_Field {
                 </div>
         `;       
     }
+
+    // Utilizado pelo formulário page intituicao.js
+    // Sobrescreve o validar do Bae_Field
+    validar() {        
+        return this.validarSelect(); 
+    }
+
 
     async configurarValidacao() {
         const input = this.shadowRoot.querySelector(".field-select");    
@@ -45,7 +59,7 @@ class Administracao_Field extends Base_Field {
      * @param {string} mensagemErro - Mensagem exibida em caso de falha
      * @returns {boolean}
      */
-    validarSelect() {
+    async validarSelect() {
 
         const select = this.control;
         

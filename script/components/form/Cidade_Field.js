@@ -27,6 +27,10 @@ class Cidade_Field extends Base_Field {
         `;        
     }
 
+    validar() { // Adicione async aqui
+        return this.validarNome();        
+    }
+
     configurarBusca() {
         const campoBusca = this.shadowRoot.getElementById('cidade');
         const scope = this.getAttribute('scope'); // Captura o atributo 'scope'   

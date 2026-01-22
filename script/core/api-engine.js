@@ -22,7 +22,7 @@ export async function executarOperacao({
     validacao = null   // Função de validação opcional
 }) {
     // 1. Executa validação se existir
-    if (validacao && !validacao()) return;
+    if (validacao && !( await validacao() ) ) return;
 
     try {
         //bloquearButton(idBotao, textoAguarde);

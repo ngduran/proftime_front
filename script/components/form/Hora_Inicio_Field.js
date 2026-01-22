@@ -26,6 +26,12 @@ class Hora_Inicio_Field extends Base_Field {
                 </div>
         `;                  
     }
+
+    // Utilizado pelo formulário page intituicao.js
+    // Sobrescreve o validar do Bae_Field
+    validar() {        
+        return this.validarCampoTime(); 
+    }
     
     async configurarValidacao() {
         const input = this.shadowRoot.querySelector(".field-input");    

@@ -36,6 +36,12 @@ class Municipio_Field extends Base_Field {
         `;           
     }
 
+    // Utilizado pelo formulário page intituicao.js
+    // Sobrescreve o validar do Bae_Field
+    validar() {        
+        return this.validarSelect(); 
+    }
+
     configurarValidacao() {        
         const select = this.control; // Use o getter da Base_Field em vez de getElementById
         if (!select) return;
@@ -47,7 +53,7 @@ class Municipio_Field extends Base_Field {
             const municipioId = e.target.value;
             this.dispatchEvent(new CustomEvent('municipio-selecionado', {
                 detail: { 
-                    municipiId: municipioId,
+                    municipioId: municipioId,
                     scope:    scope // Envia o escopo junto com o ID
                 },
                 bubbles: true, // Permite que o evento suba na árvore DOM
@@ -157,7 +163,9 @@ class Municipio_Field extends Base_Field {
      * @param {Array} dados - Lista de municípios vinda da API (ex: [{uuid: '...', nome: 'Cascavel'}])
      */
     async preencherSelect(idSelect, dados) {     
-        const select = this.shadowRoot.getElementById('municipio');
+       //const select = this.shadowRoot.getElementById('municipio');
+       
+        const select = this.shadowRoot.getElementById(idSelect); // USE O PARÂMETRO idSelect
 
         if (!select) {
             console.error(`Select com ID ${idSelect} não encontrado no Shadow DOM.`);
@@ -169,8 +177,13 @@ class Municipio_Field extends Base_Field {
 
         dados.forEach(item => {
             const option = document.createElement('option');
-            // O value DEVE ser o UUID para bater com o seu banco de dados         
-            option.value = item.id;
+            // Estava utilizando id
+            // O value DEVE ser o UUID para bater com o seu banco de dados       
+            //option.value = item.UUID;
+            //option.value = item.id;
+            
+            option.value = item.uuid;
+            
             option.textContent = item.nome; 
             select.appendChild(option);
         });

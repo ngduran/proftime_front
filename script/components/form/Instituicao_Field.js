@@ -26,6 +26,19 @@ class Instituicao_Field extends Base_Field {
         `;        
     }
 
+    // Utilizado pelo formulário page intituicao.js
+    // Sobrescreve o validar do Bae_Field
+    async validar() {        
+        return this.validarNome(); 
+    }
+
+    // Utilizado pelo formulário page intituicao.js
+    // Sobrescreve o validar do Bae_Field
+    validar() { // Adicione async aqui
+        return this.validarNome();        
+    }
+
+
     async configurarValidacao() {
         const input = this.shadowRoot.querySelector(".field-input");    
         

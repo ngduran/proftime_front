@@ -25,9 +25,9 @@ function voltarAoInicio() {
 // Validação em tempo real ao sair do campo (Blur)
 document.getElementById('nome'           ).addEventListener('blur',         validarNome                                                       );
 document.getElementById('administracao'  ).addEventListener('blur', () => { validarComboBox   ( 'administracao',  'Selecione a instituição'   ); } );
-//document.getElementById('estado'         ).addEventListener('blur', () => { validarComboBox   ( 'estado',         'Selecione o estado'        ); } );
-document.getElementById('cidade'         ).addEventListener('blur', () => { validarComboBox   ( 'cidade',         'Selecione a cidade'        ); } );
-//document.getElementById('horarioInicial' ).addEventListener('blur', () => { validarCampoTime  ( 'horarioInicial', 'Selecione uma hora válida' ); } );
+document.getElementById('estado'         ).addEventListener('blur', () => { validarComboBox   ( 'estado',         'Selecione o estado'        ); } );
+document.getElementById('cidade'         ).addEventListener('blur', () => { validarComboBox   ( 'municipio',      'Selecione a cidade'        ); } );
+document.getElementById('horarioInicial' ).addEventListener('blur', () => { validarCampoTime  ( 'horarioInicial', 'Selecione uma hora válida' ); } );
 document.getElementById('horaAula'       ).addEventListener('blur', () => { validarCampoTime  ( 'horaAula',       'Selecione uma hora válida' ); } );
 
 document.getElementById('cadastrarBtn'  ).addEventListener('click', salvar         );
@@ -56,8 +56,8 @@ async function salvar() {
             return validarFormulario('instituicaoForm') &&
                    validarNome() &&
                    validarComboBox('administracao', 'Selecione a administracao') &&
-                   //validarComboBox('estado', 'Selecione o estado') &&
-                   validarComboBox('cidade', 'Selecione a cidade') &&
+                   validarComboBox('estado', 'Selecione o estado') &&
+                   validarComboBox('municipio', 'Selecione a cidade') &&
                    validarCampoTime('horarioInicial', 'Selecione uma hora válida') &&
                    validarCampoTime('horaAula', 'Selecione uma hora válida');
                 },
