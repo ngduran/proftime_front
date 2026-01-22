@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <form class="form-container">
+    <form id="instituicaoForm" class="form-container">
 
         <div class="field-container">
             <div class="field-group col-0">
@@ -117,6 +117,7 @@
                <div class="field-group col-5">
                    <div class="field-col">
                        <estado-field 
+                            scope                  = "instituicao"
                             label                  = "Estado (UF)" 
                             data-translate_label   = "lbl_estado"
                             id                     = "estado"
@@ -132,8 +133,27 @@
                    </div>
                </div>
                <div class="field-group col-5">
-                   <div class="field-col">
+                    <div class="field-col">
+                       <cidade-field 
+                            scope                  = "instituicao"
+                            label                  = "Cidade" 
+                            data-translate_label   = "lbl_cidade"
+                            id                     = "cidade"
+                            name                   = "cidade"                                
+                            icon-question          = "fa-solid fa-circle-question info-question"
+                            data-translate_ph      = "ph_cidade"
+                            data-tooltip_balao     = "Letras usadas para filtrar a lista de cidades"
+                            data-translate-tooltip = "tp_lbl_cidade"
+                            placeholder            = "Digite as 3 letras iniciais da cidade"
+                            icon-edicao            = "fa-regular fa-pen-to-square"
+                            required
+                        >
+                        </cidade-field>
+                   <!-- </div> -->
+                   <!-- <div class="field-col"> -->
                        <municipio-field 
+                            style                   = "display: none;"
+                            scope                   = "instituicao"
                             label                   = "Cidade" 
                             data-translate_label    = "lbl_cidade"
                             id                      = "cidade"         
@@ -142,11 +162,12 @@
                             icon-question           = "fa-solid fa-circle-question info-question"
                             data-tooltip_balao      = "Em qual cidade?"
                             data-translate-tooltip  = "tp_lbl_cidade"
-                            placeholder            = "Selecione a cidade"
+                            placeholder             = "Selecione a cidade"
                             icon-edicao             = "fa-regular fa-pen-to-square"
                             required>
                         </municipio-field>
                    </div>
+                   
                </div>
         </div>
 
@@ -172,6 +193,7 @@
     <script type="module" src="../script/components/form/Administracao_Field.js"></script>
     <script type="module" src="../script/components/form/Hora_Aula_Field.js"></script>
     <script type="module" src="../script/components/form/Estado_Field.js"></script>
+    <script type="module" src="../script/components/form/Cidade_Field.js"></script>
     <script type="module" src="../script/components/form/Municipio_Field.js"></script> 
 </body>
 </html>

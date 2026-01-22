@@ -16,7 +16,7 @@ export async function executarOperacao({
     keyTextoAguarde,
     textoOriginal = "Salvar",
     apiCall,          // Função de API (ex: cadastrarInstituicao ou initialDataInstituicao)
-    dados = null,      // Dados para enviar (null para GET)
+    dados,      // Dados para enviar (null para GET)
     mensagemSucesso,
     onSuccess,         // Callback opcional para ações específicas após sucesso
     validacao = null   // Função de validação opcional
@@ -30,14 +30,14 @@ export async function executarOperacao({
         // Busca a tradução dinamicamente
         bloquearButton(idBotao, getTranslation(keyTextoAguarde));
        
-
+        
         // 2. Chamada da API
         const response = await apiCall(dados);
-
+       
         // 3. Processamento da resposta (Lógica unificada que você já usa)
         const resultado = response.ok 
             ? await lerRespostaSucesso(response) 
-            : await lerRespostaErro(response);
+            : await lerRespostaErro(response);        
 
         if (response.ok) {
             // Persistência de ID/UUID se retornar

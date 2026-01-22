@@ -3,9 +3,7 @@ import { editionCss } from '../css/Edition_Styles.js';
 export const EditionManager = {
 
      init(shadowRoot) {
-        console.log("===================================================================");
-        console.log(" CHAMOU O INIT DENTRO DO EDITION MANAGER");
-        console.log("===================================================================");
+        
         // Injeta o CSS do tooltip no array de estilos do componente
         if (!shadowRoot.adoptedStyleSheets.includes(editionCss)) {
             shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, editionCss];
@@ -15,25 +13,14 @@ export const EditionManager = {
     },
 
     show(shadowRoot) {        
-        console.log("///////////////////////////////////////////////////////////////////////");
-        console.log(" CHAMOU O SHOW DENTRO DO EDITION MANAGER");
-        console.log("///////////////////////////////////////////////////////////////////////");
-
+       
        // 1. Buscamos o input primeiro
-        const campo = shadowRoot.querySelector('input, select');
-
-        console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        console.log(campo);
-        console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        const campo = shadowRoot.querySelector('input, select');       
 
         if (!campo) return;
 
         // 2. O container é o pai do input (a div que você criou no renderControl)
-        const container = campo.parentElement;
-
-        console.log("-----------------------------------------------------------------------");
-        console.log(container);
-        console.log("-----------------------------------------------------------------------");
+        const container = campo.parentElement;      
 
         if (container) {
             // Garante que o container aceite posicionamento absoluto do botão

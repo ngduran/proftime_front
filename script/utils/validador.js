@@ -120,23 +120,58 @@ export function validarTelefone() {
     return true;
 }
 
+// /**
+//  * Valida se um ComboBox (select) possui uma opção selecionada.
+//  * @param {string} id - O ID do elemento select.
+//  * @param {string} mensagemErro - A mensagem a ser exibida caso esteja vazio.
+//  * @returns {boolean} - True se for válido, False caso contrário.
+//  */
+// export function validarComboBox(id, mensagemErro) {
+//     console.log("Chamou o validar combobox");
+//     let elemento = document.getElementById(id);
+//     if (elemento.shadowRoot) {
+//         // Se for um componente, buscamos o select dentro dele
+//         elemento = elemento.shadowRoot.getElementById('main-select');
+        
+//     }
+    
+//     if (!elemento) {
+//         console.error(`Elemento com ID "${id}" não encontrado.`);
+//         return false;
+//     }
+
+//     // Se o valor for vazio (primeira option), marca erro
+//     if (!elemento.value || elemento.value.trim() === "") {
+//         marcarErro(elemento, mensagemErro);
+//         return false;
+//     }
+
+//     marcarSucesso(elemento);
+//     return true;
+// }
+
+
 /**
  * Valida se um ComboBox (select) possui uma opção selecionada.
  * @param {string} id - O ID do elemento select.
  * @param {string} mensagemErro - A mensagem a ser exibida caso esteja vazio.
  * @returns {boolean} - True se for válido, False caso contrário.
  */
-export function validarComboBox(id, mensagemErro) {
-    console.log("Chamou o validar combobox");
-    let elemento = document.getElementById(id);
-    if (elemento.shadowRoot) {
-        // Se for um componente, buscamos o select dentro dele
-        elemento = elemento.shadowRoot.getElementById('main-select');
-        
+export function validarComboBox(elementoAlvo, mensagemErro) {    
+    // Se 'alvo' for string, busca no document. Se for elemento, usa direto.
+    let elemento = typeof elementoAlvo === 'string' ? document.getElementById(elementoAlvo) : elementoAlvo;
+
+    //let elemento = document.getElementById(id);
+    
+    // CORREÇÃO 1: Verifica se o elemento existe antes de acessar shadowRoot e reatribui
+    if (elemento && elemento.shadowRoot) {
+        // Busca o select específico dentro do componente
+        elemento = elemento.shadowRoot.querySelector('select'); 
     }
     
+    // CORREÇÃO 2: Usa elementoAlvo para o log de erro, já que 'id' não existe mais
     if (!elemento) {
-        console.error(`Elemento com ID "${id}" não encontrado.`);
+        console.error(`Elemento "${elementoAlvo}" não encontrado no DOM ou Shadow DOM.`);
         return false;
     }
 

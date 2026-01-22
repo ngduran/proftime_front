@@ -1,5 +1,5 @@
-const BASE_URL = "http://127.0.0.1:8080";
-//const BASE_URL = "https://aad6a90435c4.ngrok-free.app";
+//const BASE_URL = "http://127.0.0.1:8080";
+const BASE_URL = "https://aad6a90435c4.ngrok-free.app";
 
 const R_USUARIO         = "/usuario";
 const R_CONTA           = "/conta";
@@ -38,7 +38,7 @@ export const API_MAP = {
     },
 
     MUNICIPIO: {
-        POR_ESTADO:  { path: `${BASE_URL}${R_MUNICIPIO}/find-estado`, method: 'GET' },
+        POR_ESTADO:  { path: `${BASE_URL}${R_MUNICIPIO}/listar-por-estado`, method: 'GET' },
     }
 
 };

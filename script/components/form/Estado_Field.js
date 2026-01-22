@@ -16,6 +16,8 @@ class Estado_Field extends Base_Field {
         super.setupBase();
         super.initTooltip();
         super.initEdition();
+        this.readEstados();
+        this.configurarValidacao();
     }
 
     renderControl(p) {                
@@ -35,12 +37,35 @@ class Estado_Field extends Base_Field {
 
 
 
+    // configurarValidacao() {
+    //     const select = this.shadowRoot.getElementById('estado');    
+    //     select.addEventListener('blur', () => {
+    //         validarComboBox(this.id, 'Selecione o estado');
+    //     });
+    // }
+
     configurarValidacao() {
-        const select = this.shadowRoot.getElementById('main-select');    
+        const select = this.shadowRoot.getElementById('estado');
+        const scope = this.getAttribute('scope'); // Captura o atributo 'scope'  
+        
+        // Disparar evento quando o estado mudar
+        select.addEventListener('change', (e) => {
+            const estadoId = e.target.value;
+            this.dispatchEvent(new CustomEvent('estado-selecionado', {
+                detail: { 
+                    estadoId: estadoId,
+                    scope:    scope // Envia o escopo junto com o ID
+                },
+                bubbles: true, // Permite que o evento suba na árvore DOM
+                composed: true // Permite que o evento atravesse o Shadow DOM
+            }));
+        });
+
         select.addEventListener('blur', () => {
             validarComboBox(this.id, 'Selecione o estado');
         });
     }
+
 
     async readEstados() {
         
@@ -60,7 +85,7 @@ class Estado_Field extends Base_Field {
      * @param {Array} dados - Lista de estados vinda da API (ex: [{uuid: '...', nome: 'Paraná'}])
      */
     async preencherSelect(idSelect, dados) {     
-        const select = this.shadowRoot.getElementById('main-select'); 
+        const select = this.shadowRoot.getElementById('estado'); 
         
         if (!select) {
             console.error(`Select com ID ${idSelect} não encontrado no Shadow DOM.`);
