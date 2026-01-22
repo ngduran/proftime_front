@@ -1,9 +1,6 @@
 import { executarOperacao } from '../../core/api-engine.js';
 import { listarMunicipiosPorEstado } from '../../services/api_service.js';
-import { coletarDadosForm } from '../../utils/form-helper.js';
-
 import { validarComboBox } from '../../utils/validador.js';
-
 import { Base_Field } from '../base/Base_Field.js';
 
 
@@ -87,12 +84,12 @@ class Municipio_Field extends Base_Field {
         });
     }
 
-    async readMunicipios(termoCidade) {
+    async readMunicipios(termoCidade, letras) {
             
         await executarOperacao({
             idBotao: 'cadastrarBtn',
             keyTextoAguarde: 'Consultando...',          
-            apiCall: () => listarMunicipiosPorEstado(termoCidade, "CAS"),
+            apiCall: () => listarMunicipiosPorEstado(termoCidade, letras),
             onSuccess: async (resultado) => {              
                 this.preencherSelect(this.id, resultado.data);
                 

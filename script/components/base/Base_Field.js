@@ -59,6 +59,128 @@ export class Base_Field extends HTMLElement {
         
     }
 
+
+    // Retorna o elemento de controle interno (input, select ou textarea)
+    get control() {
+        return this.shadowRoot.querySelector('.field-input, .field-select, .field-time');
+    }
+
+    // Retorna o container para mensagens de erro
+    get container() {
+        return this.shadowRoot.querySelector('.campo');        
+    }
+
+    marcarErro(mensagem) {
+        const input = this.control; // Já pega o input automaticamente
+        const container = this.container; // Já pega a div .field-col automaticamente
+
+        if (!input || !container) return;
+
+        input.classList.remove("valid");
+        input.classList.add("invalid");
+
+        container.classList.add('has-error');
+        
+        let msgErro = container.querySelector('.error-message');
+        if (!msgErro) {
+            msgErro = document.createElement('span');
+            msgErro.className = 'error-message';
+            container.appendChild(msgErro);
+        }
+        msgErro.innerText = mensagem;
+    }
+
+    marcarSucesso() {
+        const input = this.control;
+        const container = this.container;
+
+        if (!input || !container) return;
+
+        input.classList.remove("invalid");
+        input.classList.add("valid");
+
+        container.classList.remove('has-error');
+        const msgErro = container.querySelector('.error-message');
+        if (msgErro) msgErro.remove();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // marcarErro(input, mensagem) {
+       
+    //     console.log("Chamou o marcar Erro...");        
+
+    //     const container = this.container;
+
+    //     console.log("---------------------------------------------------------");
+    //     console.log(container);
+    //     console.log("---------------------------------------------------------");
+
+    //     if (!input) return;
+
+    //     input.classList.remove("valid");
+    //     input.classList.add("invalid");
+       
+    //     if (container) {
+    //         container.classList.add('has-error');
+    //         let msgErro = container.querySelector('.error-message');
+    //         if (!msgErro) {
+    //             msgErro = document.createElement('span');
+    //             msgErro.className = 'error-message';
+    //             container.appendChild(msgErro);
+    //         }
+    //         msgErro.innerText = mensagem;
+    //     }
+    // }
+
+    // marcarSucesso() {
+    //     const input = this.control;
+    //     const container = this.container;
+
+    //     if (!input) return;
+
+    //     input.classList.remove("invalid");
+    //     input.classList.add("valid");
+
+    //     if (container) {
+    //         container.classList.remove('has-error');
+    //         const msgErro = container.querySelector('.error-message');
+    //         if (msgErro) msgErro.remove();
+    //     }
+    // }
+
+
 }
 customElements.define('base-input', Base_Field);
 

@@ -20,7 +20,7 @@ export function marcarErro(input, mensagem) {
     
     if (!input || !(input instanceof HTMLElement)) return;
 
-    const container = input.closest('.input-group');
+    const container = input.closest('.field-input');
 
     // 1. Troca as classes de sucesso por erro
     input.classList.remove("valid");
@@ -40,36 +40,36 @@ export function marcarErro(input, mensagem) {
     }
 }
 
-export async function inicializarTooltips() {
-    document.querySelectorAll('.info-question').forEach(icon => {
-        icon.addEventListener('mouseenter', () => {
-            const mensagem = icon.getAttribute('data-tooltip');
-            const container = icon.closest('.input-group');
+// export async function inicializarTooltips() {
+//     document.querySelectorAll('.info-question').forEach(icon => {
+//         icon.addEventListener('mouseenter', () => {
+//             const mensagem = icon.getAttribute('data-tooltip');
+//             const container = icon.closest('.input-group');
 
-            // Cria o tooltip se não existir
-            let tooltip = container.querySelector('.tooltip-container');
-            if (!tooltip) {
-                tooltip = document.createElement('div');
-                tooltip.className = 'tooltip-container';
-                tooltip.innerText = mensagem;
-                container.appendChild(tooltip);
-            }
+//             // Cria o tooltip se não existir
+//             let tooltip = container.querySelector('.tooltip-container');
+//             if (!tooltip) {
+//                 tooltip = document.createElement('div');
+//                 tooltip.className = 'tooltip-container';
+//                 tooltip.innerText = mensagem;
+//                 container.appendChild(tooltip);
+//             }
 
-            // Exibe com um pequeno frame de atraso para a animação
-            requestAnimationFrame(() => tooltip.classList.add('visible'));
-        });
+//             // Exibe com um pequeno frame de atraso para a animação
+//             requestAnimationFrame(() => tooltip.classList.add('visible'));
+//         });
 
-        icon.addEventListener('mouseleave', () => {
-            const container = icon.closest('.input-group');
-            const tooltip = container.querySelector('.tooltip-container');
-            if (tooltip) {
-                tooltip.classList.remove('visible');
-                // Remove do DOM após a transição para economizar memória
-                setTimeout(() => tooltip.remove(), 300);
-            }
-        });
-    });
-}
+//         icon.addEventListener('mouseleave', () => {
+//             const container = icon.closest('.input-group');
+//             const tooltip = container.querySelector('.tooltip-container');
+//             if (tooltip) {
+//                 tooltip.classList.remove('visible');
+//                 // Remove do DOM após a transição para economizar memória
+//                 setTimeout(() => tooltip.remove(), 300);
+//             }
+//         });
+//     });
+// }
 
 /**
  * Configura a lógica de mostrar/esconder senha para qualquer formulário.

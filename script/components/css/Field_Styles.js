@@ -89,6 +89,33 @@ field_style.replaceSync(`
             margin-right: 28px; /* Desloca o ícone do relógio para longe da borda direita */
             cursor: pointer;
         }
+
+         /* ===== 2 =====*/
+        input:focus {
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 2px rgba(175, 126, 23, 0.2);
+            outline: none;
+        }
+
+        /* ===== 4 =====*/
+        input.invalid {
+            border: 1px solid #ff4d4d !important;
+            background-color: #fffafa !important;
+        }
+
+        input.valid {
+            border: 1px solid #28a745 !important; 
+            background-color: #f8fff9 !important;
+        }
+
+        .error-message {
+            position: absolute;
+            top: 100%;
+            margin-top: 2px;   
+            left: 0px;    
+            font-size: 12px;
+            color: #ff4d4d;
+        }
        
                
 `);
