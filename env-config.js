@@ -1,4 +1,3 @@
-// Este arquivo NÃO será commitado
 export const ENV = {
     BASE_URL: "https://aad6a90435c4.ngrok-free.app"
 };
