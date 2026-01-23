@@ -45,7 +45,9 @@ export const translations = {
         ph_administracao_op1: "Federal",
         ph_administracao_op2: "Estadual",
         ph_administracao_op3: "Municipal",
-        ph_administracao_op4: "Particular",
+        ph_administracao_op4: "Privada",
+        ph_administracao_op5: "Público Privada",
+        ph_administracao_op6: "Particular",
         
         ph_estado_op0: "Selecione o estado",
 
@@ -97,7 +99,10 @@ export const translations = {
         ph_administracao_op1: "Federal",
         ph_administracao_op2: "Departamental",
         ph_administracao_op3: "Municipal",
-        ph_administracao_op4: "Privada",
+        ph_administracao_op4: "Privado",
+        ph_administracao_op5: "Público Privado",
+        ph_administracao_op6: "Individual",
+
 
         ph_estado_op0: "Seleccione el estado",
 
@@ -123,6 +128,154 @@ export function setLanguage(lang) {
     sessionStorage.setItem('lang', lang);
     applyTranslations();
 }
+
+
+
+export function applyTranslations(root = document) {
+    const tradutor = translations[currentLang];
+    if (!tradutor) return;
+
+    // 1. Traduz elementos no root atual (seja Document ou ShadowRoot)
+    const elements = root.querySelectorAll('[data-translate]');
+
+    elements.forEach(el => {
+        const key = el.getAttribute('data-translate');
+        const textoTraduzido = tradutor[key];
+
+        if (textoTraduzido) {
+            if (el.classList.contains('info-question')) {
+                el.setAttribute('data-tooltip', textoTraduzido);
+            } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = textoTraduzido;
+            } else if (el.tagName === 'SELECT') {
+                // Apenas ignora o SELECT para não sobrescrever o texto do pai
+                return; 
+            } else {
+                // Traduz Options, Labels, Botões, etc.
+                el.textContent = textoTraduzido;
+            }
+        }
+    });
+
+    // 2. SE o root for o document, precisamos entrar nos Shadow DOMs dos campos
+    if (root === document) {
+        // Busca todos os seus Custom Elements (Web Components)
+        const customFields = document.querySelectorAll('administracao-field, instituicao-field, municipio-field');
+        customFields.forEach(field => {
+            if (field.shadowRoot) {
+                // Chamada recursiva para traduzir o interior do componente
+                applyTranslations(field.shadowRoot);
+            }
+        });
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export function applyTranslations(root = document) {
+//     const tradutor = translations[currentLang];
+//     if (!tradutor) return;
+
+//     const elements = root.querySelectorAll('[data-translate]');
+
+//     elements.forEach(el => {
+//         const key = el.getAttribute('data-translate');
+//         const textoTraduzido = tradutor[key];
+
+//         if (textoTraduzido) {
+//             // 1. Ícones/Tooltips
+//             if (el.classList.contains('info-question')) {
+//                 el.setAttribute('data-tooltip', textoTraduzido);
+//                 return;
+//             }
+
+//             // 2. Inputs/Textarea
+//             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+//                 el.placeholder = textoTraduzido;
+//             } 
+//             // 3. SELECT - REMOVA O TRATAMENTO DE OPTIONS[0] AQUI
+//             // Deixe que as <option> sejam traduzidas individualmente pelo 'else' abaixo
+//             else if (el.tagName === 'SELECT') {
+//                 // Não fazemos nada no SELECT pai, apenas deixamos o loop continuar para os filhos
+//                 return;
+//             } 
+//             // 4. TEXTOS GERAIS (Labels e as <option> do seu renderControl)
+//             else {
+//                 el.textContent = textoTraduzido;
+//             }
+//         }
+//     });
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // export function applyTranslations() {
 //     const elements = document.querySelectorAll('[data-translate]');
@@ -168,56 +321,56 @@ export function setLanguage(lang) {
 //     });
 // }
 
-/**
- * Aplica as traduções nos elementos da página ou de um componente específico.
- * @param {Document|ShadowRoot} root - O ponto de partida para a busca (default: document)
- */
-export function applyTranslations(root = document) {
+// /**
+//  * Aplica as traduções nos elementos da página ou de um componente específico.
+//  * @param {Document|ShadowRoot} root - O ponto de partida para a busca (default: document)
+//  */
+// export function applyTranslations(root = document) {
    
-    const tradutor = translations[currentLang];
+//     const tradutor = translations[currentLang];
     
-    // Se o dicionário não existir para o idioma atual, interrompe a execução
-    if (!tradutor) {
-        console.warn(`Traduções não encontradas para o idioma: ${currentLang}`);
-        return;
-    }
+//     // Se o dicionário não existir para o idioma atual, interrompe a execução
+//     if (!tradutor) {
+//         console.warn(`Traduções não encontradas para o idioma: ${currentLang}`);
+//         return;
+//     }
 
-    // Busca apenas dentro do 'root' fornecido (crucial para Web Components)
-    const elements = root.querySelectorAll('[data-translate]');
+//     // Busca apenas dentro do 'root' fornecido (crucial para Web Components)
+//     const elements = root.querySelectorAll('[data-translate]');
 
-    elements.forEach(el => {
-        const key = el.getAttribute('data-translate');
-        const textoTraduzido = tradutor[key];
+//     elements.forEach(el => {
+//         const key = el.getAttribute('data-translate');
+//         const textoTraduzido = tradutor[key];
 
-        // Só aplica se houver uma tradução definida para aquela chave
-        if (textoTraduzido) {
+//         // Só aplica se houver uma tradução definida para aquela chave
+//         if (textoTraduzido) {
             
-            // 1. TRATAMENTO PARA ÍCONES/TOOLTIPS
-            if (el.classList.contains('info-question')) {
-                el.setAttribute('data-tooltip', textoTraduzido);
-                el.textContent = ''; 
-                return; 
-            }
+//             // 1. TRATAMENTO PARA ÍCONES/TOOLTIPS
+//             if (el.classList.contains('info-question')) {
+//                 el.setAttribute('data-tooltip', textoTraduzido);
+//                 el.textContent = ''; 
+//                 return; 
+//             }
 
-            // 2. TRATAMENTO PARA INPUTS E TEXTAREAS
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                el.placeholder = textoTraduzido;
-            } 
+//             // 2. TRATAMENTO PARA INPUTS E TEXTAREAS
+//             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+//                 el.placeholder = textoTraduzido;
+//             } 
             
-            // 3. TRATAMENTO PARA SELECTS (Primeira opção/Placeholder)
-            else if (el.tagName === 'SELECT') {
-                if (el.options.length > 0) {
-                    el.options[0].textContent = textoTraduzido;
-                }
-            } 
+//             // 3. TRATAMENTO PARA SELECTS (Primeira opção/Placeholder)
+//             else if (el.tagName === 'SELECT') {
+//                 if (el.options.length > 0) {
+//                     el.options[0].textContent = textoTraduzido;
+//                 }
+//             } 
             
-            // 4. TRATAMENTO PARA TEXTOS GERAIS (Labels, H1, Botões, Spans)
-            else {
-                el.textContent = textoTraduzido;
-            }
-        }
-    });
-}
+//             // 4. TRATAMENTO PARA TEXTOS GERAIS (Labels, H1, Botões, Spans)
+//             else {
+//                 el.textContent = textoTraduzido;
+//             }
+//         }
+//     });
+// }
 
 
 

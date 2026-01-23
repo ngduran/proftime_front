@@ -24,7 +24,8 @@ class Administracao_Field extends Base_Field {
         this.configurarValidacao();
     }
 
-    renderControl(p) {       
+    renderControl(p) {   
+        
         return `<div class="campo">
                     <label class="field-label"  for="${p.id}" data-translate="${p.data_translate_label}">${p.label}</label>
                     <i class="${p.icon_question}" data-tooltip="${p.data_tooltip_balao}" data-translate="${p.data_translate_tooltip}"></i>
@@ -32,12 +33,13 @@ class Administracao_Field extends Base_Field {
                         autocomplete="off" ${p.is_required}>
                         <option value="" data-translate="${p.data_translate_op}">${p.placeholder}</option>
 
-                        <option value="FEDERAL">Federal</option>
-                        <option value="ESTADUAL">Estadual</option>
-                        <option value="MUNICIPAL">Municipal</option>
-                        <option value="PRIVADA">Privada</option>
-                        <option value="PUBLICO_PRIVADA">Público Privada</option>
-                        <option value="PARTICULAR">Particular</option>
+                        <option value="Federal"         data-translate="${p.data_translate_op1}"></option>
+                        <option value="Estadual"        data-translate="${p.data_translate_op2}"></option>
+                        <option value="Municipal"       data-translate="${p.data_translate_op3}"></option>
+                        <option value="Privada"         data-translate="${p.data_translate_op4}"></option>
+                        <option value="Publico_Privada" data-translate="${p.data_translate_op5}"></option>
+                        <option value="Particular"      data-translate="${p.data_translate_op6}"></option>
+                        
                     </select>
                     <button type="button" class="edit-button">
                         <i class="${p.icon_edicao}"></i>
@@ -45,6 +47,21 @@ class Administracao_Field extends Base_Field {
                 </div>
         `;       
     }
+
+
+    // No seu renderControl
+    // <option value="Federal" data-translate="${p.data_translate_op1}">
+    //     ${getTranslation(p.data_translate_op1)} 
+    // </option>
+
+
+    // <option value="Federal"         data-translate="${this.getAttribute('data-translate_op1') || ''}"></option>
+    // <option value="Estadual"        data-translate="${this.getAttribute('data-translate_op2') || ''}"></option>
+    // <option value="Municipal"       data-translate="${this.getAttribute('data-translate_op3') || ''}"></option>
+    // <option value="Privada"         data-translate="${this.getAttribute('data-translate_op4') || ''}"></option>
+    // <option value="Publico_Privada" data-translate="${this.getAttribute('data-translate_op5') || ''}"></option>
+    // <option value="Particular"      data-translate="${this.getAttribute('data-translate_op6') || ''}"></option>
+
 
     // Utilizado pelo formulário page intituicao.js
     // Sobrescreve o validar do Bae_Field

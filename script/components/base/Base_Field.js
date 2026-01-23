@@ -54,34 +54,57 @@ export class Base_Field extends HTMLElement {
     }
 
 
-
-
-   async render() {
+    async render() {
+        // 1. Criamos um objeto com os valores padrão que você já usa
         const props = {
-            label                  : this.getAttribute('label') || '',
-            data_translate_label   : this.getAttribute('data-translate_label') || '',
-            id                     : this.getAttribute('id') || '',
-            name                   : this.getAttribute('name') || '',
-            icon_question          : this.getAttribute('icon-question') || '',
-            data_translate_ph      : this.getAttribute('data_translate_ph') || '',
-            data_tooltip_balao     : this.getAttribute('data-tooltip_balao') || '',
-            data_translate_tooltip : this.getAttribute('data-translate-tooltip') || '',
-            data_translate_op      : this.getAttribute('data-translate_op') || '',
-            placeholder            : this.getAttribute('placeholder') || '',
-            icon_edicao            : this.getAttribute('icon-edicao') || '',
-            is_required            : this.hasAttribute('required') ? 'required' : ''
+            is_required: this.hasAttribute('required') ? 'required' : ''
+        };
+
+        // 2. Automatizamos a captura de TODOS os atributos do componente
+        // Isso transforma 'data-translate_op1' em 'data_translate_op1' no objeto props
+        for (let attr of this.attributes) {
+            const propName = attr.name.replace(/-/g, '_'); 
+            props[propName] = attr.value;
         }
+
+        // Agora o props já contém data_translate_op1, op2, etc., automaticamente!
         
         this.shadowRoot.innerHTML = `            
             <style>
                 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
             </style>
-            
-            ${this.renderControl(props)}        
-           
+            ${this.renderControl(props)}           
         `;
-        
     }
+
+
+
+//    async render() {
+//         const props = {
+//             label                  : this.getAttribute('label') || '',
+//             data_translate_label   : this.getAttribute('data-translate_label') || '',
+//             id                     : this.getAttribute('id') || '',
+//             name                   : this.getAttribute('name') || '',
+//             icon_question          : this.getAttribute('icon-question') || '',
+//             data_translate_ph      : this.getAttribute('data_translate_ph') || '',
+//             data_tooltip_balao     : this.getAttribute('data-tooltip_balao') || '',
+//             data_translate_tooltip : this.getAttribute('data-translate-tooltip') || '',
+//             data_translate_op      : this.getAttribute('data-translate_op') || '',
+//             placeholder            : this.getAttribute('placeholder') || '',
+//             icon_edicao            : this.getAttribute('icon-edicao') || '',
+//             is_required            : this.hasAttribute('required') ? 'required' : ''
+//         }
+        
+//         this.shadowRoot.innerHTML = `            
+//             <style>
+//                 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+//             </style>
+            
+//             ${this.renderControl(props)}        
+           
+//         `;
+        
+//     }
 
 
     // Retorna o elemento de controle interno (input, select ou textarea)

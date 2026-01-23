@@ -9,11 +9,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="container">
-        <div class="form-card">
-            <h1 class="header-title">Login</h1>
+   
 
             <form id="loginForm" autocomplete="off">
+
+
+                <div class="field-container">
+                    <div class="field-group col-0">
+                        <div class="field-col">
+                            <h1 class="header-title">Login</h1>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col posicao-end">
+                    <button type="button" id="btn-pt" class="lang-btn active">
+                            <img class="icon-flag" src="../asset/icon/bandeira-do-brasil.png" alt="Bandeira do Brasil">
+                        </button>                   
+                        <button type="button" id="btn-es" class="lang-btn">
+                            <img class="icon-flag" src="../asset/icon/paraguai.png" alt="Bandeira do Paraguai">
+                        </button> 
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
                 <label for="email">Email</label>
                 <div class="input-group">
                     <input type="email" id="email" name="email" placeholder="seu@email.com" required>
@@ -46,8 +72,7 @@
 				</div>
 
 			</form>
-        </div>
-    </div>
+     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script type="module" src="../script/pages/login.js"></script>
 </body>
