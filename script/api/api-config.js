@@ -1,7 +1,7 @@
 import { ENV } from '../../env-config.js'
 
-//const BASE_URL = ENV.BASE_URL;
-const BASE_URL = "https://aad6a90435c4.ngrok-free.app";
+const BASE_URL = ENV.BASE_URL;
+//const BASE_URL = "https://aad6a90435c4.ngrok-free.app";
 
 const R_USUARIO         = "/usuario";
 const R_CONTA           = "/conta";
