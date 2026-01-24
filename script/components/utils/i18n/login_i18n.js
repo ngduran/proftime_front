@@ -1,127 +1,146 @@
-//let currentLanguage = 'pt';
-
+// Recupera o idioma salvo ou define o padrão
 let currentLang = sessionStorage.getItem('lang') || 'pt';
 
 export const translations = {
     pt: {
-        // Títulos e Labels
         lbl_titulo: "Login",
         lbl_email: "Email",
         lbl_senha: "Senha",
         lbl_mostrar_senha: "Mostrar Senha",
-
-        // Botões e Links
         btn_entrar: "Entrar",
         btn_criar_conta: "Criar Conta",
         link_esqueceu_senha: "Esqueceu a senha?",
         link_reenviar_email: "Reenviar email",
-
-        // Placeholders
         ph_email: "seu_melhor_email@mail.com",
         ph_senha: "Digite sua senha",
-
-        // Tooltips (Ícones de interrogação)
         tp_lbl_email: "Email utilizado para acessar o aplicativo",
         tp_lbl_senha: "Senha utilizada para acessar o aplicativo. Mínimo de 8 caracteres, com letra maiúscula, minúscula, número e caractere especial (!@#$).",
-
-        // Validações e Erros (Opcional, mas útil)
         err_email_invalido: "Por favor, insira um e-mail válido.",
         err_senha_fraca: "A senha deve conter: Maiúscula, Minúscula, Número, Símbolo e 8+ caracteres."
     },
     es: {
-        // Títulos e Labels
         lbl_titulo: "Iniciar Sesión",
         lbl_email: "Correo electrónico",
         lbl_senha: "Contraseña",
         lbl_mostrar_senha: "Mostrar contraseña",
-
-        // Botões e Links
-        btn_entrar: "Entrar",
+        btn_entrar: "Para entrar",
         btn_criar_conta: "Crear cuenta",
         link_esqueceu_senha: "¿Olvidaste tu contraseña?",
         link_reenviar_email: "Reenviar correo electrónico",
-
-        // Placeholders
         ph_email: "tu_mejor_correo@mail.com",
         ph_senha: "Introduce tu contraseña",
-
-        // Tooltips
         tp_lbl_email: "Correo electrónico utilizado para acceder a la aplicación",
         tp_lbl_senha: "Contraseña utilizada para acceder a la aplicación. Mínimo 8 caracteres, con mayúsculas, minúsculas, números y caracteres especiales.",
-
         err_email_invalido: "Por favor, introduce un correo electrónico válido.",
         err_senha_fraca: "La contraseña debe contener: Mayúsculas, Minúsculas, Números, Símbolos y más de 8 caracteres."
     }
 };
 
-export function changeLanguage(newLang) {    
-    currentLang = newLang; // Atualiza sua variável global de idioma
+/**
+ * Altera o idioma global, salva e avisa os componentes.
+ */
+export function changeLanguage(newLang) {
+   
+    currentLang = newLang;
+    sessionStorage.setItem('lang', newLang); 
     
-    // 1. Traduz o que está fora do Shadow DOM (Light DOM)
-    applyTranslations(); 
+    // Traduz o Light DOM (o que não é Web Component)
+    applyTranslations(document);
 
-    // 2. Dispara um evento global para os Web Components (Shadow DOM)
+    
+    // Dispara o evento para os Shadow DOMs se auto-atualizarem
     const event = new CustomEvent('languageChanged', { 
         detail: { lang: newLang },
         bubbles: true, 
-        composed: true // Permite que o evento atravesse as fronteiras do Shadow DOM
+        composed: true 
     });
+    //console.log(`%c [Transmissor] Disparando evento languageChanged para: ${newLang}`, "color: blue; font-weight: bold;");
     window.dispatchEvent(event);
+    
 }
 
-// Inicialização automática ao carregar o script
-document.addEventListener('DOMContentLoaded', () => {
-    changeLanguage('pt'); 
-});
-
-export function getTranslation(key) {
-    return translations[currentLang][key] || key;
-}
-
-export function setLanguage(lang) {
-    currentLang = lang;
-    sessionStorage.setItem('lang', lang);
-    applyTranslations();
-}
-
-
-
+/**
+ * Aplica as traduções em um determinado escopo (document ou shadowRoot).
+ */
 export function applyTranslations(root = document) {   
+
     const tradutor = translations[currentLang];
     if (!tradutor) return;
 
-    // 1. Traduz elementos no root atual (seja Document ou ShadowRoot)
+    // 1. RASTREIO: Qual idioma a função acha que deve usar agora?
+    //console.log(`%c >>> [applyTranslations] Idioma Ativo: ${currentLang}`, 'background: #000; color: #fff; padding: 2px 5px;');
+
+    // 1. RASTREIO DE ALVO: Quem é a raiz da busca?
+    //const alvoBusca = root === document ? "Documento (Lado de fora)" : (root instanceof ShadowRoot ? "ShadowRoot (Lado de dentro)" : root.tagName);
+    
+    // 2. RASTREIO DE QUANTIDADE: Quantos elementos com data-translate existem aqui?
     const elements = root.querySelectorAll('[data-translate]');
+    
+    //console.log(`%c [Passo 5] Executando em: ${alvoBusca} | Elementos encontrados: ${elements.length}`, "color: #e67e22; font-weight: bold;");
 
-    elements.forEach(el => {
+    elements.forEach((el, index) => {
         const key = el.getAttribute('data-translate');
-        const textoTraduzido = tradutor[key];
+        console.log(`   -> Alvo ${index + 1}: <${el.tagName.toLowerCase()}> | Chave: ${key}`);
+        
+        // const texto = tradutor[key];
+        // if (texto) {
+        //     if (el.tagName === 'INPUT') el.placeholder = texto;
+        //     else el.textContent = texto;
+        // }
 
-        if (textoTraduzido) {
-            if (el.classList.contains('info-question')) {
-                el.setAttribute('data-tooltip', textoTraduzido);
-            } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                el.placeholder = textoTraduzido;
-            } else if (el.tagName === 'SELECT') {
-                // Apenas ignora o SELECT para não sobrescrever o texto do pai
-                return; 
+
+        // Dentro do loop elements.forEach em applyTranslations
+        const texto = tradutor[key];
+        if (texto) {
+            if (el.tagName === 'INPUT') {
+                el.placeholder = texto;
+            } else if (el.hasAttribute('data-tooltip')) {
+                // CORREÇÃO: Traduz o atributo de dica em vez de inserir texto no HTML
+                el.setAttribute('data-tooltip', texto);
+                
+                // Se você usa o TooltipManager, talvez precise reinicializá-lo
+                //TooltipManager.update(el, texto); 
             } else {
-                // Traduz Options, Labels, Botões, etc.
-                el.textContent = textoTraduzido;
+                el.textContent = texto;
             }
         }
-    });
 
-    // 2. SE o root for o document, precisamos entrar nos Shadow DOMs dos campos
-    if (root === document) {
-        // Busca todos os seus Custom Elements (Web Components)
-        const customFields = document.querySelectorAll('email-field, senha-field');
-        customFields.forEach(field => {
-            if (field.shadowRoot) {
-                // Chamada recursiva para traduzir o interior do componente
-                applyTranslations(field.shadowRoot);
-            }
-        });
-    }
 
+
+
+    });    
+
+    // const elements = root.querySelectorAll('[data-translate]');
+
+    // console.log("==========================================================");
+    // console.log(elements);
+    // console.log("==========================================================");
+
+    // elements.forEach(el => {
+    //     const key = el.getAttribute('data-translate');
+    //     const texto = tradutor[key];
+        
+    //     console.log("---------------------------------------------------------");
+    //     console.log("key ----> " + key);
+    //     console.log("texto --> " + texto);
+    //     console.log("---------------------------------------------------------");
+
+    //     if (texto) {
+    //         // Lógica específica por tipo de elemento
+    //         if (el.classList.contains('info-question')) {
+    //             el.setAttribute('data-tooltip', texto);
+    //         } else if (['INPUT', 'TEXTAREA'].includes(el.tagName)) {
+    //             el.placeholder = texto;
+    //         } else if (el.tagName !== 'SELECT') {
+    //             el.textContent = texto;
+    //         }
+    //     }
+    // });
+}
+
+/**
+ * Função utilitária para buscar uma tradução específica via código.
+ */
+export function getTranslation(key) {
+    return translations[currentLang][key] || key;
 }

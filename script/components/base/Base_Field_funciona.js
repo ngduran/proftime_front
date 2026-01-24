@@ -1,38 +1,53 @@
 import { field_style } from '../css/Field_Styles.js';
 import { TooltipManager } from '../utils/TooltipManager.js';
 import { EditionManager } from '../utils/EditionManager.js';
-import { applyTranslations } from '../utils/i18n/login_i18n.js';
+import { applyTranslations } from '../utils/i18n/login_i18n.js'; // Importe o tradutor aqui
 
 export class Base_Field extends HTMLElement {
     
     constructor() {
-        
         super();
-
         if (!this.shadowRoot) {
             this.attachShadow({ mode: 'open' });
-        }
-
+        }       
         this.shadowRoot.adoptedStyleSheets = [field_style];
-                
-        this._handleLanguageChange = (e) => {
-            const novoIdioma = e.detail?.lang || e.detail;
-            //console.log(`%c [AÇÃO] <${this.tagName.toLowerCase()}> traduzindo para: ${novoIdioma}`, "background: #27ae60; color: #fff");
+        
+        // Referência estável da função para o EventListener
+        // Usamos .bind(this) para que o 'this' dentro da função seja sempre o componente
+        this._handleLanguageChange = () => {
+            console.log(`Componente ${this.tagName} reagindo à mudança de idioma...`);
             applyTranslations(this.shadowRoot); 
         };
     }
 
+    /**
+     * Ciclo de vida: Chamado quando o componente entra no DOM
+     */
     connectedCallback() {
-        //console.log(`%c [Receptor] Ativando ouvido em: <${this.tagName.toLowerCase()}>`, "color: #9b59b6");        
-        window.addEventListener('languageChanged', this._handleLanguageChange);
         
-        // O render() já chama o applyTranslations internamente via queueMicrotask
-        this.render(); 
+        console.log(`%c [Receptor] Ativando ouvido em: <${this.tagName.toLowerCase()}>`, "color: #9b59b6");
+
+
+        // 1. Escuta o evento global de troca de idioma
+        window.addEventListener('languageChanged', this._handleLanguageChange = (e) => {
+
+            console.log(`%c [Passo 6] Componente <${this.tagName.toLowerCase()}> recebeu sinal de mudança para: ${e.detail}`, "background: #2ecc71; color: #000; font-weight: bold;");
+            console.log(`%c [AÇÃO] O componente <${this.tagName.toLowerCase()}> ouviu o sinal! Traduzindo...`, "background: #27ae60; color: #fff");
+
+            // RASTREIO: Ele vai tentar se traduzir agora?
+            console.log(`   -> Chamando applyTranslations para meu próprio ShadowRoot...`);
+            
+            // --- ESTA LINHA É A QUE ESTAVA FALTANDO ---
+            applyTranslations(this.shadowRoot);
+        });
     }
 
-    disconnectedCallback() {        
+    /**
+     * Ciclo de vida: Chamado quando o componente sai do DOM (Faxina)
+     */
+    disconnectedCallback() {
+        // 2. Remove o ouvinte para evitar Memory Leaks
         window.removeEventListener('languageChanged', this._handleLanguageChange);
-        //console.log(`%c [Faxina] Ouvido removido de: <${this.tagName.toLowerCase()}>`, "color: #e74c3c");
     }
    
     setupBase() { }
@@ -83,15 +98,33 @@ export class Base_Field extends HTMLElement {
     }
 
     async render() {
-        const props = {
-            is_required: this.hasAttribute('required') ? 'required' : ''
-        };
+            const props = {
+                is_required: this.hasAttribute('required') ? 'required' : ''
+            };
         
-        //console.log(`%c >>> Lendo atributos de: <${this.tagName.toLowerCase()}>`, 'color: blue; font-weight: bold;');
+
+        console.log(`%c >>> Lendo atributos de: <${this.tagName.toLowerCase()}>`, 'color: blue; font-weight: bold;');
+
+
         for (let attr of this.attributes) {
             const propName = attr.name.replace(/-/g, '_'); 
-            props[propName] = attr.value;            
+            props[propName] = attr.value;
+
+            // DEBUG: Se o label não traduz, veja se este log mostra a chave correta
+            // if (propName.includes('translate')) {
+            //     console.log(`Atributo mapeado: ${propName} = ${attr.value}`);
+            // }
+
+            // Este log mostra cada atributo saindo do HTML e entrando no objeto 'p' (props)
+            //console.log(`   [Mapeamento]: Atributo HTML "${attr.name}" -> Propriedade Objeto "${propName}" = "${attr.value}"`);
         }
+
+        // Verifica se a chave de tradução do label foi capturada
+        // if (!props.data_translate_label) {
+        //     console.warn(`   [ALERTA]: A propriedade "data_translate_label" não foi encontrada em <${this.tagName.toLowerCase()}>!`);
+        // } else {
+        //     console.log("A chave foi capturada --> " + props.data_translate_label);
+        // }
         
         this.shadowRoot.innerHTML = `            
             <style>
@@ -100,7 +133,11 @@ export class Base_Field extends HTMLElement {
             
             ${this.renderControl(props)}           
         `;
-      
+        
+        
+        // 3. Tradução imediata após o render
+        //applyTranslations(this.shadowRoot);
+
         queueMicrotask(() => {
             applyTranslations(this.shadowRoot);
         });

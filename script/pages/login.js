@@ -2,111 +2,41 @@ import { changeLanguage } from "../components/utils/i18n/login_i18n.js";
 
 const formLogin = document.getElementById('loginForm');
 
-document.addEventListener('DOMContentLoaded', () => {   
-    // Vincular cliques
-    document.getElementById('btn-pt').addEventListener('click', () => {         
+document.addEventListener('DOMContentLoaded', () => {       
+    
+    document.getElementById('btn-pt').addEventListener('click', () => {
+        //console.log("%c --- CLIQUE NO BOTÃO ESPANHOL ---", "background: #ff0000; color: #fff; font-weight: bold;");
+    
+        // RASTREIO: Antes de traduzir, vamos ver se o componente de email está acessível
+        //const emailField = document.querySelector('email-field');
+        //console.log("Componente encontrado no DOM:", emailField);
+        //console.log("Existe ShadowRoot nele?", emailField ? !!emailField.shadowRoot : "Não");
         changeLanguage('pt');
     });
     
-    document.getElementById('btn-es').addEventListener('click', () => {        
+    document.getElementById('btn-es').addEventListener('click', () => {
+        //console.log("%c --- CLIQUE NO BOTÃO ESPANHOL ---", "background: #ff0000; color: #fff; font-weight: bold;");
+    
+        // RASTREIO: Antes de traduzir, vamos ver se o componente de email está acessível
+        //const emailField = document.querySelector('email-field');
+        //console.log("Componente encontrado no DOM:", emailField);
+        //console.log("Existe ShadowRoot nele?", emailField ? !!emailField.shadowRoot : "Não");
+
         changeLanguage('es')        
     });
-});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { efetuarLogin } from "../services/api_service.js";
-// import { bloquearButton, coletarDadosForm } from "../utils/form-helper.js";
-// import { validarEmail, validarForcaSenha } from "../utils/validador.js";
-// import { configurarMostrarSenha, inicializarTooltips } from "../utils/dom-utils.js"
-
-// inicializarTooltips();
-// configurarMostrarSenha('mostrarSenha', ['senha', 'confirmarSenha']);
-
-// async function logar() {
+    // Este código deve ficar FORA de qualquer outra função, no final do arquivo
+    //window.addEventListener('languageChanged', (event) => { // 'event' agora está definido aqui
+    //console.log("%c [PROVA ABSOLUTA] O evento chegou na Window!", "background: #00ff00; color: #000; font-weight: bold;");
     
-//     if ( !validarEmail()                 ) { return; }
-//     if ( !validarForcaSenha()            ) { return; }
+    // Verificando a estrutura do que foi recebido
+    // if (event.detail) {
+    //     console.log("Conteúdo do detail:", event.detail);
+    //     const idiomaRecebido = event.detail.lang || event.detail; 
+    //     console.log(`Sucesso: O sistema notificou a mudança para: ${idiomaRecebido}`);
+    // } else {
+    //     console.warn("O evento chegou, mas o 'detail' está vazio.");
+    // }
 
-//     try {
 
-//         bloquearButton("loginBtn", "Logando...");
-
-//         const dados = coletarDadosForm("loginForm");
-
-//         const response = await efetuarLogin(dados);
-
-//         const resultado = response.ok 
-//                     ? await lerRespostaSucesso(response) 
-//                     : await lerRespostaErro(response);
-                    
-//         if (response.ok) {
-                   
-//             if (resultado?.uuid) { SessionManager.salvar("token_uuid", resultado.uuid); }       
-
-//             await Mensagem.sucesso("Login efetuado com sucesso!");          
-
-//             navegarPara("login");            
-            
-//         } else {
-            
-//             const mensagemFinal = typeof resultado === 'object' 
-//                 ? (resultado.message || "Erro no servidor") 
-//                 : resultado;
-
-//             await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
-//         }
-
-//     } catch (error) {
-
-//     } finally {
-
-//     }
-
-// }
-
-// document.getElementById('email'     ).addEventListener('blur', validarEmail      );
-// document.getElementById('senha'     ).addEventListener('blur', validarForcaSenha );
-
-// document.getElementById('loginBtn'  ).addEventListener('click', logar            );
+});
