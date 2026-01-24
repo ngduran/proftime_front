@@ -15,12 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     document.getElementById('btn-es').addEventListener('click', () => {
-        //console.log("%c --- CLIQUE NO BOTÃO ESPANHOL ---", "background: #ff0000; color: #fff; font-weight: bold;");
+        console.log("%c --- CLIQUE NO BOTÃO ESPANHOL ---", "background: #ff0000; color: #fff; font-weight: bold;");
     
         // RASTREIO: Antes de traduzir, vamos ver se o componente de email está acessível
-        //const emailField = document.querySelector('email-field');
-        //console.log("Componente encontrado no DOM:", emailField);
-        //console.log("Existe ShadowRoot nele?", emailField ? !!emailField.shadowRoot : "Não");
+        const emailField = document.querySelector('email-field');
+        console.log("Componente encontrado no DOM:", emailField);
+        console.log("Existe ShadowRoot nele?", emailField ? !!emailField.shadowRoot : "Não");
 
         changeLanguage('es')        
     });

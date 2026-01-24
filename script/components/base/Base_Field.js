@@ -18,7 +18,14 @@ export class Base_Field extends HTMLElement {
         this._handleLanguageChange = (e) => {
             const novoIdioma = e.detail?.lang || e.detail;
             //console.log(`%c [AÇÃO] <${this.tagName.toLowerCase()}> traduzindo para: ${novoIdioma}`, "background: #27ae60; color: #fff");
-            applyTranslations(this.shadowRoot);           
+            //applyTranslations(this.shadowRoot);
+            // Captura o que vem do evento
+    
+            // 1. Grava no sessionStorage (dura apenas enquanto a aba estiver aberta)
+            sessionStorage.setItem('official_language', novoIdioma);
+
+            console.log(`%c [SESSÃO] Idioma salvo: ${novoIdioma}`, "background: #2c3e50; color: #fff; padding: 2px;");
+            this.translate(novoIdioma);
         };
     }
 

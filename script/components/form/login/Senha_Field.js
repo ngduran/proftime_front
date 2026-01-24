@@ -102,7 +102,58 @@ class Senha_Field extends Base_Field {
         // 4. Caso passe, marca sucesso usando a estrutura da base
         this.marcarSucesso();
         return true;
-    }    
+    }
+    
+    static i18n = {
+        pt: {
+            label: "Senha",
+            placeholder: "Digite sua senha",
+            label_mostrar: "Mostrar Senha",
+            tooltip: "Senha utilizada para acessar o aplicativo. Mínimo de 8 caracteres, com letra maiúscula, minúscula, número e caractere especial (!@#$).",
+            erro: "A senha deve conter: Maiúscula, Minúscula, Número, Símbolo e 8+ caracteres."
+        },
+        es: {
+            label: "Contraseña",
+            placeholder: "Introduce tu contraseña",
+            label_mostrar: "Mostrar contraseña",
+            tooltip: "Contraseña utilizada para acceder a la aplicación. Mínimo 8 caracteres, con mayúsculas, minúsculas, números y caracteres especiales.",
+            erro: "La contraseña debe contener: Mayúsculas, Minúsculas, Números, Símbolos y más de 8 caracteres."
+        }
+    };
+
+    translate(lang) {
+        console.log("%c [Tradução] Email_Field executando translate", "color: #b70cce; font-weight: bold; border: 1px solid #b70cce; padding: 2px;");
+        
+        // Se o filho (ex: Email_Field) tiver o método updateLabels, ele executa.
+        if (typeof this.updateLabels === 'function') {
+            this.updateLabels(lang);
+        }
+    }
+
+    updateLabels(lang) {
+       
+        // 1. Recupera o idioma atual (ajuste conforme seu sistema de troca de idiomas)
+        //const lang = localStorage.getItem('selectedLanguage') || 'pt';
+        
+        // LINHA DE LOG PARA VERIFICAÇÃO
+        //console.log(`%c [Tradução] Email_Field executando updateLabels para: ${lang.toUpperCase()}`, "color: #00ff00; font-weight: bold; border: 1px solid #00ff00; padding: 2px;");
+        
+        const t = Email_Field.i18n[lang];
+
+        if (!t) return;
+
+        // 2. Localiza os elementos dentro do Shadow DOM
+        const label = this.shadowRoot.querySelector('.field-label');
+        const input = this.shadowRoot.querySelector('.field-input');
+        const icon  = this.shadowRoot.querySelector('.info-question');
+
+        // 3. Aplica as traduções específicas deste campo
+        if (label) label.innerText = t.lbl_email;
+        if (input) input.placeholder = t.ph_email;
+        
+        // 4. Sincroniza o tooltip (o Manager lerá este atributo depois)
+        if (icon) icon.setAttribute('data-tooltip', t.tp_lbl_email);
+    }
         
 }
 

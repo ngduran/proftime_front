@@ -10,65 +10,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="container">
-        <div class="form-card">
-            <h1 class="header-title">Conta Prof Time </h1>
 
-            <form id="conta/Form" autocomplete="off">
-                <label for="nome">Nome Completo</label>
-                <div class="input-group">
-                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>                    
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome utilizado para identificação"></i>                    
-                    <span class="info-icon" title="Obrigatório"></span>
-                </div>              
-
-                <label for="usuario">Nome de usuário</label>
-                <div class="input-group">
-                    <input type="text" id="usuario" name="usuario" placeholder="Crie um usuario" required>                    
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Nome para facilitar o seu acesso. Comece com uma letra. Use apenas minúsculas, números"></i>                    
-                    <span class="info-icon" title="Obrigatório"></span>
+    <form id="contaForm" class="form-container" autocomplete="off">
+        <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col">
+                    <h1 class="header-title" data-translate="lbl_titulo">Conta</h1>
                 </div>
-
-                <label for="email">EMAIL</label>
-                <div class="input-group">
-                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Email utilizado para acessar o aplicativo"></i>
-                    <span class="info-icon" title="Obrigatório"></span>
-                </div> 
-
-                <label for="telefone">Telefone</label>
-                <div class="input-group">
-                    <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" maxlength="15">
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="O colégio necessita para contato"></i>
-                    <span class="info-icon" title="Obrigatório"></span>
-                </div>
-
-                <label for="senha">Senha</label>
-                <div class="input-group">
-                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Senha utilizada para acessar o aplicativo. Mínimo de 8 caracteres, com letra maiúscula, minúscula, número e caractere especial (!@#$)."></i>
-                    <span class="info-icon" title="Obrigatório"></span>
-                </div>
-
-                <label for="confirmarSenha">Confirmar Senha</label>
-                <div class="input-group">
-                    <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Confirme sua senha" required>
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Senha utilizada para acessar o aplicativo. Mínimo de 8 caracteres, com letra maiúscula, minúscula, número e caractere especial (!@#$)."></i>
-                    <span class="info-icon" title="Obrigatório"></span>
-                </div>
-
-                <div class="checkbox-group">
-                    <input type="checkbox" id="mostrarSenha">                
-                    <label for="mostrarSenha">Mostrar Senha</label>
-                </div>
-
-                <div class="button-group">
-                    <button type="button" id="cadastrarBtn" class="cta-button">Criar Conta</button>    
-                    <button type="button" id="voltarBtn"    class="cta-button">Voltar ao Inicio</button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script type="module" src="../script/pages/conta.js"></script>
 </body>
