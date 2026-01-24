@@ -1,54 +1,112 @@
-import { efetuarLogin } from "../services/api_service.js";
-import { bloquearButton, coletarDadosForm } from "../utils/form-helper.js";
-import { validarEmail, validarForcaSenha } from "../utils/validador.js";
-import { configurarMostrarSenha, inicializarTooltips } from "../utils/dom-utils.js"
+import { changeLanguage } from "../components/utils/i18n/login_i18n.js";
 
-inicializarTooltips();
-configurarMostrarSenha('mostrarSenha', ['senha', 'confirmarSenha']);
+const formLogin = document.getElementById('loginForm');
 
-async function logar() {
+document.addEventListener('DOMContentLoaded', () => {   
+    // Vincular cliques
+    document.getElementById('btn-pt').addEventListener('click', () => {         
+        changeLanguage('pt');
+    });
     
-    if ( !validarEmail()                 ) { return; }
-    if ( !validarForcaSenha()            ) { return; }
+    document.getElementById('btn-es').addEventListener('click', () => {        
+        changeLanguage('es')        
+    });
+});
 
-    try {
 
-        bloquearButton("loginBtn", "Logando...");
 
-        const dados = coletarDadosForm("loginForm");
 
-        const response = await efetuarLogin(dados);
 
-        const resultado = response.ok 
-                    ? await lerRespostaSucesso(response) 
-                    : await lerRespostaErro(response);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { efetuarLogin } from "../services/api_service.js";
+// import { bloquearButton, coletarDadosForm } from "../utils/form-helper.js";
+// import { validarEmail, validarForcaSenha } from "../utils/validador.js";
+// import { configurarMostrarSenha, inicializarTooltips } from "../utils/dom-utils.js"
+
+// inicializarTooltips();
+// configurarMostrarSenha('mostrarSenha', ['senha', 'confirmarSenha']);
+
+// async function logar() {
+    
+//     if ( !validarEmail()                 ) { return; }
+//     if ( !validarForcaSenha()            ) { return; }
+
+//     try {
+
+//         bloquearButton("loginBtn", "Logando...");
+
+//         const dados = coletarDadosForm("loginForm");
+
+//         const response = await efetuarLogin(dados);
+
+//         const resultado = response.ok 
+//                     ? await lerRespostaSucesso(response) 
+//                     : await lerRespostaErro(response);
                     
-        if (response.ok) {
+//         if (response.ok) {
                    
-            if (resultado?.uuid) { SessionManager.salvar("token_uuid", resultado.uuid); }       
+//             if (resultado?.uuid) { SessionManager.salvar("token_uuid", resultado.uuid); }       
 
-            await Mensagem.sucesso("Login efetuado com sucesso!");          
+//             await Mensagem.sucesso("Login efetuado com sucesso!");          
 
-            navegarPara("login");            
+//             navegarPara("login");            
             
-        } else {
+//         } else {
             
-            const mensagemFinal = typeof resultado === 'object' 
-                ? (resultado.message || "Erro no servidor") 
-                : resultado;
+//             const mensagemFinal = typeof resultado === 'object' 
+//                 ? (resultado.message || "Erro no servidor") 
+//                 : resultado;
 
-            await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
-        }
+//             await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
+//         }
 
-    } catch (error) {
+//     } catch (error) {
 
-    } finally {
+//     } finally {
 
-    }
+//     }
 
-}
+// }
 
-document.getElementById('email'     ).addEventListener('blur', validarEmail      );
-document.getElementById('senha'     ).addEventListener('blur', validarForcaSenha );
+// document.getElementById('email'     ).addEventListener('blur', validarEmail      );
+// document.getElementById('senha'     ).addEventListener('blur', validarForcaSenha );
 
-document.getElementById('loginBtn'  ).addEventListener('click', logar            );
+// document.getElementById('loginBtn'  ).addEventListener('click', logar            );

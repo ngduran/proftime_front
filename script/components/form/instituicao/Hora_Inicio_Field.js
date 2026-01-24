@@ -1,12 +1,12 @@
-import { applyTranslations } from "../../utils/i18n.js";
-import { Base_Field } from "../base/Base_Field.js";
+import { applyTranslations } from "../../utils/i18n/instituicao_i18n.js";
+import { Base_Field } from "../../base/Base_Field.js";
 
-class Hora_Aula_Field extends Base_Field {
-
+class Hora_Inicio_Field extends Base_Field {
+   
     constructor() {
-        super();
+        super();        
     }
-
+    
     connectedCallback() {
         super.render();
 
@@ -24,7 +24,7 @@ class Hora_Aula_Field extends Base_Field {
         this.configurarValidacao();
     }
 
-    renderControl(p) {
+    renderControl(p) {       
         return `<div class="campo">
                     <label class="field-label"  for="${p.id}" data-translate="${p.data_translate_label}">${p.label}</label>
                     <i class="${p.icon_question}" data-tooltip="${p.data_tooltip_balao}" data-translate="${p.data_translate_tooltip}"></i>
@@ -34,7 +34,7 @@ class Hora_Aula_Field extends Base_Field {
                         <i class="${p.icon_edicao}"></i>
                     </button>
                 </div>
-        `;
+        `;                  
     }
 
     // Utilizado pelo formulário page intituicao.js
@@ -42,8 +42,7 @@ class Hora_Aula_Field extends Base_Field {
     validar() {        
         return this.validarCampoTime(); 
     }
-
-
+    
     async configurarValidacao() {
         const input = this.shadowRoot.querySelector(".field-input");    
         
@@ -79,6 +78,11 @@ class Hora_Aula_Field extends Base_Field {
         this.marcarSucesso(); // Limpa erros e aplica classe 'valid'
         return true;
     }
+
+
+
+
+
 }
 
-customElements.define('hora-aula-field', Hora_Aula_Field);
+customElements.define('hora-inicio-field', Hora_Inicio_Field);

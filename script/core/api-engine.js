@@ -3,7 +3,7 @@ import { Mensagem } from "../utils/mensageiro.js";
 import { bloquearButton, desbloquearButton } from "../utils/form-helper.js";
 import { SessionManager } from "../utils/session-manager.js";
 
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation } from '../components/utils/i18n/instituicao_i18n.js';
 
 
 /**

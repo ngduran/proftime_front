@@ -1,26 +1,26 @@
-import { applyTranslations } from '../../utils/i18n.js';
-import { Base_Field } from '../base/Base_Field.js';
-
-class Instituicao_Field extends Base_Field {
+import { applyTranslations } from "../../utils/i18n/instituicao_i18n.js";
+import { Base_Field } from "../../base/Base_Field.js";
+class Cidade_Field extends Base_Field {
     constructor() {
-        super();
+        super();         
     }
     
     connectedCallback() {
-        super.render(); 
-
+        super.render();
+        
         // Tradução inicial na carga do componente
         applyTranslations(this.shadowRoot);
 
         // Escuta a mudança global de idioma
         window.addEventListener('languageChanged', () => {
             applyTranslations(this.shadowRoot);            
-        });
+        });        
 
         super.setupBase();
         super.initTooltip();
         super.initEdition();
         this.configurarValidacao();
+        this.configurarBusca();
     }
 
     renderControl(p) {       
@@ -36,18 +36,34 @@ class Instituicao_Field extends Base_Field {
         `;        
     }
 
-    // Utilizado pelo formulário page intituicao.js
-    // Sobrescreve o validar do Bae_Field
-    async validar() {        
-        return this.validarNome(); 
-    }
-
-    // Utilizado pelo formulário page intituicao.js
-    // Sobrescreve o validar do Bae_Field
     validar() { // Adicione async aqui
         return this.validarNome();        
     }
 
+    configurarBusca() {
+        const campoBusca = this.shadowRoot.getElementById('cidade');
+        const scope = this.getAttribute('scope'); // Captura o atributo 'scope'   
+        
+        if (campoBusca) {
+            campoBusca.addEventListener('input', (e) => {
+                const termo = e.target.value;
+
+                // REGRA: Só dispara para o servidor a partir de 3 caracteres
+                if (termo.length >= 3) {
+                    console.log("Enviando termo para busca:", termo);
+                    
+                    this.dispatchEvent(new CustomEvent('cidade-digitada', {
+                        detail: { 
+                            termoBusca: termo, 
+                            scope:      scope
+                        },
+                        bubbles: true,
+                        composed: true
+                    }));
+                }
+            });
+        }
+    }
 
     async configurarValidacao() {
         const input = this.shadowRoot.querySelector(".field-input");    
@@ -84,9 +100,7 @@ class Instituicao_Field extends Base_Field {
         return true;
     }
 
-
-
         
 }
 
-customElements.define('instituicao-field', Instituicao_Field);
+customElements.define('cidade-field', Cidade_Field);

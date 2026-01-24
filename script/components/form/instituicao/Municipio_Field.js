@@ -1,8 +1,8 @@
-import { executarOperacao } from '../../core/api-engine.js';
-import { listarMunicipiosPorEstado } from '../../services/api_service.js';
-import { applyTranslations } from '../../utils/i18n.js';
-import { Mensagem } from '../../utils/mensageiro.js';
-import { Base_Field } from '../base/Base_Field.js';
+import { executarOperacao } from '../../../core/api-engine.js';
+import { listarMunicipiosPorEstado } from '../../../services/api_service.js';
+import { Mensagem } from '../../../utils/mensageiro.js';
+import { applyTranslations } from "../../utils/i18n/instituicao_i18n.js";
+import { Base_Field } from "../../base/Base_Field.js";
 
 
 class Municipio_Field extends Base_Field {

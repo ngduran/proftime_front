@@ -1,5 +1,5 @@
-import { applyTranslations } from "../../utils/i18n.js";
-import { Base_Field } from "../base/Base_Field.js";
+import { applyTranslations } from "../../utils/i18n/instituicao_i18n.js";
+import { Base_Field } from "../../base/Base_Field.js";
 
 class Administracao_Field extends Base_Field {
 

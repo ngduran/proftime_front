@@ -1,92 +1,106 @@
-import { applyTranslations } from '../../utils/i18n.js';
-import { Base_Field } from '../base/Base_Field.js';
+import { applyTranslations } from '../../utils/i18n/login_i18n.js';
+import { Base_Field } from '../../base/Base_Field.js';
 
-class Instituicao_Field extends Base_Field {
+class Email_Field extends Base_Field {
     constructor() {
         super();
     }
     
+    // connectedCallback() {
+    //     super.render(); 
+
+    //     // Tradução inicial na carga do componente
+    //     applyTranslations(this.shadowRoot);
+
+    //     // Escuta a mudança global de idioma
+    //     window.addEventListener('languageChanged', () => {
+    //         applyTranslations(this.shadowRoot);            
+    //     });
+
+    //     super.setupBase();
+    //     super.initTooltip();
+    //     //super.initEdition();
+    //     this.configurarValidacao();
+    // }
+
     connectedCallback() {
         super.render(); 
 
-        // Tradução inicial na carga do componente
+        // 1. Define a função do listener como uma referência fixa
+        // O .bind(this) é necessário para que o 'this' dentro da função continue sendo o componente
+        this._handleLanguageChange = () => applyTranslations(this.shadowRoot);
+
+        // Tradução inicial na carga
         applyTranslations(this.shadowRoot);
 
-        // Escuta a mudança global de idioma
-        window.addEventListener('languageChanged', () => {
-            applyTranslations(this.shadowRoot);            
-        });
+        // 2. Escuta o evento global usando a referência salva
+        window.addEventListener('languageChanged', this._handleLanguageChange);
 
         super.setupBase();
         super.initTooltip();
-        //super.initEdition();
         this.configurarValidacao();
     }
+
+    // 3. O "faxineiro" do componente
+    disconnectedCallback() {
+        // Remove o listener exatamente com a mesma referência criada no connected
+        // Isso evita que o componente continue "vivo" na memória após ser removido da tela
+        window.removeEventListener('languageChanged', this._handleLanguageChange);
+        
+        console.log("Listener de idioma removido para evitar memory leak.");
+    }
+
+
 
     renderControl(p) {       
         return `<div class="campo">
                     <label class="field-label"  for="${p.id}" data-translate="${p.data_translate_label}">${p.label}</label>
                     <i class="${p.icon_question}" data-tooltip="${p.data_tooltip_balao}" data-translate="${p.data_translate_tooltip}"></i>
                     <input type="text" id="${p.id}" name="${p.name}" class="field-input" data-translate="${p.data_translate_ph}" placeholder="${p.placeholder}" autocomplete="off" ${p.is_required}>
-                    </input>
-                    <button type="button" class="edit-button">
-                        <i class="${p.icon_edicao}"></i>
-                    </button>   
+                    </input>                    
                 </div>
         `;        
     }
 
-    // Utilizado pelo formulário page intituicao.js
-    // Sobrescreve o validar do Bae_Field
+    // Sobreescrevendo o validar da Base_Field
+    /** @override */
     async validar() {        
-        return this.validarNome(); 
+        return this.validarEmail(); 
     }
-
-    // Utilizado pelo formulário page intituicao.js
-    // Sobrescreve o validar do Bae_Field
-    validar() { // Adicione async aqui
-        return this.validarNome();        
-    }
-
 
     async configurarValidacao() {
-        const input = this.shadowRoot.querySelector(".field-input");    
+        // Usamos o getter 'control' da Base_Field para pegar o input
+        const input = this.control; 
         
         if (input) {
+            // Valida quando o usuário sai do campo
             input.addEventListener('blur', () => {
-                this.validarNome();
+                this.validarEmail();
+            });
+
+            // Opcional: Limpa o erro enquanto o usuário digita
+            input.addEventListener('input', () => {
+                this.limparEstado(); 
             });
         }
-       
     }
 
-    async validarNome() {  
-        const input = this.control; // Usa o getter da Base_Field
-        if (!input) return;
+    validarEmail() {    
+        // Pega o valor diretamente do componente
+        const valor = this.value; 
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        // Formatação: Primeira letra de cada palavra em maiúscula
-        input.value = input.value.toLowerCase().replace(/(?:^|\s)\S/g, a => a.toUpperCase());
-        
-        const valor = input.value.trim();
-        const regexNome = /^[A-Za-zÀ-ÿ\s]+$/;
-
-        if (!regexNome.test(valor)) {
-            this.marcarErro("O nome deve conter apenas letras.");
+        if (!regexEmail.test(valor)) {
+            // Usa o método da Base_Field que já lida com as classes CSS de erro
+            this.marcarErro("Por favor, insira um e-mail válido.");
             return false;
         }
 
-        if (valor.length < 3) {
-            this.marcarErro("O nome deve ter pelo menos 3 letras.");
-            return false;
-        }
-
-        this.marcarSucesso(); // Não precisa passar nada!
+        // Usa o método da Base_Field para mostrar o estado verde/válido
+        this.marcarSucesso();
         return true;
     }
-
-
-
         
 }
 
-customElements.define('instituicao-field', Instituicao_Field);
+customElements.define('email-field', Email_Field);

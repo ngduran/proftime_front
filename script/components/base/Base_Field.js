@@ -37,6 +37,32 @@ export class Base_Field extends HTMLElement {
         return control ? control.value : '';
     }
 
+     // Retorna o elemento de controle interno (input, select ou textarea)
+    get control() {
+        return this.shadowRoot.querySelector('.field-input, .field-select, .field-time');
+    }
+
+    // Retorna o container para mensagens de erro
+    get container() {
+        return this.shadowRoot.querySelector('.campo');        
+    }
+    
+    limparEstado() {
+        const input = this.control;
+        const container = this.container;
+
+        if (!input || !container) return;
+
+        // Remove as classes de erro e sucesso, voltando ao CSS base
+        input.classList.remove("invalid", "valid");
+        container.classList.remove('has-error');
+
+        // Remove a mensagem de texto de erro se ela existir
+        const msgErro = container.querySelector('.error-message');
+        if (msgErro) msgErro.remove();
+    }
+
+
     // Dentro da classe Base_Field
     validar() {
         // Se o componente tiver um select interno, usa a validação de select
@@ -77,46 +103,6 @@ export class Base_Field extends HTMLElement {
         `;
     }
 
-
-
-//    async render() {
-//         const props = {
-//             label                  : this.getAttribute('label') || '',
-//             data_translate_label   : this.getAttribute('data-translate_label') || '',
-//             id                     : this.getAttribute('id') || '',
-//             name                   : this.getAttribute('name') || '',
-//             icon_question          : this.getAttribute('icon-question') || '',
-//             data_translate_ph      : this.getAttribute('data_translate_ph') || '',
-//             data_tooltip_balao     : this.getAttribute('data-tooltip_balao') || '',
-//             data_translate_tooltip : this.getAttribute('data-translate-tooltip') || '',
-//             data_translate_op      : this.getAttribute('data-translate_op') || '',
-//             placeholder            : this.getAttribute('placeholder') || '',
-//             icon_edicao            : this.getAttribute('icon-edicao') || '',
-//             is_required            : this.hasAttribute('required') ? 'required' : ''
-//         }
-        
-//         this.shadowRoot.innerHTML = `            
-//             <style>
-//                 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
-//             </style>
-            
-//             ${this.renderControl(props)}        
-           
-//         `;
-        
-//     }
-
-
-    // Retorna o elemento de controle interno (input, select ou textarea)
-    get control() {
-        return this.shadowRoot.querySelector('.field-input, .field-select, .field-time');
-    }
-
-    // Retorna o container para mensagens de erro
-    get container() {
-        return this.shadowRoot.querySelector('.campo');        
-    }
-
     marcarErro(mensagem) {
        
         const input = this.control; // Já pega o input automaticamente
@@ -152,14 +138,6 @@ export class Base_Field extends HTMLElement {
         if (msgErro) msgErro.remove();
     }
 
-
-
-
-
 }
-customElements.define('base-input', Base_Field);
 
-/* Retirado pois é adicionado dinamicamente */
-/* <button type="button" class="edit-button">
-    <i class="${props.icon_edicao}"></i>
-</button>   */
+customElements.define('base-input', Base_Field);

@@ -1,7 +1,7 @@
 import { navegarPara } from "../utils/form-helper.js";
-import { changeLanguage } from "../utils/i18n.js";
 import { executarOperacao } from "../core/api-engine.js"
 import { cadastrarInstituicao } from "../services/api_service.js";
+import { changeLanguage } from "../components/utils/i18n/instituicao_i18n.js";
 
 
 // 1. Selecionamos o formulário pai que contém os Web Components
@@ -60,7 +60,7 @@ async function salvar() {
             // Se houver um único false, ele retorna false para a engine e NÃO salva
             return resultados.every(res => res === true);
         },
-        //onSuccess: () => navegarPara("home")
+        onSuccess: () => navegarPara("home")
     });
 
 }

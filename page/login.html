@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prof Time Conta - Cadastro</title>   
+    <title>ProfTime - login</title>
+    <link rel="stylesheet" href="../asset/style/base/base-form.css">
     <link rel="stylesheet" href="../asset/style/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
    
 
-            <form id="loginForm" autocomplete="off">
+    <form id="loginForm" class="form-container" autocomplete="off">
 
 
-                <div class="field-container">
-                    <div class="field-group col-0">
-                        <div class="field-col">
-                            <h1 class="header-title">Login</h1>
-                        </div>
-                    </div>
+        <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col">
+                    <h1 class="header-title" data-translate="lbl_titulo">Login</h1>
                 </div>
+            </div>
+        </div>
 
-                 <div class="field-container">
+            <div class="field-container">
             <div class="field-group col-0">
                 <div class="field-col posicao-end">
                     <button type="button" id="btn-pt" class="lang-btn active">
@@ -35,45 +37,104 @@
             </div>
         </div>
 
-
-
-
-
-
-                <label for="email">Email</label>
-                <div class="input-group">
-                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Email utilizado para acessar o aplicativo"></i>
-                    <span class="info-icon" title="Obrigatório"></span>
+        <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col">
+                    <email-field 
+                        label                  = "Email" 
+                        data_translate_label   = "lbl_email"
+                        id                     = "email"
+                        name                   = "email"                                
+                        icon_question          = "fa-solid fa-circle-question info-question"
+                        data_translate_ph      = "ph_email"
+                        data_tooltip_balao     = "Email utilizado para acessar o aplicativo"
+                        data_translate_tooltip = "tp_lbl_email"
+                        placeholder            = "seu_melhor_email@mail.com"                                
+                    >
+                    </email-field>
                 </div>
-                
-                <label for="senha">Senha</label>
-                <div class="input-group">
-                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
-                    <i class="fa-solid fa-circle-question info-question" data-tooltip="Senha utilizada para acessar o aplicativo. Mínimo de 8 caracteres, com letra maiúscula, minúscula, número e caractere especial (!@#$)."></i>
-                    <span class="info-icon" title="Obrigatório"></span>
+            </div>
+        </div>
+
+        <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col">
+                    <senha-field 
+                        label                  = "Senha" 
+                        data_translate_label   = "lbl_senha"
+                        id                     = "senha"
+                        name                   = "senha"                                
+                        icon_question          = "fa-solid fa-circle-question info-question"
+                        data_translate_ph      = "ph_senha"
+                        data_tooltip_balao     = "Senha utilizada para acessar o aplicativo. Mínimo de 8 caracteres, com letra maiúscula, minúscula, número e caractere especial (!@#$)."
+                        data_translate_tooltip = "tp_lbl_senha"
+                        placeholder            = "Digite sua senha"                                
+                    >
+                    </senha-field>
                 </div>
-				
-				<div class="checkbox-group">
-					<input type="checkbox" id="mostrarSenha">                
-					<label for="mostrarSenha">Mostrar Senha</label>
-				</div>
-				
-				<button type="button" id="loginBtn" class="cta-button">Entrar</button>
-				
-				<div class="help-link">
-					<a href="esqueceu-a-senha.html" class="help-link">Esqueceu a senha?</a>
-				</div>
+            </div>
+        </div>
+        
+        <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col">                    
+                </div>
+            </div>
+        </div>        
+        
+        <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col">
+                    <input type="checkbox" id="mostrarSenha">                
+                    <label for="mostrarSenha" data-translate="lbl_mostrar_senha">Mostrar Senha</label>
+                </div>
+            </div>
+        </div>                  
+        
+        <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col">
+                    <button type="button" id="loginBtn" class="cta-button" data-translate="btn_entrar">Entrar</button>
+                </div>
+            </div>
+        </div>       
+        
+        <div class="field-container">
+            <div class="field-group col-centro">
+                <div class="field-col">
+                    <a href="esqueceu-a-senha.html" class="help-link" data-translate="link_esqueceu_senha">Esqueceu a senha?</a>
+                </div>
+            </div>
+        </div>       
+        
+        <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col">
+                    <button type="button" id="criarConta" class="cta-button" data-translate="btn_criar_conta">Criar Conta</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="field-container">
+            <div class="field-group col-centro">
+                <div class="field-col">
+                    <a href="reenviar-email.html" class="help-link" data-translate="link_reenviar_email">Reenviar email</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="help-link">
+        </div>
 
-				<button type="button" id="criarConta" class="cta-button">Criar Conta</button>
 
-				<div class="help-link">
-					<a href="reenviar-email.html" class="help-link">Reenviar email</a>
-				</div>
+        <div class="help-link">
+        </div>
 
-			</form>
-     
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-    <script type="module" src="../script/pages/login.js"></script>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer           ></script>
+    <script type="module" src="../script/pages/login.js"                      ></script>
+    <script type="module" src="../script/components/form/login/Email_Field.js"></script>
+    <script type="module" src="../script/components/form/login/Senha_Field.js"></script>
 </body>
 </html>
