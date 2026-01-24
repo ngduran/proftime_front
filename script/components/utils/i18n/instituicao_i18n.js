@@ -6,7 +6,7 @@ export const translations = {
     pt: {
 
         // Campos do Formulário Instituição
-        lbl_titulo: "Login",
+        lbl_titulo: "Instituição",
         lbl_nome: "Nome da Instituição",
         lbl_administracao: "Administração",
         lbl_estado: "Estado (UF)",
@@ -64,7 +64,7 @@ export const translations = {
     es: {
 
         // Campos do Formulário Instituição
-        lbl_titulo: "institución",
+        lbl_titulo: "Institución",
         lbl_nome: "Nombre de la Institución",
         lbl_administracao: "Administración",
         lbl_estado: "Estado (UF)",

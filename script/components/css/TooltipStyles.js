@@ -22,7 +22,11 @@ tooltipCss.replaceSync(`
         color: #fff;
         padding: 10px 15px;
         /* Canto arredondado invertido para a ponta do balão */
-        border-radius: 12px 12px 0px 12px; 
+        border-radius: 12px 12px 12px 12px; 
+        
+        /*Para fazer a ponta do balão um deve der zero*/
+        /*border-radius: 12px 12px 0px 12px;*/ 
+        
         font-size: 13px;
         line-height: 1.4;
         z-index: 10000;

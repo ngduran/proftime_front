@@ -18,7 +18,7 @@ export class Base_Field extends HTMLElement {
         this._handleLanguageChange = (e) => {
             const novoIdioma = e.detail?.lang || e.detail;
             //console.log(`%c [AÇÃO] <${this.tagName.toLowerCase()}> traduzindo para: ${novoIdioma}`, "background: #27ae60; color: #fff");
-            applyTranslations(this.shadowRoot); 
+            applyTranslations(this.shadowRoot);           
         };
     }
 
@@ -136,6 +136,48 @@ export class Base_Field extends HTMLElement {
         container.classList.remove('has-error');
         const msgErro = container.querySelector('.error-message');
         if (msgErro) msgErro.remove();
+    }
+
+    /**
+     * Captura a hierarquia de containers e a posição geométrica exata do elemento.
+     * @returns {Object} Dados de estrutura e coordenadas (Relativas ao container).
+     */
+    getContainerInfo() {
+        // 1. Busca os ancestrais
+        const fieldContainer = this.closest('.field-container');
+        if (!fieldContainer) return { erro: "Fora de um .field-container" };
+
+        const fieldGroup = this.closest('.field-group');
+
+        // 2. Captura Retângulos (Bounding Box)
+        const rectElem = this.getBoundingClientRect();
+        const rectCont = fieldContainer.getBoundingClientRect();
+
+        // 3. Mapeia Grupos
+        const grupos = Array.from(fieldContainer.querySelectorAll('.field-group'));
+
+        // 4. Retorno com Posições Iniciais e Finais (Cálculo Relativo)
+        return {
+            dimensoesContainer: {
+                largura: rectCont.width,
+                altura: rectCont.height,
+                centroX: rectCont.width / 2 // O meio exato horizontal do container
+            },
+            estrutura: {
+                totalGrupos: grupos.length,
+                minhaClasseGrupo: fieldGroup?.className || null
+            },
+            posicaoHorizontal: {
+                inicio: rectElem.left - rectCont.left,
+                fim: rectElem.right - rectCont.left,
+                largura: rectElem.width
+            },
+            posicaoVertical: {
+                inicio: rectElem.top - rectCont.top,
+                fim: rectElem.bottom - rectCont.top,
+                altura: rectElem.height
+            }
+        };
     }
 }
 

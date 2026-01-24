@@ -21,6 +21,9 @@ class Instituicao_Field extends Base_Field {
         super.initTooltip();
         super.initEdition();
         this.configurarValidacao();
+
+        
+        console.log(this.tagName, this.getContainerInfo());
     }
 
     renderControl(p) {       

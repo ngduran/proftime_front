@@ -19,6 +19,8 @@ class Email_Field extends Base_Field {
         super.setupBase();
         super.initTooltip();
         this.configurarValidacao();
+
+        console.log(this.tagName, this.getContainerInfo());
     }
 
     renderControl(p) {

@@ -97,6 +97,8 @@ export function applyTranslations(root = document) {
             } else if (el.hasAttribute('data-tooltip')) {
                 // CORREÇÃO: Traduz o atributo de dica em vez de inserir texto no HTML
                 el.setAttribute('data-tooltip', texto);
+
+                el.textContent = ''; // Garante que o ícone fique vazio por dentro
                 
                 // Se você usa o TooltipManager, talvez precise reinicializá-lo
                 //TooltipManager.update(el, texto); 
