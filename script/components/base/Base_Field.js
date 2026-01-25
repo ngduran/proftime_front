@@ -28,8 +28,14 @@ export class Base_Field extends HTMLElement {
 
     // 2. Ciclo de Vida (Lifecycle)
     connectedCallback() {
+        // 1. // Escuta o evento global de troca de idioma e associa à função de tratamento
         window.addEventListener('languageChanged', this._handleLanguageChange);
+        
+        // 1. Constrói a estrutura visual do componente no DOM
         this.render(); 
+        
+        // 2. Aplica a tradução inicial baseada no idioma salvo ou padrão
+        this.translate(); 
     }
 
     disconnectedCallback() {        
@@ -56,7 +62,7 @@ export class Base_Field extends HTMLElement {
             ${this.renderControl(props)}           
         `;
       
-        // Removido pois a chamada agora é feita no próprio componente
+        //Removido pois a chamada agora é feita no próprio componente
         // queueMicrotask(() => {
         //     // Chamando dicionario externo
         //     // Nas próximas refatoração pode verificar a remoção
@@ -83,6 +89,7 @@ export class Base_Field extends HTMLElement {
 
     // 5. Tradução
     translate() {
+        console.log("Foi chamado o translate ao iniciar a página");
         const official_language = sessionStorage.getItem('official_language') || 'pt';
         const dicionario = this.constructor.i18n?.[official_language];
         
