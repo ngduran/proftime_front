@@ -41,15 +41,13 @@
             <div class="field-group col-0">
                 <div class="field-col">
                     <email-field 
-                        label                  = "Email" 
-                        data_translate_label   = "lbl_email"
                         id                     = "email"
                         name                   = "email"                                
-                        icon_question          = "fa-solid fa-circle-question info-question"
+                        data_translate_label   = "lbl_email"
                         data_translate_ph      = "ph_email"
-                        data_tooltip_balao     = "Email utilizado para acessar o aplicativo"
-                        data_translate_tooltip = "tp_lbl_email"
-                        placeholder            = "seu_melhor_email@mail.com"                                
+                        data_translate_tooltip = "tp_lbl_email"                       
+                        icon_question          = "fa-solid fa-circle-question info-question"
+                        required
                     >
                     </email-field>
                 </div>
@@ -133,9 +131,9 @@
 
     </form>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer           ></script>
-    <script type="module" src="../script/components/form/login/Email_Field.js"></script>
-    <script type="module" src="../script/components/form/login/Senha_Field.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer         ></script>
+    <script type="module" src="../script/components/flexible/Email_Field.js"></script>
+    <!-- <script type="module" src="../script/components/form/login/Senha_Field.js"></script> -->
     <script type="module" src="../script/pages/login.js"                      ></script>
 </body>
 </html>

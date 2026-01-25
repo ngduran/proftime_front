@@ -1,10 +1,7 @@
 import { field_style } from '../css/Field_Styles.js';
 import { TooltipManager } from '../utils/TooltipManager.js';
 import { EditionManager } from '../utils/EditionManager.js';
-
-// Removida pois agora a tradução é feita pelo próprio componente
-// Removida a chamada também na função render
-//import { applyTranslations } from '../utils/i18n/login_i18n.js';
+import { applyTranslations } from '../utils/i18n/login_i18n.js';
 
 export class Base_Field extends HTMLElement {
     
@@ -20,20 +17,28 @@ export class Base_Field extends HTMLElement {
         this.shadowRoot.adoptedStyleSheets = [field_style];
                 
         this._handleLanguageChange = (e) => {
+          
             const novoIdioma = (e.detail && typeof e.detail === 'object') ? e.detail.lang : e.detail;
+            console.log(`%c [EVENTO] <${this.tagName.toLowerCase()}> detectou: ${novoIdioma}`, "color: blue; font-weight: bold;");
+                
             sessionStorage.setItem('official_language', novoIdioma);
+
             this.translate();
         };
     }
 
     // 2. Ciclo de Vida (Lifecycle)
     connectedCallback() {
+        //console.log(`%c [Receptor] Ativando ouvido em: <${this.tagName.toLowerCase()}>`, "color: #9b59b6");        
         window.addEventListener('languageChanged', this._handleLanguageChange);
+        
+        // O render() já chama o applyTranslations internamente via queueMicrotask
         this.render(); 
     }
 
     disconnectedCallback() {        
         window.removeEventListener('languageChanged', this._handleLanguageChange);
+        //console.log(`%c [Faxina] Ouvido removido de: <${this.tagName.toLowerCase()}>`, "color: #e74c3c");
     }
    
     // 3. Renderização
@@ -56,18 +61,16 @@ export class Base_Field extends HTMLElement {
             ${this.renderControl(props)}           
         `;
       
-        // Removido pois a chamada agora é feita no próprio componente
-        // queueMicrotask(() => {
-        //     // Chamando dicionario externo
-        //     // Nas próximas refatoração pode verificar a remoção
-        //     applyTranslations(this.shadowRoot);
-        // });
+        queueMicrotask(() => {
+            // Chamando dicionario externo
+            // Nas próximas refatoração pode verificar a remoção
+            applyTranslations(this.shadowRoot);
+        });
 
     }
 
     renderControl(p) { return ``; }
 
-    // 4. Getters de Acesso
     get control() {
         return this.shadowRoot.querySelector('.field-input, .field-select, .field-time');
     }
@@ -82,11 +85,19 @@ export class Base_Field extends HTMLElement {
     }
 
     // 5. Tradução
+    // Dentro da classe Base_Field
     translate() {
         const official_language = sessionStorage.getItem('official_language') || 'pt';
+        
+        // Acessa o i18n da classe filha (Email_Field ou Senha_Field)
         const dicionario = this.constructor.i18n?.[official_language];
+
+        // LOG 1: Verificar se o dicionário da classe filha foi encontrado
+        console.log(`%c [TRANSLATE] <${this.tagName.toLowerCase()}> Lendo dicionário (${official_language}):`, 
+                "color: #e67e22; font-weight: bold;", dicionario);
         
         if (!dicionario) {
+            console.warn(`%c [AVISO] Dicionário não encontrado para o idioma: ${lang}`, "color: orange");
             return;
         }
 
@@ -100,40 +111,59 @@ export class Base_Field extends HTMLElement {
         if (label) {
             const chave = label.getAttribute('data-translate'); // Ex: "lbl_email"
             if (dicionario[chave]) label.innerText = dicionario[chave];
-        } 
+        } else {
+            console.log(`%c [ERRO CHAVE] Chave "${chave}" não existe no i18n de ${official_language}`, "color: red");
+        }
 
         // 3. Traduz o PLACEHOLDER usando a chave do atributo
         if (input) {
             const chave = input.getAttribute('data-translate'); // Ex: "ph_email"
             if (dicionario[chave]) input.placeholder = dicionario[chave];
-        } 
+        } else {
+            console.log(`%c [ERRO CHAVE] Chave "${chave}" não existe no i18n de ${official_language}`, "color: red");
+        }
 
         // 4. Traduz o TOOLTIP usando a chave do atributo
         if (icon) {
             const chave = icon.getAttribute('data-translate'); // Ex: "tp_lbl_email"
             if (dicionario[chave]) icon.setAttribute('data-tooltip', dicionario[chave]);
-        } 
+        } else {
+            console.log(`%c [ERRO CHAVE] Chave "${chave}" não existe no i18n de ${official_language}`, "color: red");
+        }
 
         // CORREÇÃO PONTUAL: Verifica se o elemento de erro existe no DOM para traduzi-lo
         const msgErroExistente = this.container?.querySelector('.error-message');
 
         if (msgErroExistente) {         
+            console.log(`%c [VALIDAÇÃO] Erro detectado em <${this.tagName.toLowerCase()}>. Traduzindo mensagem...`, "color: #f39c12;");
             this.validar(); 
         }
         
+
+
+
+
+        // // Se o campo estiver em estado de erro, chama a validação específica do filho
+        // if (this.container?.classList.contains('error-message')) {         
+           
+        //     console.log(" -> Possui 'error-message'?", this.container.classList.contains('error-message'));
+        //     // Chamamos 'this.validar()', que por polimorfismo executará 
+        //     // validarEmail() ou validarForcaSenha() dependendo do filho.
+        //     this.validar(); 
+        // } else {
+        //     console.log(" -> NÃO Possui 'error-message'?", this.container.classList.contains('error-message'));
+            
+        // }
     }
 
     // 6. Métodos de Validação e Estado
     validar() {
-
         if (this.shadowRoot && this.shadowRoot.querySelector('select')) {
             return this.validarSelect(); 
         }
-
         if (this.control && this.control.type === 'time') {
             return this.validarCampoTime("Selecione uma hora válida");
         }
-
         return this.validarNome(); 
     }
 
@@ -157,7 +187,11 @@ export class Base_Field extends HTMLElement {
 
         input.classList.remove("valid");
         input.classList.add("invalid");
-         
+        //container.classList.add('has-error');
+        
+        // 1. Adicionamos uma classe de estado ao container para o translate() saber que há erro
+        //container.classList.add('is-invalid');
+
         let msgErro = container.querySelector('.error-message');
         if (!msgErro) {
             msgErro = document.createElement('span');
@@ -174,9 +208,8 @@ export class Base_Field extends HTMLElement {
 
         input.classList.remove("invalid");
         input.classList.add("valid");
-        
+        //container.classList.remove('is-invalid');
         const msgErro = container.querySelector('.error-message');
-
         if (msgErro) msgErro.remove();
     }
 

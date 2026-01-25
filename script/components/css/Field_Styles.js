@@ -4,119 +4,119 @@ export const field_style = new CSSStyleSheet();
 
 field_style.replaceSync(`
 
-        /* Utilizado para manter as caixas zeradas e aplicar as medidas do container pai*/
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box; /* Crucial: padding não aumenta o tamanho da caixa */
-        }
+    /* Utilizado para manter as caixas zeradas e aplicar as medidas do container pai*/
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box; /* Crucial: padding não aumenta o tamanho da caixa */
+    }
 
-        .field-label {
-            width: 100%;       /* Ocupa toda a largura do .field-group */
-            border: none;      /* Remove a borda padrão do navegador */
-            outline: none;     /* Remove a linha de destaque ao clicar */
-            padding: 0 0px;   /* Adiciona um respiro interno para o texto não colar na borda */
-            height: 40px;
-            flex: 1 1 auto;
-            font-size: 1.0rem;
+    .field-label {
+        width: 100%;       /* Ocupa toda a largura do .field-group */
+        border: none;      /* Remove a borda padrão do navegador */
+        outline: none;     /* Remove a linha de destaque ao clicar */
+        padding: 0 0px;   /* Adiciona um respiro interno para o texto não colar na borda */
+        height: 40px;
+        flex: 1 1 auto;
+        font-size: 1.0rem;
 
-            /* gap: 4px;
-            margin-top: 15px;
-            margin-bottom: 5px; */
-        }
+        /* gap: 4px;
+        margin-top: 15px;
+        margin-bottom: 5px; */
+    }
 
-        .field-input {
-            width: 100%;       /* Ocupa toda a largura do .field-group */
-            border: none;      /* Remove a borda padrão do navegador */
-            outline: none;     /* Remove a linha de destaque ao clicar */
-            padding: 0 10px;   /* Adiciona um respiro interno para o texto não colar na borda */
-            //background: white; /* Cor de fundo para o campo */
-            height: 40px;
-            flex: 1 1 auto;
-            font-size: 1.0rem;
+    .field-input {
+        width: 100%;       /* Ocupa toda a largura do .field-group */
+        border: none;      /* Remove a borda padrão do navegador */
+        outline: none;     /* Remove a linha de destaque ao clicar */
+        padding: 0 10px;   /* Adiciona um respiro interno para o texto não colar na borda */
+        //background: white; /* Cor de fundo para o campo */
+        height: 40px;
+        flex: 1 1 auto;
+        font-size: 1.0rem;
 
-            border: 1px solid var(--color-accent);
-            border-radius: 8px;
-            color: var(--color-text-dark);
-            background-color: var(--color-input-bg);
-            transition: border-color 0.2s, box-shadow 0.2s;
-            appearance: none !important;
-            -webkit-appearance: none !important;
-            cursor: pointer; 
-        }
+        border: 1px solid var(--color-accent);
+        border-radius: 8px;
+        color: var(--color-text-dark);
+        background-color: var(--color-input-bg);
+        transition: border-color 0.2s, box-shadow 0.2s;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        cursor: pointer; 
+    }
 
-        .field-time {
-            width: 100%;       /* Ocupa toda a largura do .field-group */
-            border: none;      /* Remove a borda padrão do navegador */
-            outline: none;     /* Remove a linha de destaque ao clicar */
-            padding: 0 10px;   /* Adiciona um respiro interno para o texto não colar na borda */
-            background: white; /* Cor de fundo para o campo */
-            height: 40px;
-            flex: 1 1 auto;
-            font-size: 1.0rem;
+    .field-time {
+        width: 100%;       /* Ocupa toda a largura do .field-group */
+        border: none;      /* Remove a borda padrão do navegador */
+        outline: none;     /* Remove a linha de destaque ao clicar */
+        padding: 0 10px;   /* Adiciona um respiro interno para o texto não colar na borda */
+        background: white; /* Cor de fundo para o campo */
+        height: 40px;
+        flex: 1 1 auto;
+        font-size: 1.0rem;
 
-            border: 1px solid var(--color-accent);
-            border-radius: 8px;
-            color: var(--color-text-dark);
-            background-color: var(--color-input-bg);
-            transition: border-color 0.2s, box-shadow 0.2s;
-            appearance: none !important;
-            -webkit-appearance: none !important;
-            cursor: pointer; 
-        }
+        border: 1px solid var(--color-accent);
+        border-radius: 8px;
+        color: var(--color-text-dark);
+        background-color: var(--color-input-bg);
+        transition: border-color 0.2s, box-shadow 0.2s;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        cursor: pointer; 
+    }
+
+    .field-select {
+        width: 100%;       /* Ocupa toda a largura do .field-group */
+        border: none;      /* Remove a borda padrão do navegador */
+        outline: none;     /* Remove a linha de destaque ao clicar */
+        padding: 0 10px;   /* Adiciona um respiro interno para o texto não colar na borda */
+        background: white; /* Cor de fundo para o campo */
+        height: 40px;
+        flex: 1 1 auto;
+        font-size: 1.0rem;
+
+        border: 1px solid var(--color-accent);
+        border-radius: 8px;
+        color: var(--color-text-dark);
+        background-color: var(--color-input-bg);
+        transition: border-color 0.2s, box-shadow 0.2s;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        cursor: pointer; 
+    }
+
+    input[type="time"]::-webkit-calendar-picker-indicator {
+        margin-right: 28px; /* Desloca o ícone do relógio para longe da borda direita */
+        cursor: pointer;
+    }
+
+        /* ===== 2 =====*/
+    input:focus {
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 2px rgba(175, 126, 23, 0.2);
+        outline: none;
+    }
+
+    /* ===== 4 =====*/
+    input.invalid, select.invalid {
+        border: 1px solid #ff4d4d !important;
+        background-color: #fffafa !important;
+    }
+
+    input.valid, select.valid {
+        border: 1px solid #28a745 !important; 
+        background-color: #f8fff9 !important;
+    }
+
+    .error-message {
+        position: absolute;
+        top: 100%;
+        margin-top: 2px;   
+        left: 0px;    
+        font-size: 12px;
+        color: #ff4d4d;
+    }
     
-        .field-select {
-            width: 100%;       /* Ocupa toda a largura do .field-group */
-            border: none;      /* Remove a borda padrão do navegador */
-            outline: none;     /* Remove a linha de destaque ao clicar */
-            padding: 0 10px;   /* Adiciona um respiro interno para o texto não colar na borda */
-            background: white; /* Cor de fundo para o campo */
-            height: 40px;
-            flex: 1 1 auto;
-            font-size: 1.0rem;
-
-            border: 1px solid var(--color-accent);
-            border-radius: 8px;
-            color: var(--color-text-dark);
-            background-color: var(--color-input-bg);
-            transition: border-color 0.2s, box-shadow 0.2s;
-            appearance: none !important;
-            -webkit-appearance: none !important;
-            cursor: pointer; 
-        }
-
-        input[type="time"]::-webkit-calendar-picker-indicator {
-            margin-right: 28px; /* Desloca o ícone do relógio para longe da borda direita */
-            cursor: pointer;
-        }
-
-         /* ===== 2 =====*/
-        input:focus {
-            border-color: var(--color-accent);
-            box-shadow: 0 0 0 2px rgba(175, 126, 23, 0.2);
-            outline: none;
-        }
-
-        /* ===== 4 =====*/
-        input.invalid, select.invalid {
-            border: 1px solid #ff4d4d !important;
-            background-color: #fffafa !important;
-        }
-
-        input.valid, select.valid {
-            border: 1px solid #28a745 !important; 
-            background-color: #f8fff9 !important;
-        }
-
-        .error-message {
-            position: absolute;
-            top: 100%;
-            margin-top: 2px;   
-            left: 0px;    
-            font-size: 12px;
-            color: #ff4d4d;
-        }
-       
                
 `);
 
