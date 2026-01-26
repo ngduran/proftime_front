@@ -3,36 +3,36 @@ let currentLang = sessionStorage.getItem('lang') || 'pt';
 
 export const translations = {
     pt: {
-        lbl_titulo: "Login",
-        lbl_email: "Email",
-        lbl_senha: "Senha",
+        //lbl_titulo: "Login",
+        //lbl_email: "Email",
+        //lbl_senha: "Senha",
         lbl_mostrar_senha: "Mostrar Senha",
         btn_entrar: "Entrar",
         btn_criar_conta: "Criar Conta",
         link_esqueceu_senha: "Esqueceu a senha?",
         link_reenviar_email: "Reenviar email",
-        ph_email: "seu_melhor_email@mail.com",
-        ph_senha: "Digite sua senha",
-        tp_lbl_email: "Email utilizado para acessar o aplicativo",
-        tp_lbl_senha: "Senha utilizada para acessar o aplicativo. Mínimo de 8 caracteres, com letra maiúscula, minúscula, número e caractere especial (!@#$).",
-        err_email_invalido: "Por favor, insira um e-mail válido.",
-        err_senha_fraca: "A senha deve conter: Maiúscula, Minúscula, Número, Símbolo e 8+ caracteres."
+        //ph_email: "seu_melhor_email@mail.com",
+        //ph_senha: "Digite sua senha",
+        //tp_lbl_email: "Email utilizado para acessar o aplicativo",
+        //tp_lbl_senha: "Senha utilizada para acessar o aplicativo. Mínimo de 8 caracteres, com letra maiúscula, minúscula, número e caractere especial (!@#$).",
+        //err_email_invalido: "Por favor, insira um e-mail válido.",
+        //err_senha_fraca: "A senha deve conter: Maiúscula, Minúscula, Número, Símbolo e 8+ caracteres."
     },
     es: {
-        lbl_titulo: "Iniciar Sesión",
-        lbl_email: "Correo electrónico",
-        lbl_senha: "Contraseña",
+        //lbl_titulo: "Iniciar Sesión",
+        //lbl_email: "Correo electrónico",
+        //lbl_senha: "Contraseña",
         lbl_mostrar_senha: "Mostrar contraseña",
         btn_entrar: "Para entrar",
         btn_criar_conta: "Crear cuenta",
         link_esqueceu_senha: "¿Olvidaste tu contraseña?",
         link_reenviar_email: "Reenviar correo electrónico",
-        ph_email: "tu_mejor_correo@mail.com",
-        ph_senha: "Introduce tu contraseña",
-        tp_lbl_email: "Correo electrónico utilizado para acceder a la aplicación",
-        tp_lbl_senha: "Contraseña utilizada para acceder a la aplicación. Mínimo 8 caracteres, con mayúsculas, minúsculas, números y caracteres especiales.",
-        err_email_invalido: "Por favor, introduce un correo electrónico válido.",
-        err_senha_fraca: "La contraseña debe contener: Mayúsculas, Minúsculas, Números, Símbolos y más de 8 caracteres."
+        //ph_email: "tu_mejor_correo@mail.com",
+        //ph_senha: "Introduce tu contraseña",
+        //tp_lbl_email: "Correo electrónico utilizado para acceder a la aplicación",
+        //tp_lbl_senha: "Contraseña utilizada para acceder a la aplicación. Mínimo 8 caracteres, con mayúsculas, minúsculas, números y caracteres especiales.",
+        //err_email_invalido: "Por favor, introduce un correo electrónico válido.",
+        //err_senha_fraca: "La contraseña debe contener: Mayúsculas, Minúsculas, Números, Símbolos y más de 8 caracteres."
     }
 };
 

@@ -56,7 +56,8 @@ class Email_Field extends Base_Field {
                         class           ="field-input" 
                         data-translate  ="${p.data_translate_ph}" 
                         placeholder     ="${p.placeholder}" 
-                        autocomplete    ="off" ${p.is_required}>
+                        autocomplete    ="off" 
+                        ${p.is_required}>
                 </div>`;         
     }
 

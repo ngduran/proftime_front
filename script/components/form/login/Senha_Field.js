@@ -5,18 +5,17 @@ class Senha_Field extends Base_Field {
     // 1. Atributos Estáticos
     static i18n = {
         pt: {
-            label:         "Senha",
-            placeholder:   "Digite sua senha",
-            label_mostrar: "Mostrar Senha",
-            tooltip:       "Senha utilizada para acessar o aplicativo. Mínimo de 8 caracteres, com letra maiúscula, minúscula, número e caractere especial (!@#$).",
-            erro:          "A senha deve conter: Maiúscula, Minúscula, Número, Símbolo e 8+ caracteres."
+            lbl_senha    : "Senha", 
+            ph_senha     : "Digite sua senha",
+            tp_lbl_senha : "Senha utilizada para acessar o aplicativo",
+            erro         : "Por favor, digite sua senha"       
         },
+
         es: {
-            label:         "Contraseña",
-            placeholder:   "Introduce tu contraseña",
-            label_mostrar: "Mostrar contraseña",
-            tooltip:       "Contraseña utilizada para acceder a la aplicación. Mínimo 8 caracteres, con mayúsculas, minúsculas, números y caracteres especiales.",
-            erro:          "La contraseña debe contener: Mayúsculas, Minúsculas, Números, Símbolos y más de 8 caracteres."
+            lbl_senha    : "Contraseña",
+            ph_senha     : "Introduzca su contraseña.",
+            tp_lbl_senha : "Contraseña utilizada para acceder a la aplicación.",
+            erro         : "Por favor, introduzca su contraseña."
         }
     };
 
@@ -34,9 +33,23 @@ class Senha_Field extends Base_Field {
     // 4. Renderização
     renderControl(p) {       
         return `<div class="campo">
-                    <label class="field-label"  for="${p.id}" data-translate="${p.data_translate_label}">${p.label}</label>
-                    <i class="${p.icon_question}" data-tooltip="${p.data_tooltip_balao}" data-translate="${p.data_translate_tooltip}"></i>
-                    <input type="password" id="${p.id}" name="${p.name}" class="field-input" data-translate="${p.data_translate_ph}" placeholder="${p.placeholder}" autocomplete="off" ${p.is_required}>
+                    <label  class          ="field-label"  
+                            for            ="${p.id}" 
+                            data-translate ="${p.data_translate_label}">
+                            ${p.label}
+                    </label>
+                    <i  class          ="${p.icon_question}" 
+                        data-tooltip   ="${p.data_tooltip_balao}" 
+                        data-translate ="${p.data_translate_tooltip}">
+                    </i>
+                    <input type        ="password" 
+                        id             ="${p.id}" 
+                        name           ="${p.name}" 
+                        class          ="field-input" 
+                        data-translate ="${p.data_translate_ph}" 
+                        placeholder    ="${p.placeholder}" 
+                        autocomplete   ="off" 
+                        ${p.is_required}>
                     </input>                    
                 </div>
         `;        
@@ -54,7 +67,6 @@ class Senha_Field extends Base_Field {
             input.addEventListener('blur', () => this.validarForcaSenha());
             input.addEventListener('input', () => this.limparEstado()); 
         }
-       
     }
 
     async configurarMostrarSenha(idCheckbox = 'mostrarSenha') {
@@ -93,8 +105,6 @@ class Senha_Field extends Base_Field {
         this.marcarSucesso();
         return true;
     }
-    
-    
         
 }
 
