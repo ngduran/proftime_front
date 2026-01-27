@@ -83,14 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 const dicionarioLogin = {
+
     pt: {
+        lbl_titulo              : "Login",
         lbl_mostrar_senha       : "Mostrar Senha",
         lbl_btn_entrar          : "Entrar",
         lbl_link_esqueceu_senha : "Esqueceu a senha?",
         lbl_btn_criar_conta     : "Criar Conta",
         lbl_link_reenviar_email : "Reenviar email"
     },
+    
     es: {
+        lbl_titulo              : "Acceso",
         lbl_mostrar_senha       : "Mostrar contraseña",
         lbl_btn_entrar          : "Para entrar",
         lbl_link_esqueceu_senha : "¿Olvidaste tu contraseña?",
