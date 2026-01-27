@@ -104,21 +104,21 @@ export function validarSenhasIguais() {
 //     return todosValidos;
 // }
 
-export function validarTelefone() {
-    const telefone = document.getElementById('telefone');
-    const valor = telefone.value.trim();
+// export function validarTelefone() {
+//     const telefone = document.getElementById('telefone');
+//     const valor = telefone.value.trim();
 
-    // (00) 0000-0000 -> 14 caracteres
-    // (00) 00000-0000 -> 15 caracteres
-    if (valor.length > 0 && valor.length < 14) {
-        marcarErro(telefone, "Telefone incompleto.");
-        return false;
-    }
+//     // (00) 0000-0000 -> 14 caracteres
+//     // (00) 00000-0000 -> 15 caracteres
+//     if (valor.length > 0 && valor.length < 14) {
+//         marcarErro(telefone, "Telefone incompleto.");
+//         return false;
+//     }
 
-    marcarSucesso(telefone);
+//     marcarSucesso(telefone);
 
-    return true;
-}
+//     return true;
+// }
 
 // /**
 //  * Valida se um ComboBox (select) possui uma opção selecionada.

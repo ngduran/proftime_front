@@ -57,16 +57,14 @@
             <div class="field-group col-0">
                 <div class="field-col">
                     <senha-field 
-                        label                  = "Senha" 
-                        data_translate_label   = "lbl_senha"
                         id                     = "senha"
                         name                   = "senha"                                
-                        icon_question          = "fa-solid fa-circle-question info-question"
+                        data_translate_label   = "lbl_senha"
                         data_translate_ph      = "ph_senha"
-                        data_tooltip_balao     = "Senha utilizada para acessar o aplicativo. Mínimo de 8 caracteres, com letra maiúscula, minúscula, número e caractere especial (!@#$)."
                         data_translate_tooltip = "tp_lbl_senha"
-                        placeholder            = "Digite sua senha"                                
-                    >
+                        icon_question          = "fa-solid fa-circle-question info-question"
+                        required
+                        >
                     </senha-field>
                 </div>
             </div>
@@ -130,9 +128,9 @@
 
     </form>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer           ></script>
-    <script type="module" src="../script/components/flexible/Email_Field.js"  ></script>
-    <script type="module" src="../script/components/form/login/Senha_Field.js"></script>
-    <script type="module" src="../script/pages/login.js"                      ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer          ></script>
+    <script type="module" src="../script/components/flexible/Email_Field.js" ></script>
+    <script type="module" src="../script/components/flexible/Senha_Field.js"></script>
+    <script type="module" src="../script/pages/login.js"                     ></script>
 </body>
 </html>

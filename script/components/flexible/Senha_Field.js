@@ -1,4 +1,4 @@
-import { Base_Field } from '../../base/Base_Field.js';
+import { Base_Field } from '../base/Base_Field.js';
 
 class Senha_Field extends Base_Field {
 
@@ -8,14 +8,26 @@ class Senha_Field extends Base_Field {
             lbl_senha    : "Senha", 
             ph_senha     : "Digite sua senha",
             tp_lbl_senha : "Senha utilizada para acessar o aplicativo",
-            erro         : "Por favor, digite sua senha"       
+            erro         : "Por favor, digite sua senha",
+            
+            // Novas chaves para a confirmação:
+            lbl_confirmar_senha    : "Confirmar Senha",
+            ph_confirmar_senha     : "Digite a senha novamente",
+            tp_lbl_confirmar_senha : "Repita a senha para garantir que está correta",
+            erro_confirmar_senha   : "Digite a senha novamente"
         },
 
         es: {
             lbl_senha    : "Contraseña",
             ph_senha     : "Introduzca su contraseña.",
             tp_lbl_senha : "Contraseña utilizada para acceder a la aplicación.",
-            erro         : "Por favor, introduzca su contraseña."
+            erro         : "Por favor, introduzca su contraseña.",
+
+            // Novas chaves para a confirmação:
+            lbl_confirmar_senha    : "Confirmar contraseña",
+            ph_confirmar_senha     : "Ingrese la contraseña nuevamente",
+            tp_lbl_confirmar_senha : "Repita la contraseña para asegurarse de que sea correcta",
+            erro_confirmar_senha   : "Repita la contraseña"
         }
     };
 

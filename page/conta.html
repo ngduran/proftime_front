@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../asset/style/base/base-form.css">
     <link rel="stylesheet" href="../asset/style/conta.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
@@ -38,16 +38,13 @@
             <div class="field-group col-0">
                  <div class="field-col">
                     <nome-field 
-                        label                  = "Nome" 
-                        data_translate_label   = "lbl_nome"
                         id                     = "nome"
                         name                   = "nome"                                
-                        icon_question          = "fa-solid fa-circle-question info-question"
+                        data_translate_label   = "lbl_nome"
                         data_translate_ph      = "ph_nome"
-                        data_tooltip_balao     = "Nome para registro no aplicativo"
                         data_translate_tooltip = "tp_lbl_nome"
-                        placeholder            = "Digite seu nome"                                
-                    >
+                        icon_question          = "fa-solid fa-circle-question info-question"
+                        >
                     </nome-field>
                  </div>
             </div>
@@ -57,15 +54,12 @@
             <div class="field-group col-0">
                  <div class="field-col">
                     <usuario-field 
-                        label                  = "Nome de Usuário" 
-                        data_translate_label   = "lbl_usuario"
                         id                     = "usuario"
                         name                   = "usuario"                                
-                        icon_question          = "fa-solid fa-circle-question info-question"
+                        data_translate_label   = "lbl_usuario"
                         data_translate_ph      = "ph_usuario"
-                        data_tooltip_balao     = "Nome para registro no aplicativo"
                         data_translate_tooltip = "tp_lbl_usuario"
-                        placeholder            = "Digite o seu usuário"                                
+                        icon_question          = "fa-solid fa-circle-question info-question"
                     >
                     </usuario-field>
                  </div>
@@ -76,15 +70,12 @@
             <div class="field-group col-0">
                  <div class="field-col">
                     <email-field 
-                        label                  = "Email" 
-                        data_translate_label   = "lbl_email"
                         id                     = "email"
                         name                   = "email"                                
-                        icon_question          = "fa-solid fa-circle-question info-question"
+                        data_translate_label   = "lbl_email"
                         data_translate_ph      = "ph_email"
-                        data_tooltip_balao     = "Email utilizado para acessar o aplicativo"
                         data_translate_tooltip = "tp_lbl_email"
-                        placeholder            = "seu_melhor_email@mail.com"                                
+                        icon_question          = "fa-solid fa-circle-question info-question"
                     >
                     </email-field>
                  </div>
@@ -95,22 +86,69 @@
             <div class="field-group col-0">
                  <div class="field-col">
                     <telefone-field 
-                        label                  = "Telefone" 
-                        data_translate_label   = "lbl_telefone"
                         id                     = "telefone"
                         name                   = "telefone"                                
-                        icon_question          = "fa-solid fa-circle-question info-question"
+                        data_translate_label   = "lbl_telefone"
                         data_translate_ph      = "ph_telefone"
-                        data_tooltip_balao     = "Utilizado para a instituição manter contato"
                         data_translate_tooltip = "tp_lbl_telefone"
-                        placeholder            = "Digite seu melhor número de telefone"                                
+                        icon_question          = "fa-solid fa-circle-question info-question"
                     >
                     </telefone-field>
                  </div>
             </div>
         </div>
 
+        <div class="field-container">
+            <div class="field-group col-0">
+                 <div class="field-col">
+                    <senha-field 
+                        id                     = "senha"
+                        name                   = "senha"                                
+                        data_translate_label   = "lbl_senha"
+                        data_translate_ph      = "ph_senha"
+                        data_translate_tooltip = "tp_lbl_senha"
+                        icon_question          = "fa-solid fa-circle-question info-question"
+                    >
+                    </senha-field>
+                 </div>
+            </div>
+        </div>
 
+        <div class="field-container">
+            <div class="field-group col-0">
+                 <div class="field-col">
+                    <senha-field 
+                        id                     = "confirmar_senha"
+                        name                   = "confirmar_senha"                                
+                        data_translate_label   = "lbl_confirmar_senha"
+                        data_translate_ph      = "ph_confirmar_senha"
+                        data_translate_tooltip = "tp_lbl_confirmar_senha"
+                        icon_question          = "fa-solid fa-circle-question info-question"
+                    >
+                    </senha-field>
+                 </div>
+            </div>
+        </div>
+
+        <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col">
+                    <input type="checkbox" id="mostrarSenha">                
+                    <label for="mostrarSenha" data-translate="lbl_mostrar_senha">Mostrar Senha</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="field-container">
+            <div class="field-group col-5">
+                <div class="field-col"></div>
+                <button type="button" id="voltarBtn"    class="cta-button" data-translate="lbl_voltarBtn">Voltar</button>
+            </div>   
+            <div class="field-group col-5">
+                <div class="field-col"></div>
+                <button type="button" id="cadastrarBtn" class="cta-button" data-translate="lbl_cadastrarBtn">Salvar</button>
+            </div>
+        </div>
 
     
     
@@ -120,6 +158,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script type="module" src="../script/components/form/conta/Nome_Field.js"></script>
+    <script type="module" src="../script/components/form/conta/Usuario_Field.js"></script>
+    <script type="module" src="../script/components/flexible/Email_Field.js"></script>
+    <script type="module" src="../script/components/form/conta/Telefone_Field.js"></script>
+    <script type="module" src="../script/components/flexible/Senha_Field.js"></script>
+    
+    
     <script type="module" src="../script/pages/conta.js"></script>
 </body>
 </html>
