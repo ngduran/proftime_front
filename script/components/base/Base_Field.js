@@ -2,13 +2,9 @@ import { field_style } from '../css/Field_Styles.js';
 import { TooltipManager } from '../utils/TooltipManager.js';
 import { EditionManager } from '../utils/EditionManager.js';
 
-// Removida pois agora a tradução é feita pelo próprio componente
-// Removida a chamada também na função render
-//import { applyTranslations } from '../utils/i18n/login_i18n.js';
-
 export class Base_Field extends HTMLElement {
     
-    // 1. Inicialização
+    // 1. INICIALIZAÇÃO
     constructor() {
         
         super();
@@ -17,21 +13,10 @@ export class Base_Field extends HTMLElement {
             this.attachShadow({ mode: 'open' });
         }
 
-        this.shadowRoot.adoptedStyleSheets = [field_style];
-                
-        // this._handleLanguageChange = (e) => {
-        //     const novoIdioma = (e.detail && typeof e.detail === 'object') ? e.detail.lang : e.detail;
-            
-        //     console.log("-------------------------------------------------------------------");
-        //     console.log("O novo idioma --------> " + novoIdioma);
-        //     console.log("-------------------------------------------------------------------");
-            
-        //     sessionStorage.setItem('official_language', novoIdioma);
-        //     this.translate();
-        // };
+        this.shadowRoot.adoptedStyleSheets = [field_style];        
     }
 
-    // 2. Ciclo de Vida (Lifecycle)
+    // 2. CICLO DE VIDA (LIFECYCLE)
     connectedCallback() {
         // 1. // Escuta o evento global de troca de idioma e associa à função de tratamento
         window.addEventListener('languageChanged', this._handleLanguageChange);
@@ -39,8 +24,7 @@ export class Base_Field extends HTMLElement {
         // 1. Constrói a estrutura visual do componente no DOM
         this.render(); 
         
-        // 2. Aplica a tradução inicial baseada no idioma salvo ou padrão
-        //this.translate(); 
+        // 2. Aplica a tradução inicial baseada no idioma salvo ou padrão        
         queueMicrotask(() => {
             console.log(`%c[SYNC] %c${this.id}: Aplicando tradução segura...`, "color: #007bff; font-size: 10px;", "color: #333;");
             this.translate(); 
@@ -51,7 +35,7 @@ export class Base_Field extends HTMLElement {
         window.removeEventListener('languageChanged', this._handleLanguageChange);
     }
    
-    // 3. Renderização
+    // 3. RENDERIZAÇÃO
     async render() {
         const props = {
             is_required: this.hasAttribute('required') ? 'required' : ''
@@ -69,56 +53,12 @@ export class Base_Field extends HTMLElement {
             </style>
             
             ${this.renderControl(props)}           
-        `;
-      
-        //Removido pois a chamada agora é feita no próprio componente
-        // queueMicrotask(() => {
-        //     // Chamando dicionario externo
-        //     // Nas próximas refatoração pode verificar a remoção
-        //     applyTranslations(this.shadowRoot);
-        // });
-
+        `;     
     }
 
     renderControl(p) { return ``; }
 
-    // 4. Getters de Acesso
-    get control() {
-        return this.shadowRoot.querySelector('.field-input, .field-select, .field-time');
-    }
-
-    get container() {
-        return this.shadowRoot.querySelector('.campo');        
-    }
-
-    get value() {
-        const control = this.shadowRoot.querySelector('input, select, textarea');
-        return control ? control.value : '';
-    }
-
-    /**
-     * Retorna o ID do componente (útil para logs e labels)
-     */
-    get id() {
-        return this.getAttribute('id') || 'sem-id';
-    }
-
-    /**
-     * Retorna o atributo name do componente
-     */
-    get name() {
-        return this.getAttribute('name') || 'sem name';
-    }
-
-    /**
-     * Retorna o scope do componente para lógica de negócio (ex: "senha", "confirmar_senha")
-     */
-    get scope() {
-        return this.getAttribute('scope') || 'default';
-    }
-
-    // 5. Tradução
-    // Criamos a função de tratamento com log
+    // 4. SISTEMA DE TRADUÇÃO (I18N)    
     _handleLanguageChange = (e) => {
         console.log("CHAMOU O HANDLE LANGUAGE CHANGE");
         //const novoIdioma = e.detail?.language || sessionStorage.getItem('official_language');
@@ -166,13 +106,6 @@ export class Base_Field extends HTMLElement {
 
         //this.translate(); // Chama o método que aplica as novas strings
     };
-
-
-
-
-
-
-
 
     translate() {
         console.log("Foi chamado o translate ao iniciar a página");
@@ -235,7 +168,42 @@ export class Base_Field extends HTMLElement {
         
     }
 
-    // 6. Métodos de Validação e Estado
+    // 5. GETTERS DE ACESSO
+    get control() {
+        return this.shadowRoot.querySelector('.field-input, .field-select, .field-time');
+    }
+
+    get container() {
+        return this.shadowRoot.querySelector('.campo');        
+    }
+
+    get value() {
+        const control = this.shadowRoot.querySelector('input, select, textarea');
+        return control ? control.value : '';
+    }
+
+    /**
+     * Retorna o ID do componente (útil para logs e labels)
+     */
+    get id() {
+        return this.getAttribute('id') || 'sem-id';
+    }
+
+    /**
+     * Retorna o atributo name do componente
+     */
+    get name() {
+        return this.getAttribute('name') || 'sem name';
+    }
+
+    /**
+     * Retorna o scope do componente para lógica de negócio (ex: "senha", "confirmar_senha")
+     */
+    get scope() {
+        return this.getAttribute('scope') || 'default';
+    }
+
+    // 6. VALIDAÇÃO E ESTADO VISUAL  
     validar() {
 
         if (this.shadowRoot && this.shadowRoot.querySelector('select')) {
@@ -292,7 +260,7 @@ export class Base_Field extends HTMLElement {
         if (msgErro) msgErro.remove();
     }
 
-    // 7. Utilitários e Inicializadores de Managers
+    // 7. MANAGERS E POSICIONAMENTO
     setupBase() { }
     
     initTooltip() {
@@ -348,5 +316,5 @@ export class Base_Field extends HTMLElement {
     
 }
 
-// 8. Definição do Web Component
+// 8. DEFINIÇÃO DO WEB COMPONENT
 customElements.define('base-input', Base_Field);
