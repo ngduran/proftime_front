@@ -1,81 +1,57 @@
-// import { cadastrarUsuario } from "../services/api_service.js";
-// import { bloquearButton, desbloquearButton, coletarDadosForm, configurarMascaraTelefone, 
-//          navegarPara} from "../utils/form-helper.js";
-// import { validarNome, validarUsuario, validarFormulario, validarEmail, 
-//          validarTelefone, validarForcaSenha, validarSenhasIguais } from "../utils/validador.js";
-// import { inicializarTooltips, configurarMostrarSenha } from "../utils/dom-utils.js";
-// import { SessionManager } from "../utils/session-manager.js";
-// import { lerRespostaSucesso, lerRespostaErro } from "../api/api-client.js";
-// import { Mensagem } from "../utils/mensageiro.js";
+// 1. DICIONÁRIO DE INTERFACE ESTÁTICA (Textos que não são Web Components)
+const dicionarioLogin = {
 
-
-// inicializarTooltips();
-// configurarMostrarSenha('mostrarSenha', ['senha', 'confirmarSenha']);
-// configurarMascaraTelefone('telefone');
-
-// async function salvar() {
+    pt: {
+        lbl_titulo              : "Conta",
+        lbl_mostrar_senha       : "Mostrar Senha",
+        lbl_voltarBtn           : "Voltar",
+        lbl_cadastrarBtn        : "Salvar"        
+    },
     
-//     if ( !validarFormulario("contaForm") ) { return; }
-//     if ( !validarNome()                  ) { return; }
-//     if ( !validarUsuario()               ) { return; }
-//     if ( !validarEmail()                 ) { return; }
-//     if ( !validarTelefone()              ) { return; }
-//     if ( !validarForcaSenha()            ) { return; }
-//     if ( !validarSenhasIguais()          ) { return; }
+    es: {
+        lbl_titulo              : "Cuenta",
+        lbl_mostrar_senha       : "Mostrar contraseña",
+        lbl_voltarBtn           : "Para volver atrás",
+        lbl_cadastrarBtn        : "Ahorrar"
+    }
+};
 
-//     try {
+// 2. FUNÇÕES DE TRADUÇÃO
+function traduzirInterfaceEstatica(lang) {
+    const elementos = document.querySelectorAll('[data-translate]');
+    elementos.forEach(el => {
+        const chave = el.getAttribute('data-translate');
         
-//         bloquearButton("cadastrarBtn", "Criando...");
+        if (dicionarioLogin[lang] && dicionarioLogin[lang][chave]) {
+            el.innerText = dicionarioLogin[lang][chave];
+        }
+    });
+}
+
+// 3. EVENTOS GLOBAIS
+window.addEventListener('languageChanged', (e) => {
+    const lang = e.detail?.Language || e.detail?.language || e.detail;
+    traduzirInterfaceEstatica(lang);
+});
+
+// 4. INICIALIZAÇÃO E CONTROLE DE UI
+document.addEventListener('DOMContentLoaded', () => {
     
-//         const dados = coletarDadosForm("contaForm");
+    if (!sessionStorage.getItem('official_language')) {
+        sessionStorage.setItem('official_language', 'pt');        
+    }
+    
+    // 4.3 FUNÇÃO DE TROCA DE IDIOMA DO SISTEMA
+    const trocarIdiomaSistema = (lang) => {
+        
+        sessionStorage.setItem('official_language', lang);
        
-//         const response = await cadastrarUsuario(dados);       
-        
-//         const resultado = response.ok 
-//             ? await lerRespostaSucesso(response) 
-//             : await lerRespostaErro(response);            
-        
-//         if (response.ok) {
-           
-//             if (resultado?.uuid) { SessionManager.salvar("usuario_uuid", resultado.uuid); }       
+        window.dispatchEvent(new CustomEvent('languageChanged', {
+            detail: { language: lang }
+        }));        
+    };
 
-//             await Mensagem.sucesso("Sua conta foi criada com sucesso!");          
-
-//             navegarPara("login");            
-           
-//         } else {
-            
-//             const mensagemFinal = typeof resultado === 'object' 
-//                 ? (resultado.message || "Erro no servidor") 
-//                 : resultado;
-
-//             await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
-//         }
-        
-//     } catch (error) {       
-//         // Se for erro de rede, o fetch lança TypeError. Se for código, é ReferenceError ou similar.
-//         if (error.message.includes("fetch") || error.message.includes("Network")) {
-//              await Mensagem.erro("Conexão", "Não foi possível alcançar o servidor.");
-//         } else {
-//              // Se o Swal falhar, ele mostra o erro do script aqui
-//              alert("Erro no script de Mensagem: " + error.message);
-//         }   
-//     } finally {
-//         desbloquearButton("cadastrarBtn", "Salvar");
-//     }        
-// }
-
-// function voltarAoInicio() {
-//     navegarPara('home');
-// }
-
-// // Validação em tempo real ao sair do campo (Blur)
-// document.getElementById('nome'          ).addEventListener('blur', validarNome         );
-// document.getElementById('usuario'       ).addEventListener('blur', validarUsuario      );
-// document.getElementById('email'         ).addEventListener('blur', validarEmail        );
-// document.getElementById('telefone'      ).addEventListener('blur', validarTelefone     );
-// document.getElementById('senha'         ).addEventListener('blur', validarForcaSenha   );
-// document.getElementById('confirmarSenha').addEventListener('blur', validarSenhasIguais );
-
-// document.getElementById('cadastrarBtn'  ).addEventListener('click', salvar         );
-// document.getElementById('voltarBtn'     ).addEventListener('click', voltarAoInicio );
+    // 4.4 OUVINTES DOS BOTÕES DE BANDEIRA
+    document.getElementById('btn-pt')?.addEventListener('click', () => trocarIdiomaSistema('pt'));
+    document.getElementById('btn-es')?.addEventListener('click', () => trocarIdiomaSistema('es'));
+});
