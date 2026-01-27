@@ -46,7 +46,7 @@ class Usuario_Field extends Base_Field {
                         data-tooltip   ="${p.data_tooltip_balao}" 
                         data-translate ="${p.data_translate_tooltip}">
                     </i>
-                    <input type        ="password" 
+                    <input type        ="text" 
                         id             ="${p.id}" 
                         name           ="${p.name}" 
                         class          ="field-input" 
@@ -73,7 +73,10 @@ class Usuario_Field extends Base_Field {
         }
     }
 
-    async validarUsername() {  
+    async validarUsername() { 
+        
+        const official_language = sessionStorage.getItem('official_language') || 'pt';
+        
         const input = this.control; // Usa o getter da Base_Field
         if (!input) return;
 
@@ -87,19 +90,19 @@ class Usuario_Field extends Base_Field {
         const regexUsername = /^[a-z0-9._]+$/;
 
         if (valor.includes(" ")) {
-            const mensagem = Email_Field.i18n[official_language].erro_1;
+            const mensagem = Usuario_Field.i18n[official_language].erro_1;
             this.marcarErro( mensagem );
             return false;
         }
 
         if (!regexUsername.test(valor)) {
-            const mensagem = Email_Field.i18n[official_language].erro_2;
+            const mensagem = Usuario_Field.i18n[official_language].erro_2;
             this.marcarErro( mensagem );
             return false;
         }
 
         if (valor.length < 3) {
-            const mensagem = Email_Field.i18n[official_language].erro_3;
+            const mensagem = Usuario_Field.i18n[official_language].erro_3;
             this.marcarErro( mensagem );
             return false;
         }

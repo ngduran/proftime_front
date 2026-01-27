@@ -88,14 +88,14 @@ export function aplicarMascaraTelefone(valor) {
     return valor.substring(0, 15); // Limita ao tamanho máximo de celular
 }
 
-export function configurarMascaraTelefone(id) {
-    const campo = document.getElementById(id);
-    if (campo) {
-        campo.addEventListener('input', (e) => {
-            e.target.value = aplicarMascaraTelefone(e.target.value);
-        });
-    }
-}
+// export function configurarMascaraTelefone(id) {
+//     const campo = document.getElementById(id);
+//     if (campo) {
+//         campo.addEventListener('input', (e) => {
+//             e.target.value = aplicarMascaraTelefone(e.target.value);
+//         });
+//     }
+// }
 
 /**
  * Redireciona para uma página específica dentro da pasta /page/

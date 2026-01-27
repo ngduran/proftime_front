@@ -87,6 +87,27 @@ export class Base_Field extends HTMLElement {
         return control ? control.value : '';
     }
 
+    /**
+     * Retorna o ID do componente (útil para logs e labels)
+     */
+    get id() {
+        return this.getAttribute('id') || 'sem-id';
+    }
+
+    /**
+     * Retorna o atributo name do componente
+     */
+    get name() {
+        return this.getAttribute('name') || 'sem name';
+    }
+
+    /**
+     * Retorna o scope do componente para lógica de negócio (ex: "senha", "confirmar_senha")
+     */
+    get scope() {
+        return this.getAttribute('scope') || 'default';
+    }
+
     // 5. Tradução
     translate() {
         console.log("Foi chamado o translate ao iniciar a página");

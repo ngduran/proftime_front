@@ -4,7 +4,7 @@ import { applyTranslations } from "../../utils/i18n/instituicao_i18n.js";
 import { Base_Field } from "../../base/Base_Field.js";
 
 
-class Estado_Field extends Base_Field {
+class Instituicao_Select extends Base_Field {
     
     constructor() {
         super();        
@@ -80,25 +80,25 @@ class Estado_Field extends Base_Field {
     // }
 
     setupEventListeners() {
-    const control = this.control; // Usa o getter genérico da Base_Field
-    if (!control) return;
+        const control = this.control; // Usa o getter genérico da Base_Field
+        if (!control) return;
 
-    // 1. Evento de Mudança (Lógica de Negócio + Validação)
-    control.addEventListener('change', (e) => {
-        this.validar(); // Chama o método de validação genérico
-        this.emitirMudanca(e.target.value);
-    });
+        // 1. Evento de Mudança (Lógica de Negócio + Validação)
+        control.addEventListener('change', (e) => {
+            this.validar(); // Chama o método de validação genérico
+            this.emitirMudanca(e.target.value);
+        });
 
-    // 2. Evento de Perda de Foco (Validação de interface)
-    control.addEventListener('blur', () => {
-        this.validar();
-    });
+        // 2. Evento de Perda de Foco (Validação de interface)
+        control.addEventListener('blur', () => {
+            this.validar();
+        });
 
-    // 3. Evento de Entrada (Limpa erros enquanto o usuário tenta corrigir)
-    control.addEventListener('input', () => {
-        this.limparEstado();
-    });
-}
+        // 3. Evento de Entrada (Limpa erros enquanto o usuário tenta corrigir)
+        control.addEventListener('input', () => {
+            this.limparEstado();
+        });
+    }
 
     /**
      * Emite um evento customizado baseado no nome do componente
@@ -195,4 +195,4 @@ class Estado_Field extends Base_Field {
 
 }
 
-customElements.define('estado-field', Estado_Field);
+customElements.define('instituicao-select', Instituicao_Select);

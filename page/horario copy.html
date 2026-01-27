@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof Time - Grade de Horários Responsiva</title>
+    <link rel="stylesheet" href="../asset/style/base/base-form.css">
+    <link rel="stylesheet" href="../asset/style/horario.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="form-card">
+            <h1 class="header-title">Horário</h1>
+           
+            <form id="cabecalhoGradeForm" class="responsive-grid">                 
+                <div class="input-group ignore-base">
+                    <div class="label-row">
+                        <label class="ignore-base" for="instituicao">Instituição</label>
+                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Local onde leciona"></i>
+                        <span class="info-icon" title="Obrigatório"></span>
+                    </div>
+                    <select id="instituicao" name="instituicao" required>
+                        <option value="">Selecione a instituição</option>
+                        <option value="1">Colégio Estadual Marilis Faria Pirotelli</option>
+                        <option value="2">Colégio Estadual Marechal Humberto de Alencar Castelo Branco - EFM</option>
+                        <option value="3">Escola Municipal Professora Gladis Maria Tibola</option>
+                    </select>
+                </div>
+                <div class="input-group ignore-base">
+                    <div class="label-row">
+                        <label class="ignore-base" for="turno">Turno</label>                        
+                        <i class="fa-solid fa-circle-question info-question" data-tooltip="Período que leciona"></i>
+                        <span class="info-icon" title="Obrigatório"></span>
+                    </div>
+                    <select id="turno" name="turno" required>
+                        <option value="">Selecione o turno</option>
+                        <option value="1">Manhã</option>
+                        <option value="2">Tarde</option>
+                        <option value="3">Noite</option>
+                    </select>
+                </div>
+            </form>
+
+            <div class="section-grade">                
+              
+                <form id="itemGradeForm" class="entry-grid">
+                    <div class="input-group ignore-base">
+                        <div class="label-row">
+                            <label class="ignore-base">Posição</label>
+                            <i class="fa-solid fa-circle-question info-question" data-tooltip="Qual o horário da aula"></i>
+                            <span class="info-icon" title="Obrigatório"></span>
+                        </div>
+                        <input id="posicao" type="number" name="posicao" value="1" min="1" required>
+                    </div>
+                    <div class="input-group ignore-base">
+                        <div class="label-row">
+                            <label class="ignore-base">Dia</label>                            
+                            <i class="fa-solid fa-circle-question info-question" data-tooltip="Dia da Semana da aula"></i>
+                            <span class="info-icon" title="Obrigatório"></span>
+                        </div>
+                        <select id="diaSemana" name="diaSemana" required>
+                            <option value="">Selecione o dia</option>
+                            <option value="1">Segunda</option>
+                            <option value="2">Terça</option>
+                            <option value="3">Quarta</option>
+                            <option value="4">Quinta</option>
+                            <option value="5">Sexta</option>
+                            <option value="6">Sábado</option>
+                            <option value="7">Domingo</option>
+                        </select>
+                    </div>
+                    <div class="input-group ignore-base">
+                        <div class="label-row">                            
+                            <label class="ignore-base">Turma</label>
+                            <i class="fa-solid fa-circle-question info-question" data-tooltip="Turma que leciona"></i>
+                        </div>
+                        <select id="turma" name="turma" required>
+                            <option value="">Selecione a Turma</option>
+                            <option value="1">1º Técnico em Desenvolvimento de Sistemas</option>
+                            <option value="2">2º Técnico em Desenvolvimento de Sistemas</option>
+                            <option value="3">3º Técnico em Desenvolvimento de Sistemas</option>
+                            <option value="4">1º Técnico em Administração</option>
+                        </select>
+                    </div>
+                    <div class="input-group ignore-base">
+                        <div class="label-row">                        
+                            <label class="ignore-base">Matéria</label>
+                            <i class="fa-solid fa-circle-question info-question" data-tooltip="Matéria que leciona"></i>
+                        </div>
+                        <select id="materia" name="materia" required>
+                            <option value="">Selecione a matéria</option>
+                            <option value="1">Análise e Projeto de Sistemas</option>
+                            <option value="2">Banco de dados</option>
+                            <option value="3">Programação Mobile</option>
+                            <option value="4">Marketing</option>
+                            <option value="5">Datilografia</option>
+                        </select>
+                    </div>
+                    <button type="button" id="adicionarBtn" class="cta-button btn-add">Adicionar</button>
+                </form>
+            </div>
+
+            <div class="table-responsive-container">
+                <table class="horario-table">
+                    <thead>
+                        <tr>
+                            <th>Aula</th>
+                            <th>Segunda</th>
+                            <th>Terça</th>
+                            <th>Quarta</th>
+                            <th>Quinta</th>
+                            <th>Sexta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradeCorpo">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="footer-actions">
+                <div class="button-group">
+                    <button type="button" id="cadastrarBtn" class="cta-button">Salvar</button>    
+                    <button type="button" id="voltarBtn"    class="cta-button">Voltar ao Inicio</button>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script type="module" src="../script/pages/horario.js"></script>
+</body>
+</html>

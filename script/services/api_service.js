@@ -23,7 +23,6 @@ export async function initialDataInstituicao() {
 
 export async function listarEstados() {
     return await apiFetchGet(API_MAP.ESTADO.FINDALL);
-
 }
 
 export async function listarMunicipiosPorEstado(idEstado, termoBusca) {
