@@ -49,25 +49,25 @@ export function validarUsuario() {
 //     return true;
 // }
 
-export function validarSenhasIguais() {    
-    const inputSenha = document.getElementById('senha');
-    const inputConfirmarSenha = document.getElementById('confirmarSenha');
+// export function validarSenhasIguais() {    
+//     const inputSenha = document.getElementById('senha');
+//     const inputConfirmarSenha = document.getElementById('confirmarSenha');
 
-    // 1. Se estiver vazio, não marca sucesso nem erro (deixa para o validarFormulario)
-    if (inputSenha.value === "" || inputConfirmarSenha.value === "") {        
-        return false; 
-    }
+//     // 1. Se estiver vazio, não marca sucesso nem erro (deixa para o validarFormulario)
+//     if (inputSenha.value === "" || inputConfirmarSenha.value === "") {        
+//         return false; 
+//     }
     
-    // 2. Se forem diferentes
-    if (inputSenha.value !== inputConfirmarSenha.value) {                      
-        marcarErro(inputConfirmarSenha, "As senhas não conferem.");
-        return false;
-    }
+//     // 2. Se forem diferentes
+//     if (inputSenha.value !== inputConfirmarSenha.value) {                      
+//         marcarErro(inputConfirmarSenha, "As senhas não conferem.");
+//         return false;
+//     }
    
-    marcarSucesso(inputConfirmarSenha);
+//     marcarSucesso(inputConfirmarSenha);
 
-    return true;
-}
+//     return true;
+// }
 
 // export function validarForcaSenha() {
 //     const inputSenha = document.getElementById('senha');

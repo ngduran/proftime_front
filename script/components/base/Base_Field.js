@@ -19,11 +19,16 @@ export class Base_Field extends HTMLElement {
 
         this.shadowRoot.adoptedStyleSheets = [field_style];
                 
-        this._handleLanguageChange = (e) => {
-            const novoIdioma = (e.detail && typeof e.detail === 'object') ? e.detail.lang : e.detail;
-            sessionStorage.setItem('official_language', novoIdioma);
-            this.translate();
-        };
+        // this._handleLanguageChange = (e) => {
+        //     const novoIdioma = (e.detail && typeof e.detail === 'object') ? e.detail.lang : e.detail;
+            
+        //     console.log("-------------------------------------------------------------------");
+        //     console.log("O novo idioma --------> " + novoIdioma);
+        //     console.log("-------------------------------------------------------------------");
+            
+        //     sessionStorage.setItem('official_language', novoIdioma);
+        //     this.translate();
+        // };
     }
 
     // 2. Ciclo de Vida (Lifecycle)
@@ -35,7 +40,11 @@ export class Base_Field extends HTMLElement {
         this.render(); 
         
         // 2. Aplica a tradução inicial baseada no idioma salvo ou padrão
-        this.translate(); 
+        //this.translate(); 
+        queueMicrotask(() => {
+            console.log(`%c[SYNC] %c${this.id}: Aplicando tradução segura...`, "color: #007bff; font-size: 10px;", "color: #333;");
+            this.translate(); 
+        });
     }
 
     disconnectedCallback() {        
@@ -109,12 +118,79 @@ export class Base_Field extends HTMLElement {
     }
 
     // 5. Tradução
+    // Criamos a função de tratamento com log
+    _handleLanguageChange = (e) => {
+        console.log("CHAMOU O HANDLE LANGUAGE CHANGE");
+        //const novoIdioma = e.detail?.language || sessionStorage.getItem('official_language');
+
+        const novoIdioma = e.detail?.language || e.detail?.lang || e.detail;
+
+        // 2. Log de Recebimento (Roxo)
+        console.log(
+            `%c[I18N-RECEIVE] %c${this.id.toUpperCase()} %crecebeu evento. Dados: %c${JSON.stringify(e.detail)}`,
+            "background: #6f42c1; color: #fff; font-weight: bold; border-radius: 3px; padding: 0 5px;",
+            "color: #000; font-weight: bold;",
+            "color: #666;",
+            "color: #6f42c1; font-style: italic;"
+        );
+
+        if (novoIdioma) {
+            // 3. Log de Sucesso na Identificação (Verde)
+            console.log(
+                `%c[I18N-VALID] %c${this.id.toUpperCase()} %cidentificou idioma: %c${novoIdioma.toUpperCase()}`,
+                "color: #28a745; font-weight: bold;",
+                "color: #000; font-weight: bold;",
+                "color: #666;",
+                "background: #28a745; color: #fff; font-weight: bold; padding: 0 5px; border-radius: 3px;"
+            );
+
+            sessionStorage.setItem('official_language', novoIdioma);
+            this.translate();
+        } else {
+            // 4. Log de Erro (Vermelho)
+            console.error(
+                `%c[I18N-ERROR] %c${this.id.toUpperCase()}: %cEvento recebido sem idioma definido no e.detail!`,
+                "background: #dc3545; color: #fff; font-weight: bold;",
+                "color: #000; font-weight: bold;",
+                "color: #dc3545;"
+            );
+        }
+
+        console.log(
+            `%c[I18N-RECEIVE] %c${this.id.toUpperCase()} %crecebeu evento. Idioma detectado: %c${novoIdioma}`,
+            "background: #6f42c1; color: #fff; font-weight: bold; padding: 2px 5px;",
+            "color: #000; font-weight: bold;",
+            "color: #666;",
+            "color: #6f42c1; font-weight: bold;"
+        );
+
+        //this.translate(); // Chama o método que aplica as novas strings
+    };
+
+
+
+
+
+
+
+
     translate() {
         console.log("Foi chamado o translate ao iniciar a página");
         const official_language = sessionStorage.getItem('official_language') || 'pt';
         const dicionario = this.constructor.i18n?.[official_language];
         
+        console.log(
+            `%c[I18N-PROCESS] %c${this.id.toUpperCase()} %cbuscando dicionário para: %c${official_language}`,
+            "color: #fd7e14; font-weight: bold;", 
+            "color: #000; font-weight: bold;",
+            "color: #666;",
+            "color: #fd7e14; font-weight: bold;"
+        );
+        
         if (!dicionario) {
+            console.warn(
+                `%c[I18N-WARN] %cDicionário NÃO encontrado para '${official_language}' 
+                em ${this.tagName}`, "color: orange; font-weight: bold;", "color: #666;");
             return;
         }
 
@@ -128,13 +204,21 @@ export class Base_Field extends HTMLElement {
         if (label) {
             const chave = label.getAttribute('data-translate'); // Ex: "lbl_email"
             if (dicionario[chave]) label.innerText = dicionario[chave];
-        } 
+        } else {
+                console.log(
+                    `%c[I18N-MISSING] %cChave de Label não encontrada: %c${chave}`, 
+                    "color: red;", "color: #333;", "font-weight: bold;");
+            }
 
         // 3. Traduz o PLACEHOLDER usando a chave do atributo
         if (input) {
             const chave = input.getAttribute('data-translate'); // Ex: "ph_email"
             if (dicionario[chave]) input.placeholder = dicionario[chave];
-        } 
+        } else {
+                console.log(
+                    `%c[I18N-MISSING] %cChave de Placeholder não encontrada: %c${chave}`, 
+                    "color: red;", "color: #333;", "font-weight: bold;");
+            }
 
         // 4. Traduz o TOOLTIP usando a chave do atributo
         if (icon) {
