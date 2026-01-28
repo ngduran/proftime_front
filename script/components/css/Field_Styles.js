@@ -83,6 +83,9 @@ field_style.replaceSync(`
         appearance: none !important;
         -webkit-appearance: none !important;
         cursor: pointer; 
+
+        /* Isso ajuda o navegador a entender que o select não deve ser maior que o pai */
+        display: block;        
     }
 
     input[type="time"]::-webkit-calendar-picker-indicator {

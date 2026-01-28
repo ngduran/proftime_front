@@ -13,7 +13,15 @@ export class Base_Field extends HTMLElement {
             this.attachShadow({ mode: 'open' });
         }
 
-        this.shadowRoot.adoptedStyleSheets = [field_style];        
+        this.shadowRoot.adoptedStyleSheets = [field_style];
+        
+        // Adicione o FontAwesome aqui se ele for essencial para todos os campos
+        const faLink = document.createElement('link');
+        faLink.rel = 'stylesheet';
+        faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css';
+        this.shadowRoot.appendChild(faLink);
+
+
     }
 
     // 2. CICLO DE VIDA (LIFECYCLE)
@@ -58,12 +66,20 @@ export class Base_Field extends HTMLElement {
             "color: #fd7e14; font-weight: bold;", "color: #000;", "color: #666;");
 
 
+        // Retirado do this.shadowRoot.innerHTML, para testar piscada da tela
+        // Foi adicionado no construtor7
+        // <style>
+        //     @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+        // </style>
+
+        const fontAwesome = `<style>
+                                @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+                            </style>`;
 
         this.shadowRoot.innerHTML = `            
-            <style>
-                @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
-            </style>
             
+            ${fontAwesome}    
+
             ${this.renderControl(props)}           
         `;     
 
