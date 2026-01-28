@@ -37,7 +37,7 @@ export async function executarOperacao({
         // 3. Processamento da resposta (Lógica unificada que você já usa)
         const resultado = response.ok 
             ? await lerRespostaSucesso(response) 
-            : await lerRespostaErro(response);        
+            : await lerRespostaErro(response);                   
 
         if (response.ok) {
             // Persistência de ID/UUID se retornar

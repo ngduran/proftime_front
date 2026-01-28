@@ -29,3 +29,8 @@ export async function listarMunicipiosPorEstado(idEstado, termoBusca) {
     return await apiFetchGetWithId(API_MAP.MUNICIPIO.POR_ESTADO, idEstado, termoBusca);
 
 }
+
+export async function listarInstituicoes() {
+    return await apiFetchGet(API_MAP.INSTITUICAO.FINDALL);
+
+}

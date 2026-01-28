@@ -6,127 +6,125 @@ import { Base_Field } from "../../base/Base_Field.js";
 
 class Instituicao_Select extends Base_Field {
     
+    // 1. Atributos Estáticos
+    static i18n = {
+        pt: {
+            lbl_nome    : "Instituição", 
+            ph_nome     : "Selecione a instituição",
+            tp_lbl_nome : "Utilizado para organizar seu horário",
+            erro        : "Por favor, selecione uma instituição"       
+        },
+
+        es: {
+            lbl_nome    : "Institución", 
+            ph_nome     : "Seleccione la institución",
+            tp_lbl_nome : "Se utiliza para organizar tu agenda.",
+            erro        : "Por favor seleccione una institución.",
+        }
+    };
+
+    // 2. Inicialização
     constructor() {
         super();        
     }
     
     connectedCallback() {   
-        super.render(); 
+        super.initTooltip();
 
-        // Tradução inicial na carga do componente
-        applyTranslations(this.shadowRoot);
-
-        // Escuta a mudança global de idioma
-        window.addEventListener('languageChanged', () => {
-            applyTranslations(this.shadowRoot);            
+        queueMicrotask(() => {           
+            this.setupEventListeners();        
         });
 
-        super.setupBase();
-        super.initTooltip();
-        super.initEdition();
-        this.readEstados();
-        
-        // SUBSTITUIDO PELA CHAMADA ABAIXO
-        //this.configurarValidacao();
-
-        this.setupEventListeners();
+        //window.addEventListener('senha-selecionado', (e) => this.handleSenhaGlobalChange(e));
     }
 
+     // 3. RENDERIZAÇÃO
     renderControl(p) {                
         return `<div class="campo">
-                    <label class="field-label"  for="${p.id}" data-translate="${p.data_translate_label}">${p.label}</label>
-                    <i class="${p.icon_question}" data-tooltip="${p.data_tooltip_balao}" data-translate="${p.data_translate_tooltip}"></i>
-                    <select id="${p.id}" name="${p.name}" class="field-select"
-                        autocomplete="off" ${p.is_required}>
+                    <label  class          ="field-label"  
+                            for            ="${p.id}" 
+                            data-translate ="${p.data_translate_label}">
+                            ${p.label}
+                    </label>
+                    <i  class           ="${p.icon_question}" 
+                        data-tooltip    ="${p.data_tooltip_balao}" 
+                        data-translate  ="${p.data_translate_tooltip}">
+                    </i>
+                    <select 
+                        id           ="${p.id}" 
+                        name         ="${p.name}" 
+                        class        ="field-select"
+                        autocomplete ="off" 
+                        ${p.is_required}>
                         <option value="" data-translate="${p.data_translate_op}">${p.placeholder}</option>
-                    </select>
-                    <button type="button" class="edit-button">
-                        <i class="${p.icon_edicao}"></i>
-                    </button>
+                    </select>                    
                 </div>
         `;     
     }
 
-    // Utilizado pelo formulário page intituicao.js
-    // Sobrescreve o validar do Bae_Field
-    validar() {        
-        return this.validarSelect(); 
-    }
- 
-    // --> SUBSTITUIDO PELA FUNÇÃO ABAIXO
-    // --> SUBSTITUIDO PELA FUNÇÃO ABAIXO
-    // --> SUBSTITUIDO PELA FUNÇÃO ABAIXO
-    // configurarValidacao() {
-    //     const select = this.shadowRoot.getElementById('estado');
-    //     const scope = this.getAttribute('scope'); // Captura o atributo 'scope'  
+    // 4. EVENTOS E COMPORTAMENTO DE INTERFACE
+ setupEventListeners() {
         
-    //     // Disparar evento quando o estado mudar
-    //     select.addEventListener('change', (e) => {
-    //         this.validarSelect();
-    //         const estadoId = e.target.value;
-    //         this.dispatchEvent(new CustomEvent('estado-selecionado', {
-    //             detail: { 
-    //                 estadoId: estadoId,
-    //                 scope:    scope // Envia o escopo junto com o ID
-    //             },
-    //             bubbles: true, // Permite que o evento suba na árvore DOM
-    //             composed: true // Permite que o evento atravesse o Shadow DOM
-    //         }));
-    //     });
-
-    //     select.addEventListener('blur', () => {
-    //         this.validarSelect();
-    //     });
-    // }
-
-    setupEventListeners() {
-        const control = this.control; // Usa o getter genérico da Base_Field
-        if (!control) return;
-
-        // 1. Evento de Mudança (Lógica de Negócio + Validação)
-        control.addEventListener('change', (e) => {
-            this.validar(); // Chama o método de validação genérico
+        const control = this.control;
+        if (!control) {           
+            return;
+        }
+        
+        control.addEventListener('change', (e) => {            
+            this.validar();
             this.emitirMudanca(e.target.value);
         });
-
-        // 2. Evento de Perda de Foco (Validação de interface)
+        
         control.addEventListener('blur', () => {
             this.validar();
         });
-
-        // 3. Evento de Entrada (Limpa erros enquanto o usuário tenta corrigir)
+       
         control.addEventListener('input', () => {
             this.limparEstado();
         });
     }
 
-    /**
-     * Emite um evento customizado baseado no nome do componente
-     * @param {string} valor - O valor selecionado
-     */
-    emitirMudanca(valor) {
-        // Captura o 'scope' ou define 'default' se não existir
-        const scope = this.getAttribute('scope') || 'default';
-        
-        // Torna o nome do evento dinâmico (ex: se o componente for 'Estado_Field', vira 'estado-change')
+    // 5. COMUNICAÇÃO ENTRE COMPONENTES (EVENT BUS)    
+    emitirMudanca(valor) {        
         const eventName = `${this.tagName.toLowerCase().replace('-field', '')}-selecionado`;
-
+        
         this.dispatchEvent(new CustomEvent(eventName, {
             detail: { 
                 value: valor,
-                scope: scope,
-                elementId: this.id // Útil para identificar quem disparou em formulários grandes
+                scope: this.scope,
+                elementId: this.id
             },
             bubbles: true,
             composed: true 
         }));
     }
 
+    // 6. MÉTODOS DE VALIDAÇÃO    
+    validarSelect() {
 
+        const select = this.control;
+        
+        if (!select) {            
+            return false;
+        }
 
+        const valor = select.value;
+       
+        if (!valor || valor.trim() === "") {
+            this.marcarErro(this.constructor.i18n[official_language].erro);
+            return false;
+        }
 
+        this.marcarSucesso();
+        return true;
+    }
 
+//=====================================================================================
+//=====================================================================================
+//=====================================================================================
+//=====================================================================================
 
+    // 7. CALLBACK
     async readEstados() {
         
         await executarOperacao({
@@ -167,31 +165,7 @@ class Instituicao_Select extends Base_Field {
         });
     }
 
-    /**
-     * Valida o próprio componente select/combobox
-     * @param {string} mensagemErro - Mensagem exibida em caso de falha
-     * @returns {boolean}
-     */
-    validarSelect() {
-
-        const select = this.control;
-        
-        if (!select) {
-            console.error("Elemento select não encontrado internamente.");
-            return false;
-        }
-
-        const valor = select.value;
-
-        // Se não houver valor ou for string vazia (comum na opção "Selecione...")
-        if (!valor || valor.trim() === "") {
-            this.marcarErro("Selecione o estado");
-            return false;
-        }
-
-        this.marcarSucesso();
-        return true;
-    }
+    
 
 }
 

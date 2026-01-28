@@ -37,6 +37,9 @@ export class Base_Field extends HTMLElement {
    
     // 3. RENDERIZAÇÃO
     async render() {
+
+        console.log(`%c[RENDER-START] %c${this.id.toUpperCase()}`, "background: #222; color: #bada55; padding: 2px 5px;", "font-weight: bold;");
+
         const props = {
             is_required: this.hasAttribute('required') ? 'required' : ''
         };
@@ -46,7 +49,16 @@ export class Base_Field extends HTMLElement {
             const propName = attr.name.replace(/-/g, '_'); 
             props[propName] = attr.value;            
         }
+
+        console.log(`%c[RENDER-PROPS] %c${this.id.toUpperCase()} %cPropriedades extraídas:`, 
+            "color: #17a2b8; font-weight: bold;", "color: #000;", "color: #666;", props);
         
+        // RASTREAMENTO 2: O momento exato da destruição do layout
+        console.log(`%c[RENDER-DOM] %c${this.id.toUpperCase()} %cReescrevendo innerHTML...`, 
+            "color: #fd7e14; font-weight: bold;", "color: #000;", "color: #666;");
+
+
+
         this.shadowRoot.innerHTML = `            
             <style>
                 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
@@ -54,6 +66,16 @@ export class Base_Field extends HTMLElement {
             
             ${this.renderControl(props)}           
         `;     
+
+        // RASTREAMENTO 3: Verificação de pós-renderização
+        // Se o layout quebra aqui, é porque o translate() não foi chamado ou falhou
+        console.log(`%c[RENDER-END] %c${this.id.toUpperCase()} %cDOM reconstruído. Aguardando tradução...`, 
+            "color: #28a745; font-weight: bold;", "color: #000;", "color: #666;");
+
+
+        // IMPORTANTE: Para não quebrar o layout, precisamos re-traduzir após cada render
+        this.translate();
+
     }
 
     renderControl(p) { return ``; }
@@ -122,8 +144,9 @@ export class Base_Field extends HTMLElement {
         
         if (!dicionario) {
             console.warn(
-                `%c[I18N-WARN] %cDicionário NÃO encontrado para '${official_language}' 
-                em ${this.tagName}`, "color: orange; font-weight: bold;", "color: #666;");
+                `%c[I18N-WARN] %cDicionário NÃO encontrado para '${official_language}' em ${this.tagName}`, 
+                "color: orange; font-weight: bold;", "color: #666;"
+            );
             return;
         }
 
@@ -131,42 +154,172 @@ export class Base_Field extends HTMLElement {
         const label = this.shadowRoot.querySelector('.field-label');
         const input = this.shadowRoot.querySelector('.field-input');
         const icon  = this.shadowRoot.querySelector('.info-question');
+        const select = this.shadowRoot.querySelector('.field-select'); 
 
-
-        // 2. Traduz a LABEL usando a chave do atributo
+        // 2. Traduz a LABEL
         if (label) {
-            const chave = label.getAttribute('data-translate'); // Ex: "lbl_email"
-            if (dicionario[chave]) label.innerText = dicionario[chave];
-        } else {
+            const chave_label = label.getAttribute('data-translate');
+            if (chave_label && dicionario[chave_label]) {
+                label.innerText = dicionario[chave_label];
+            } else {
                 console.log(
-                    `%c[I18N-MISSING] %cChave de Label não encontrada: %c${chave}`, 
-                    "color: red;", "color: #333;", "font-weight: bold;");
+                    `%c[I18N-MISSING] %cChave de Label não encontrada: %c${chave_label}`, 
+                    "color: red;", "color: #333;", "font-weight: bold;"
+                );
             }
+        }
 
-        // 3. Traduz o PLACEHOLDER usando a chave do atributo
+        // 3. Traduz o PLACEHOLDER (Tratamento para Input ou Select)
         if (input) {
-            const chave = input.getAttribute('data-translate'); // Ex: "ph_email"
-            if (dicionario[chave]) input.placeholder = dicionario[chave];
-        } else {
+            const chave_input = input.getAttribute('data-translate');
+            if (chave_input && dicionario[chave_input]) {
+                input.placeholder = dicionario[chave_input];
+            } else {
                 console.log(
-                    `%c[I18N-MISSING] %cChave de Placeholder não encontrada: %c${chave}`, 
-                    "color: red;", "color: #333;", "font-weight: bold;");
+                    `%c[I18N-MISSING] %cChave de Placeholder (Input) não encontrada: %c${chave_input}`, 
+                    "color: red;", "color: #333;", "font-weight: bold;"
+                );
             }
+        } 
+        else if (select) {
+            const optPlaceholder = select.querySelector('option[value=""]');
+            if (optPlaceholder) {
+                const chave_select = optPlaceholder.getAttribute('data-translate');
+                if (chave_select && dicionario[chave_select]) {
+                    optPlaceholder.innerText = dicionario[chave_select];
+                } else {
+                    console.log(
+                        `%c[I18N-MISSING] %cChave de Placeholder (Select) não encontrada: %c${chave_select}`, 
+                        "color: red;", "color: #333;", "font-weight: bold;"
+                    );
+                }
+            }
+        }
 
-        // 4. Traduz o TOOLTIP usando a chave do atributo
+        // 4. Traduz o TOOLTIP
         if (icon) {
-            const chave = icon.getAttribute('data-translate'); // Ex: "tp_lbl_email"
-            if (dicionario[chave]) icon.setAttribute('data-tooltip', dicionario[chave]);
+            const chave_icon = icon.getAttribute('data-translate');
+            if (chave_icon && dicionario[chave_icon]) {
+                icon.setAttribute('data-tooltip', dicionario[chave_icon]);
+            } 
         } 
 
         // CORREÇÃO PONTUAL: Verifica se o elemento de erro existe no DOM para traduzi-lo
         const msgErroExistente = this.container?.querySelector('.error-message');
-
         if (msgErroExistente) {         
             this.validar(); 
         }
-        
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // translate() {
+    //     console.log("Foi chamado o translate ao iniciar a página");
+    //     const official_language = sessionStorage.getItem('official_language') || 'pt';
+    //     const dicionario = this.constructor.i18n?.[official_language];
+        
+    //     console.log(
+    //         `%c[I18N-PROCESS] %c${this.id.toUpperCase()} %cbuscando dicionário para: %c${official_language}`,
+    //         "color: #fd7e14; font-weight: bold;", 
+    //         "color: #000; font-weight: bold;",
+    //         "color: #666;",
+    //         "color: #fd7e14; font-weight: bold;"
+    //     );
+        
+    //     if (!dicionario) {
+    //         console.warn(
+    //             `%c[I18N-WARN] %cDicionário NÃO encontrado para '${official_language}' 
+    //             em ${this.tagName}`, "color: orange; font-weight: bold;", "color: #666;");
+    //         return;
+    //     }
+
+    //     // 1. Localiza os elementos no Shadow DOM
+    //     const label = this.shadowRoot.querySelector('.field-label');
+    //     const input = this.shadowRoot.querySelector('.field-input');
+    //     const icon  = this.shadowRoot.querySelector('.info-question');
+    //     const select = this.shadowRoot.querySelector('.field-select'); // Novo seletor para Select
+
+
+    //     let chave_label;
+    //     let chave_input;
+    //     let chave_icon;
+
+    //     // 2. Traduz a LABEL usando a chave do atributo
+    //     if (label) {
+    //         chave_label = label.getAttribute('data-translate'); // Ex: "lbl_email"
+    //         if (dicionario[chave_label]) label.innerText = dicionario[chave_label];
+    //     } else {
+    //             console.log(
+    //                 `%c[I18N-MISSING] %cChave de Label não encontrada: %c${chave_label}`, 
+    //                 "color: red;", "color: #333;", "font-weight: bold;");
+    //         }
+
+    //     // 3. Traduz o PLACEHOLDER usando a chave do atributo
+    //     if (input) {
+    //         chave_input = input.getAttribute('data-translate'); // Ex: "ph_email"
+    //         if (dicionario[chave_input]) input.placeholder = dicionario[chave_input];
+    //     } else {
+    //             console.log(
+    //                 `%c[I18N-MISSING] %cChave de Placeholder não encontrada: %c${chave_input}`, 
+    //                 "color: red;", "color: #333;", "font-weight: bold;");
+    //         }
+
+    //     // 4. Traduz o TOOLTIP usando a chave do atributo
+    //     if (icon) {
+    //         chave_icon = icon.getAttribute('data-translate'); // Ex: "tp_lbl_email"
+    //         if (dicionario[chave_icon]) icon.setAttribute('data-tooltip', dicionario[chave_icon]);
+    //     } 
+
+    //     // CORREÇÃO PONTUAL: Verifica se o elemento de erro existe no DOM para traduzi-lo
+    //     const msgErroExistente = this.container?.querySelector('.error-message');
+
+    //     if (msgErroExistente) {         
+    //         this.validar(); 
+    //     }
+        
+    // }
 
     // 5. GETTERS DE ACESSO
     get control() {

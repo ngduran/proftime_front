@@ -31,8 +31,8 @@ export const API_MAP = {
     },
 
     INSTITUICAO: {
-        CREATE:  { path: `${BASE_URL}${R_INSTITUICAO}/create`, method: 'POST' },
-        INITIAL: { path: `${BASE_URL}${R_INSTITUICAO}/initial`, method: 'GET' },
+        CREATE:  { path: `${BASE_URL}${R_INSTITUICAO}/create`,   method: 'POST' },
+        FINDALL: { path: `${BASE_URL}${R_INSTITUICAO}/find-all`, method: 'GET'  },
     },
 
     ESTADO: {
