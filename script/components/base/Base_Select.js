@@ -110,7 +110,7 @@ export class Base_Select extends Base_Field {
 
     // 4. EVENTOS E COMPORTAMENTO DE INTERFACE
     setupEventListeners() {
-        
+       
         const control = this.control; // Usa o getter genérico da Base_Field
         if (!control) {
             console.error(
@@ -121,12 +121,12 @@ export class Base_Select extends Base_Field {
             return;
         }
 
-        console.log(
-            `%c[SETUP] %c${this.id} %c[Scope: ${this.scope}]`,
-            "color: #007bff; font-weight: bold;", 
-            "color: #333; font-weight: bold;",
-            "color: #666; font-style: italic;"
-        );
+        // console.log(
+        //     `%c[SETUP] %c${this.id} %c[Scope: ${this.scope}]`,
+        //     "color: #007bff; font-weight: bold;", 
+        //     "color: #333; font-weight: bold;",
+        //     "color: #666; font-style: italic;"
+        // );
 
         // 1. Evento de Mudança (Lógica de Negócio + Validação)
         control.addEventListener('change', (e) => {
@@ -136,8 +136,8 @@ export class Base_Select extends Base_Field {
                 "color: #333;",
                 "color: #555; font-style: italic;"
             );
-            this.validar(); // Chama o método de validação genérico
-            this.emitirMudanca(e.target.value);
+            this.validarSelect(); // Chama o método de validação genérico
+            //this.emitirMudanca(e.target.value);
         });
 
         // 2. Evento de Perda de Foco (Validação de interface)
@@ -146,7 +146,7 @@ export class Base_Select extends Base_Field {
                 `%c[BLUR] %cSaindo de: ${this.id}`, 
                 "color: #fd7e14; font-weight: bold;", "color: #333;"
             );
-            this.validar();
+            this.validarSelect();
         });
 
         // 3. Evento de Entrada (Limpa erros enquanto o usuário tenta corrigir)
@@ -154,30 +154,34 @@ export class Base_Select extends Base_Field {
             // Logamos apenas que está digitando para não inundar o console com cada letra, 
             // mas confirmamos que o estado de erro está sendo limpo.
             if (this.classList.contains('error')) {
-                console.log(
-                    `%c[LIMPAR] %cUsuário corrigindo erro em: ${this.id}`,
-                    "color: #6f42c1; font-weight: bold;",
-                    "color: #333;"
-                );
+                // console.log(
+                //     `%c[LIMPAR] %cUsuário corrigindo erro em: ${this.id}`,
+                //     "color: #6f42c1; font-weight: bold;",
+                //     "color: #333;"
+                // );
             }
             this.limparEstado();
         });
     }
    
     validarSelect() {
-
+        
         const official_language = sessionStorage.getItem('official_language') || 'pt';
         const select = this.control;
         
+        // RASTREAMENTO DE VALIDAÇÃO
+        console.log(`%c[VALIDATE] %c${this.id}: Valor capturado -> "${select?.value}"`, "color: #e83e8c; font-weight: bold;", "color: #333;");
+
         if (!select) {
-            console.error("Elemento select não encontrado internamente.");
+            console.error(`[ERROR] ${this.id}: Elemento select não encontrado.`);
             return false;
         }
 
         const valor = select.value;
 
         // Se não houver valor ou for string vazia (comum na opção "Selecione...")
-        if (!valor || valor.trim() === "") {
+        // Ajuste: Verifique se o valor não é a string do placeholder traduzido
+        if (!valor || valor.trim() === "" || valor === "null" || valor === "undefined") {
             this.marcarErro(this.constructor.i18n[official_language].erro);
             return false;
         }

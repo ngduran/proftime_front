@@ -34,3 +34,8 @@ export async function listarInstituicoes() {
     return await apiFetchGet(API_MAP.INSTITUICAO.FINDALL);
 
 }
+
+export async function listarAdministracoes() {
+    return await apiFetchGet(API_MAP.ADMINISTRACAO.FINDALL);
+
+}

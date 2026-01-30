@@ -28,10 +28,14 @@ class Email_Field extends Base_Field {
     // O connectedCallback agora só chama o render e as validações.
     // A parte de tradução e "faxina" já acontece automaticamente no super (Base_Field).
     connectedCallback() {
+
         // Adiciona o listner da tradução e chama o render para renderizar o componente
         // Não pode ser removido pois adiciona o listner na classe pai
-        super.connectedCallback();        
+        super.connectedCallback(); 
        
+        super.setupBase(); //Não tem nada no setupBase
+        super.initTooltip();
+        this.configurarValidacao();
     }
 
     // 4. Renderização
@@ -58,13 +62,19 @@ class Email_Field extends Base_Field {
     }
 
     // 5. Métodos de Validação
-    /** * @override 
-     * O Base_Field chama este método automaticamente via delegação de eventos (blur/change)
-     */
+     /** @override */
     validar() {
         return this.validarEmail();
     }
-   
+
+    async configurarValidacao() {
+        const input = this.control; 
+        if (input) {
+            input.addEventListener('blur', () => this.validarEmail());
+            input.addEventListener('input', () => this.limparEstado()); 
+        }
+    }
+
     validarEmail() {    
         const official_language = sessionStorage.getItem('official_language') || 'pt';
         const valor = this.value; 

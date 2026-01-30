@@ -11,6 +11,7 @@ const R_GRADE_PROFESSOR = "/grades-professores";
 const R_INSTITUICAO     = "/instituicoes";
 const R_ESTADO          = "/estados";
 const R_MUNICIPIO       = "/municipios";
+const R_ADMINISTRACAO   = "/administracoes";
 
 export const API_MAP = {
     BASE_URL: BASE_URL,
@@ -38,9 +39,14 @@ export const API_MAP = {
     ESTADO: {
         FINDALL:  { path: `${BASE_URL}${R_ESTADO}/find-all`, method: 'GET' },
     },
-
+    
     MUNICIPIO: {
         POR_ESTADO:  { path: `${BASE_URL}${R_MUNICIPIO}/listar-por-estado`, method: 'GET' },
-    }
+    },
+    
+    ADMINISTRACAO: {
+        FINDALL:  { path: `${BASE_URL}${R_ADMINISTRACAO}/find-all`, method: 'GET' },
+    },
+    
 
 };

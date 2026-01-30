@@ -30,8 +30,8 @@ class Usuario_Field extends Base_Field {
     
     connectedCallback() {
         super.connectedCallback();
-        super.initTooltip();
-        this.configurarValidacao();
+        // super.initTooltip();
+        // this.configurarValidacao();
     }
 
     // 4. Renderização

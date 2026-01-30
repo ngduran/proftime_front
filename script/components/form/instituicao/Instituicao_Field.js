@@ -1,29 +1,34 @@
-import { applyTranslations } from "../../utils/i18n/instituicao_i18n.js";
 import { Base_Field } from "../../base/Base_Field.js";
 
 class Instituicao_Field extends Base_Field {
+
+    // 1. Atributos Estáticos
+    static i18n = {
+        pt: {
+            lbl_nome    : "Nome da Instituição",
+            ph_nome     : "Ex: Escola Estadual XXX",
+            tp_lbl_nome : "Nome utilizado para identificação",
+            erro_1      : "O nome contém caracteres inválidos",
+            erro_2      : "O nome deve ter pelo menos 3 caracteres",
+            erro_3      : "Este campo é obrigatório" 
+        },
+
+        es: {
+            lbl_nome    : "Nombre de la Institución",
+            ph_nome     : "Ejemplo: Escuela Estatal XXX",
+            tp_lbl_nome : "Nombre utilizado para identificación",
+            erro_1      : "El nombre contiene caracteres inválidos",
+            erro_2      : "El nombre debe tener al menos 3 caracteres",
+            erro_3      : "Este campo es obligatorio"  
+        }
+    };
+
     constructor() {
         super();
     }
-    
+
     connectedCallback() {
-        super.render(); 
-
-        // Tradução inicial na carga do componente
-        applyTranslations(this.shadowRoot);
-
-        // Escuta a mudança global de idioma
-        window.addEventListener('languageChanged', () => {
-            applyTranslations(this.shadowRoot);            
-        });
-
-        super.setupBase();
-        super.initTooltip();
-        super.initEdition();
-        this.configurarValidacao();
-
-        
-        console.log(this.tagName, this.getContainerInfo());
+        super.connectedCallback();        
     }
 
     renderControl(p) {       
@@ -39,54 +44,40 @@ class Instituicao_Field extends Base_Field {
         `;        
     }
 
-    // Utilizado pelo formulário page intituicao.js
-    // Sobrescreve o validar do Bae_Field
-    async validar() {        
+    validar() {
         return this.validarNome(); 
     }
 
-    // Utilizado pelo formulário page intituicao.js
-    // Sobrescreve o validar do Bae_Field
-    validar() { // Adicione async aqui
-        return this.validarNome();        
-    }
+    validarNome() {
+    
+        const lang = sessionStorage.getItem('official_language') || 'pt';
+        const dict = Instituicao_Field.i18n[lang] || Instituicao_Field.i18n['pt'];
+        const valor = this.value.trim();
 
-
-    async configurarValidacao() {
-        const input = this.shadowRoot.querySelector(".field-input");    
-        
-        if (input) {
-            input.addEventListener('blur', () => {
-                this.validarNome();
-            });
+        // 1. Validação de Campo Vazio (Obrigatório)
+        if (!valor) {
+            this.marcarErro(dict.erro_3);
+            return false;           
         }
-       
-    }
 
-    async validarNome() {  
-        const input = this.control; // Usa o getter da Base_Field
-        if (!input) return;
-
-        // Formatação: Primeira letra de cada palavra em maiúscula
-        input.value = input.value.toLowerCase().replace(/(?:^|\s)\S/g, a => a.toUpperCase());
-        
-        const valor = input.value.trim();
-        const regexNome = /^[A-Za-zÀ-ÿ\s]+$/;
-
+        // 2. Validação de Caracteres (Letras, Acentos, Números e Espaços)
+        // A Regex ^[A-Za-zÀ-ÿ0-9\s]+$ cobre tudo o que você pediu.
+        const regexNome = /^[A-Za-zÀ-ÿ0-9\s]+$/;
         if (!regexNome.test(valor)) {
-            this.marcarErro("O nome deve conter apenas letras.");
+            this.marcarErro(dict.erro_1);
             return false;
         }
 
+        // 3. Validação de Tamanho Mínimo
         if (valor.length < 3) {
-            this.marcarErro("O nome deve ter pelo menos 3 letras.");
+            this.marcarErro(dict.erro_2);
             return false;
         }
 
-        this.marcarSucesso(); // Não precisa passar nada!
+        this.marcarSucesso();
         return true;
     }
-        
+       
 }
 
 customElements.define('instituicao-field', Instituicao_Field);

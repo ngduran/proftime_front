@@ -26,8 +26,12 @@ class Telefone_Field extends Base_Field {
     
     connectedCallback() {
         super.connectedCallback();
-        super.initTooltip();
-        this.configurarMascaraTelefone();
+        
+        // Listener específico para a máscara (não delegamos 'input' para evitar lentidão global)
+        this.control?.addEventListener('input', (e) => {
+            e.target.value = this.aplicarMascaraTelefone(e.target.value);
+            this.limparEstado(); 
+        });
     }
 
     // 4. Renderização
@@ -61,47 +65,33 @@ class Telefone_Field extends Base_Field {
         return this.validarTelefone(); 
     }
 
-    async configurarValidacao() {
-        const input = this.control;  
-        if (input) {
-            input.addEventListener('blur', () => this.validarTelefone());
-            input.addEventListener('input', () => this.limparEstado()); 
+    // 3. Lógica de Validação com Early Return
+    /** @override */
+    validar() {
+        const lang = sessionStorage.getItem('official_language') || 'pt';
+        const dict = Telefone_Field.i18n[lang] || Telefone_Field.i18n['pt'];
+        const valor = this.value;
+        const valorLimpo = valor.replace(/\D/g, "");
+
+        // REGRA 1: Vazio / Obrigatório
+        if (!valorLimpo) {
+            if (this.hasAttribute('required')) {
+                this.marcarErro(dict.erro);
+                return false;
+            }
+            this.limparEstado();
+            return true;
         }
-    }
 
-    configurarMascaraTelefone() {
-        const official_language = sessionStorage.getItem('official_language') || 'pt';
-        
-        const campo = this.control;
-        
-        if (campo) {
-            
-            // 1. Aplica a máscara enquanto digita e limpa erros visuais
-            campo.addEventListener('input', (e) => {
-                console.log("Chamou o addEventListener..");
-                e.target.value = this.aplicarMascaraTelefone(e.target.value);
-                this.limparEstado();
-            });
-
-            // 2. Valida o tamanho final ao sair do campo (Mensagem de Erro)
-            campo.addEventListener('blur', () => {
-                const valorLimpo = campo.value.replace(/\D/g, "");
-                
-                // Verifica se o telefone tem o tamanho mínimo (10 para fixo ou 11 para celular)
-                if (valorLimpo.length < 10) {                   
-                    
-                    // Busca a mensagem no i18n da classe atual
-                    const mensagem = Telefone_Field.i18n[official_language].erro;
-                    this.marcarErro(mensagem);
-                    return false;
-                } else {
-                    this.marcarSucesso();
-                    return true;
-                }
-            });
-
-
+        // REGRA 2: Tamanho Mínimo (DDD + 8 ou 9 dígitos)
+        // Mínimo 10 dígitos: (11) 4444-4444
+        if (valorLimpo.length < 10) {
+            this.marcarErro(dict.erro);
+            return false;
         }
+
+        this.marcarSucesso();
+        return true;
     }
 
     aplicarMascaraTelefone(valor) {
@@ -120,27 +110,6 @@ class Telefone_Field extends Base_Field {
         
         return valor.substring(0, 15); // Limita ao tamanho máximo de celular
     }
-
-
-
-    // async validarTelefone() {
-    //     const official_language = sessionStorage.getItem('official_language') || 'pt';
-        
-    //     const telefone = this.control;
-    //     const valor = telefone.value.trim();
-    
-    //     // (00) 0000-0000 -> 14 caracteres
-    //     // (00) 00000-0000 -> 15 caracteres
-    //     if (valor.length > 0 && valor.length < 14) {
-    //         const mensagem = Telefone_Field.i18n[official_language].erro;
-    //         this.marcarErro( mensagem );
-    //         return false;
-    //     }
-    
-    //     marcarSucesso(telefone);
-    
-    //     return true;
-    // }
     
 }
 

@@ -26,7 +26,6 @@ body {
     //border: 5px solid black;
     //border: 5px;
     
-
     /* CONTROLE DE LARGURA: 
        Normalmente é 100%, mas você pode diminuir para testar */
     width: 100%;
@@ -42,19 +41,14 @@ body {
     height: auto;       /* Deixe o conteúdo definir a altura */
     overflow-y: auto;   /* Garante que a rolagem vertical exista */
     padding-bottom: 80px; /* Margem extra no final para os botões não sumirem atrás de menus */
-
-
-
 }
 
 
-.form-container {
-   
+.form-container {   
     /* CENTRALIZAÇÃO E TAMANHO */
     max-width: 800px;
     height: auto;
-    width: 100%;
-    
+    width: 100%;    
 
     /* ESTÉTICA DE CARD (Opcional, baseado nas suas variáveis) */
     background-color: var(--color-card-bg);
@@ -70,13 +64,9 @@ body {
     gap: 1em;
     flex-wrap: wrap;  
     //background-color: #f39c12;
-    border-radius: 5px;
-    
-    padding: 10px;
-
-    
-    flex: 1 1 auto;
-    
+    border-radius: 5px;    
+    padding: 10px;    
+    flex: 1 1 auto;    
 }
 
 .field-group {
@@ -99,7 +89,6 @@ body {
     justify-content: end;
     gap: 0.4rem;
 }
-
 
 /* No desktop, define as proporções */
 .col-8 {
@@ -128,7 +117,6 @@ body {
     height: 100%;
 }
 
-
 input[type="time"]::-webkit-calendar-picker-indicator {
     margin-right: 28px; /* Desloca o ícone do relógio para longe da borda direita */
     cursor: pointer;
@@ -141,7 +129,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     margin-top: 20px;
 }
 
-/* Botão CTA (Call to Action) */
 .cta-button {
     width: 100%;
     padding: 15px;
@@ -162,15 +149,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .cta-button:active {
     opacity: 0.9;
 }
-
-/* .error-message {
-    position: absolute;
-    top: 100%;
-    margin-top: 2px;   
-    left: 0px;    
-    font-size: 12px;
-    color: #ff4d4d;
-} */
 
 .header-title {
     font-size: 1.5rem;
@@ -198,9 +176,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     height: 16px;
 }
 
-
-
-
 @media screen (max-width: 512px) {
     .col-5 {
         flex: 1 1 auto;
@@ -217,10 +192,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     select
 }
 
-
 @media screen and (max-width: 720px) {
-   
-
     .col-8, .col-2, .col-5 {
         flex: 1 1 100%; /* No mobile, ambos forçam 100% da largura */
     }

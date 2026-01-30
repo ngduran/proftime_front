@@ -7,7 +7,7 @@ export const TooltipManager = {
         if (!shadowRoot.adoptedStyleSheets.includes(tooltipCss)) {
             shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, tooltipCss];
         }
-
+ 
         shadowRoot.querySelectorAll('.info-question').forEach(icon => {
             icon.addEventListener('mouseenter', () => this.show(icon, shadowRoot));
             icon.addEventListener('mouseleave', () => this.hide(icon, shadowRoot));
@@ -15,64 +15,50 @@ export const TooltipManager = {
     },
 
     show(icon, shadowRoot) {
-        // Seleciona qualquer ícone que tenha o atributo de tooltip
         const mensagem = icon.getAttribute('data-tooltip');
+        const containerCampo = icon.parentElement; 
         
-        // Alteração: Usa o pai imediato ou o container relativo mais próximo
-        // para ser independente de nomes de classe como .field_col
-        const container = icon.parentElement; 
-        container.style.position = 'relative'; // Garante que o absoluto funcione
-
-        // Busca qualquer elemento de entrada vinculado no mesmo container
-        const input = container.querySelector('input, select, textarea');
+        // 1. Busca o elemento de entrada e as informações de hierarquia
+        const input = containerCampo.querySelector('input, select, textarea, .field-time');
         if (!input) return;
 
-        // Criação do Tooltip (Reutilizável)
-        let tip = container.querySelector('.tooltip-container');
+        // Acessa a função que criamos no Base_Field através da instância do componente
+        // shadowRoot.host é o próprio Web Component (ex: <email-field>)
+        const info = shadowRoot.host.getContainerInfo();
+        if (info.erro) return;
+
+        // 2. Criação/Recuperação do Tooltip
+        let tip = containerCampo.querySelector('.tooltip-container');
         if (!tip) {
             tip = document.createElement('div');
             tip.className = 'tooltip-container';
-            container.appendChild(tip);
+            containerCampo.appendChild(tip);
         }
         tip.innerText = mensagem;
 
-        // Medições
-        const rectInput = input.getBoundingClientRect();
-        const rectTip = tip.getBoundingClientRect();
+        // 3. CÁLCULO HORIZONTAL (Meio do Tooltip com Meio do Container)
+        // Usamos o centroX do container fornecido pela função info
+        const centroContainer = info.dimensoesContainer.centroX;
+        const metadeTooltip = tip.offsetWidth / 2;
         
-        // Cálculo de alinhamento vertical centralizado
-        const meioAlturaInput = rectInput.height / 2;
-        const meioAlturaTip = rectTip.height / 2;
-        const deslocamentoY = meioAlturaInput - meioAlturaTip;
+        // Precisamos descontar a posição onde o campo começa para achar o 'left' relativo
+        const deslocamentoRelativoX = info.posicaoHorizontal.inicio;
+        
+        // Fórmula: Centro do Container - Início do Campo - Metade do Balão
+        const xFinal = centroContainer - deslocamentoRelativoX - metadeTooltip;
 
-        // Aplica alinhamento vertical
-        tip.style.bottom = `${deslocamentoY}px`;
+        // 4. CÁLCULO VERTICAL (Alinhado ao centro do Input/Select)
+        const yFinal = input.offsetTop + (input.offsetHeight / 2) - (tip.offsetHeight / 2);
 
-        // Lógica de Posicionamento Horizontal Genérica
-        // Usamos a viewport como referência caso não haja um field-container
-        const bodyWidth = document.body.clientWidth;
-        const inputCentroX = rectInput.left + (rectInput.width / 2);
-
-        // Reseta classes e estilos
-        tip.classList.remove('tooltip-left', 'tooltip-right');
-        tip.style.left = "auto";
+        // 5. Aplicação Limpa
+        tip.style.left = `${xFinal}px`;
+        tip.style.top = `${yFinal}px`;
+        
+        // Reseta estados anteriores
         tip.style.right = "auto";
-
-        // Se o centro do input está na metade esquerda da tela, 
-        // posiciona o tooltip à direita do campo
-        if (inputCentroX < bodyWidth / 2) {
-            tip.classList.add('tooltip-right');
-            // Alinha o início do balão com o fim do ícone ou uma margem fixa
-            tip.style.left = `${icon.offsetLeft + icon.offsetWidth + 5}px`;
-        } else {
-            // Posiciona o tooltip à esquerda do campo
-            tip.classList.add('tooltip-left');
-            // Alinha o fim do balão antes do ícone
-            tip.style.right = `${container.offsetWidth - icon.offsetLeft + 5}px`;
-        }
+        tip.classList.remove('tooltip-left', 'tooltip-right');
 
         requestAnimationFrame(() => tip.classList.add('visible'));
-    
     },
 
     hide(icon, shadowRoot) {        

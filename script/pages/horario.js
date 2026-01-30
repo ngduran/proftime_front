@@ -1,228 +1,87 @@
-// import { validarComboBox, validarFormulario, validarPosicaoAula } from "../utils/validador.js";
-// import { bloquearButton, desbloquearButton, coletarDadosForm} from "../utils/form-helper.js";
-// import { salvarAulaGradeProfessor } from "../services/api_service.js";
-// import { unirDados } from "../utils/mapper.js";
-// import { lerRespostaSucesso, lerRespostaErro } from "../api/api-client.js";
-// import { inicializarTooltips} from "../utils/dom-utils.js"
-// import { Mensagem } from "../utils/mensageiro.js"
+const dicionarioHorario = {
 
-
-// const cabecalho = "cabecalhoGradeForm";
-// const item      = "itemGradeForm";
-
-// let gradeDeAulas = [];
-
-// // Mapeamento para ligar o "value" do HTML ao nome da coluna na tabela
-// const mapaDias = {
-//     "1": "segunda",
-//     "2": "terca",
-//     "3": "quarta",
-//     "4": "quinta",
-//     "5": "sexta"
-// };
-
-// inicializarTooltips();
-
-// async function adicionar() {   
+    pt: {
+        lbl_titulo       : "Horário",
+        lbl_cadastrarBtn : "Salvar",
+        lbl_voltarBtn    : "Voltar",
+    },
     
-//     if ( !validarFormulario( cabecalho                                  ) ) { return; }
-//     if ( !validarComboBox  ( 'instituicao', 'Selecione a instituicao'   ) ) { return; }
-//     if ( !validarComboBox  ( 'turno',       'Selecione o turno'         ) ) { return; }
-    
-//     if ( !validarFormulario ( item                                      ) ) { return; }
-//     if ( !validarPosicaoAula( 'posicao',    1, 6, 'Indique a aula'      ) ) { return; }
-//     if ( !validarComboBox   ( 'diaSemana',  'Selecione o dia da Semana' ) ) { return; }
-//     if ( !validarComboBox   ( 'turma',      'Selecione a turma'         ) ) { return; }
-//     if ( !validarComboBox   ( 'materia',    'Selecione a materia'       ) ) { return; }
-// }
+    es: {
+        lbl_titulo       : "Tiempo",
+        lbl_cadastrarBtn : "Ahorrar",
+        lbl_voltarBtn    : "Para volver atrás",
+    }
+};
 
-// async function salvar() {
+// 2. FUNÇÕES DE TRADUÇÃO
+function traduzirInterfaceEstatica(lang) {
+    const elementos = document.querySelectorAll('[data-translate]');
+    elementos.forEach(el => {
+        const chave = el.getAttribute('data-translate');
+        // Verifica se a chave existe no dicionário para não apagar o texto por erro
+        if (dicionarioHorario[lang] && dicionarioHorario[lang][chave]) {
+            el.innerText = dicionarioHorario[lang][chave];
+        }
+    });
+}
 
-//     try {
+// 3. EVENTOS GLOBAIS
+// Escuta o evento global para traduzir o que for estático na página
+// Escuta o mesmo evento que os componentes já usam!
+window.addEventListener('languageChanged', (e) => {
+    const lang = e.detail?.Language || e.detail?.language || e.detail;
+    traduzirInterfaceEstatica(lang);
+});
 
-//         bloquearButton("cadastrarBtn", "Salvando...");
+// 4. INICIALIZAÇÃO E CONTROLE DE UI
+document.addEventListener('DOMContentLoaded', () => {
 
-//         const dadosCabecalho = coletarDadosForm(cabecalho);
-//         let dadosItem = coletarDadosForm(item);
-
-//         dadosItem.posicao = parseInt( dadosItem.posicao );      
-
-//         console.log("---------------------------------------------");
-//         console.log(dadosCabecalho);
-//         console.log("---------------------------------------------");
-//         console.log("---------------------------------------------");
-//         console.log(dadosItem);
-//         console.log("---------------------------------------------");
-    
-//         const jsonFinal = unirDados(dadosCabecalho, dadosItem, 'itens-grade');
-
-//         console.log("---------------------------------------------");
-//         console.log(jsonFinal);
-//         console.log("---------------------------------------------");
-       
-
-//         const response = await salvarAulaGradeProfessor(jsonFinal);       
-                
-//         const resultado = response.ok 
-//             ? await lerRespostaSucesso(response) 
-//             : await lerRespostaErro(response); 
-    
-//         if (response.ok) {
-                   
-//             if (resultado?.uuid) { SessionManager.salvar("usuario_uuid", resultado.uuid); }       
-    
-//             await Mensagem.sucesso("Sua aula foi criada com sucesso!");          
-    
-//             //navegarPara("login");            
-            
-//         } else {
-                
-//             const mensagemFinal = typeof resultado === 'object' 
-//                 ? (resultado.message || "Erro no servidor") 
-//                 : resultado;
-    
-//             await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
-//         }
-
-//     } catch (error) {
-//         // Se for erro de rede, o fetch lança TypeError. Se for código, é ReferenceError ou similar.
-//         if (error.message.includes("fetch") || error.message.includes("Network")) {
-//              await Mensagem.erro("Conexão", "Não foi possível alcançar o servidor.");
-//         } else {
-//              // Se o Swal falhar, ele mostra o erro do script aqui
-//              alert("Erro no script de Mensagem: " + error.message);
-//         }   
-
-//     } finally {
-//          desbloquearButton("cadastrarBtn", "Salvar");
-//     }
-
-// }
-
-// function voltarAoInicio() {
-//     window.location.href='../page/login.html'
-// }
-
-// //document.getElementById('adicionarBtn'  ).addEventListener('click', adicionar      );
-
-// document.getElementById('cadastrarBtn'  ).addEventListener('click', salvar         );
-// document.getElementById('voltarBtn'     ).addEventListener('click', voltarAoInicio );
-
-// document.getElementById('instituicao'   ).addEventListener('blur', () => { validarComboBox   ( 'instituicao', 'Selecione a instituição'   ); } );
-// document.getElementById('turno'         ).addEventListener('blur', () => { validarComboBox   ( 'turno',       'Selecione o turno'         ); } );
-// document.getElementById('posicao'       ).addEventListener('blur', () => { validarPosicaoAula( 'posicao',      1, 6, 'Indique a aula'     ); } );
-// document.getElementById('diaSemana'     ).addEventListener('blur', () => { validarComboBox   ( 'diaSemana',   'Selecione o dia da Semana' ); } );
-// document.getElementById('turma'         ).addEventListener('blur', () => { validarComboBox   ( 'turma',       'Selecione a turma'         ); } );
-// document.getElementById('materia'       ).addEventListener('blur', () => { validarComboBox   ( 'materia',     'Selecione a materia'       ); } );
-
-// 6
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     renderizarTabela();
-
-//     // Usando o ID exato do seu HTML: adicionarBtn
-//     document.getElementById('adicionarBtn').addEventListener('click', adicionarAula);
-// });
-
-// async function adicionarAula() {
-//     //refatorar futuramente
-//     // Pegando os elementos conforme os IDs do seu HTML
-//     const campoPosicao = document.getElementById('posicao');
-//     const campoDia = document.getElementById('diaSemana');
-//     const campoTurma = document.getElementById('turma');
-
-//     const posicao = parseInt(campoPosicao.value);
-//     const diaValue = campoDia.value; // Retorna "1", "2", etc.
-//     const diaChave = mapaDias[diaValue]; // Converte para "segunda", "terca"...
-    
-//     // Pega o texto da turma (ex: "1º Técnico...")
-//     const turmaTexto = campoTurma.options[campoTurma.selectedIndex].text;
-
-//     // Validação simples para o exemplo rodar
-//     if (!diaValue || !campoTurma.value) {
-//         //alert("Preencha todos os campos!");
-//         await Mensagem.erro("Prencha todos os campos!");
-//         return;
-//     }
-
-//     // Dentro da função adicionarAula, antes de salvar:
-//     let aulaExistente = gradeDeAulas.find(item => item.aula === posicao);
-
-//     if (aulaExistente && aulaExistente[diaChave]) {
-//         // if (!confirm(`Já existe uma aula na Posição ${posicao} de ${diaChave}. Deseja substituir?`)) {
-//         //     return; // Cancela a operação
-//         // }
-
-//         // Substituímos o confirm nativo pela sua nova Mensagem
-//         const desejaSubstituir = await Mensagem.confirmar(
-//             `Já existe uma aula na Posição ${posicao} de ${diaChave}. Deseja substituir?`
-//         );
-
-//         if (!desejaSubstituir) {
-//             return; // O usuário cancelou, para a execução aqui
-//         }
-
-
-//     }
-
-//     // Lógica de inserção no Array
-//     let linhaExistente = gradeDeAulas.find(item => item.aula === posicao);
-
-//     if (linhaExistente) {
-//         linhaExistente[diaChave] = turmaTexto;
-//     } else {
-//         const novaLinha = { aula: posicao };
-//         novaLinha[diaChave] = turmaTexto;
-//         gradeDeAulas.push(novaLinha);
-//     }
-
-//     renderizarTabela();
-//     salvar();
-//     await Mensagem.sucesso("Atualizado com sucesso");
-// }
-
-// async function renderizarTabela() {
-//     const corpo = document.getElementById('gradeCorpo');
-//     corpo.innerHTML = "";
-    
-//     for (let i = 1; i <= 6; i++) {
-//         const dadosLinha = gradeDeAulas.find(d => d.aula === i) || { aula: i };
+    // 1. GARANTIR IDIOMA PADRÃO NO STORAGE
+    // Se não houver nada definido, ele seta 'pt' automaticamente
+    if (!sessionStorage.getItem('official_language')) {
+        sessionStorage.setItem('official_language', 'pt');
         
-//         const tr = document.createElement('tr');
-//         tr.innerHTML = `
-//             <td>${i}</td>
-//             <td>${formatBadge(dadosLinha.segunda)}</td>
-//             <td>${formatBadge(dadosLinha.terca)}</td>
-//             <td>${formatBadge(dadosLinha.quarta)}</td>
-//             <td>${formatBadge(dadosLinha.quinta)}</td>
-//             <td>${formatBadge(dadosLinha.sexta)}</td>
-//         `;
-//         corpo.appendChild(tr);        
-//     }
+        console.log(
+            "%c[INIT] %c'official_language' inicializado como: %c PT ",
+            "color: #007bff; font-weight: bold;", 
+            "color: #333;",
+            "background: #28a745; color: #fff; font-weight: bold; border-radius: 3px;"
+        );
+    }
 
-// }
+    
+    // 4.3 FUNÇÃO DE TROCA DE IDIOMA DO SISTEMA
+    const trocarIdiomaSistema = (lang) => {
+        // 1. Salva para persistência (O Base_Field lê daqui no translate)
+        sessionStorage.setItem('official_language', lang);
 
+        // --- LOG DE VERIFICAÇÃO DE STORAGE ---
+        console.log(
+            `%c[CHECKPOINT-STORAGE] %cValor enviado: %c${lang} %c| No Storage: %c${sessionStorage.getItem('official_language')}`,
+            "color: #000; font-weight: bold;", 
+            "color: #666;", 
+            "background: #fffbe6; color: #856404; font-weight: bold; border: 1px solid #ffe58f;", // Destaque Amarelo
+            "color: #666;",
+            "color: #28a745; font-weight: bold;"
+        );
 
-// // Dicionário para guardar qual cor cada turma ganhou
-// const mapaCoresTurmas = {};
-// // Array de classes CSS que você definiu no seu arquivo
-// const classesDisponiveis = ["badge-blue", "badge-orange", "badge-purple", "badge-green", "badge-red"];
-// let indiceCor = 0;
+        // 2. Dispara o evento para os Web Components reagirem
+        window.dispatchEvent(new CustomEvent('languageChanged', {
+            detail: { language: lang }
+        }));
 
-// function formatBadge(texto) {
-//     if (!texto) return "";
+        // Log de rastreio com as cores que você consegue ver bem
+        const cor = lang === 'pt' ? '#28a745' : '#dc3545';
+        console.log(
+            `%c[SISTEMA] %cIdioma definido como: %c ${lang.toUpperCase()} `,
+            "color: #333; font-weight: bold;",
+            "color: #666;",
+            `background: ${cor}; color: #fff; font-weight: bold; border-radius: 3px;`
+        );
+    };
 
-//     // Caso especial para Hora Atividade (sempre cinza/estilo específico)
-//     if (texto.toLowerCase().includes("atividade")) {
-//         return `<span class="badge badge-activity">${texto}</span>`;
-//     }
+    // 4.4 OUVINTES DOS BOTÕES DE BANDEIRA
+    document.getElementById('btn-pt')?.addEventListener('click', () => trocarIdiomaSistema('pt'));
+    document.getElementById('btn-es')?.addEventListener('click', () => trocarIdiomaSistema('es'));
 
-//     // Se a turma ainda não tem uma cor atribuída, damos uma a ela
-//     if (!mapaCoresTurmas[texto]) {
-//         mapaCoresTurmas[texto] = classesDisponiveis[indiceCor % classesDisponiveis.length];
-//         indiceCor++; // Próxima turma terá a próxima cor
-//     }
-
-//     const classeAtribuida = mapaCoresTurmas[texto];
-//     return `<span class="badge ${classeAtribuida}">${texto}</span>`;
-// }
+});

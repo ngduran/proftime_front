@@ -1,113 +1,58 @@
-import { applyTranslations } from "../../utils/i18n/instituicao_i18n.js";
-import { Base_Field } from "../../base/Base_Field.js";
+import { executarOperacao } from "../../../core/api-engine.js";
+import { listarAdministracoes } from "../../../services/api_service.js";
+import { Base_Select } from "../../base/Base_Select.js";
 
-class Administracao_Field extends Base_Field {
+class Administracao_Field extends Base_Select {
 
-    constructor() {
-        super();
+    static i18n = {
+        pt: {
+            lbl_administracao    : "Administração",           
+            ph_administracao_op0 : "Selecione uma Administração",
+            data_translate_op    : "ph_administracao_op0",
+            placeholder          : "Seleciona uma Administração",
+            tp_lbl_administracao : "Informe o sistema de Administração",
+            erro                 : "Campo Obrigatório"       
+        },
+
+        es: {
+            lbl_administracao    : "Administración",           
+            ph_administracao_op0 : "Seleccione una Administración",
+            data_translate_op    : "ph_administracao_op0",
+            placeholder          : "Seleccione una Administración",
+            tp_lbl_administracao : "Informar al sistema de Administración",
+            erro                 : "Campo obligatorio"     
+        }
+    };
+
+    optionsList = [];
+  
+    async connectedCallback() {
+        super.connectedCallback();        
     }
 
-    connectedCallback() {
-        super.render();
-
-        // Tradução inicial na carga do componente
-        applyTranslations(this.shadowRoot);
-
-        // Escuta a mudança global de idioma
-        window.addEventListener('languageChanged', () => {
-            applyTranslations(this.shadowRoot);            
-        });
-
-        super.setupBase();
-        super.initTooltip();
-        super.initEdition();
-        this.configurarValidacao();
-    }
-
-    renderControl(p) {   
+    async connectedCallback() {
+    
+        super.connectedCallback();
         
-        return `<div class="campo">
-                    <label class="field-label"  for="${p.id}" data-translate="${p.data_translate_label}">${p.label}</label>
-                    <i class="${p.icon_question}" data-tooltip="${p.data_tooltip_balao}" data-translate="${p.data_translate_tooltip}"></i>
-                    <select id="${p.id}" name="${p.name}" class="field-select"
-                        autocomplete="off" ${p.is_required}>
-                        <option value="" data-translate="${p.data_translate_op}">${p.placeholder}</option>
-
-                        <option value="Federal"         data-translate="${p.data_translate_op1}"></option>
-                        <option value="Estadual"        data-translate="${p.data_translate_op2}"></option>
-                        <option value="Municipal"       data-translate="${p.data_translate_op3}"></option>
-                        <option value="Privada"         data-translate="${p.data_translate_op4}"></option>
-                        <option value="Publico_Privada" data-translate="${p.data_translate_op5}"></option>
-                        <option value="Particular"      data-translate="${p.data_translate_op6}"></option>
-                        
-                    </select>
-                    <button type="button" class="edit-button">
-                        <i class="${p.icon_edicao}"></i>
-                    </button>
-                </div>
-        `;       
+        await this.readAdministracoes();
     }
 
-
-    // No seu renderControl
-    // <option value="Federal" data-translate="${p.data_translate_op1}">
-    //     ${getTranslation(p.data_translate_op1)} 
-    // </option>
-
-
-    // <option value="Federal"         data-translate="${this.getAttribute('data-translate_op1') || ''}"></option>
-    // <option value="Estadual"        data-translate="${this.getAttribute('data-translate_op2') || ''}"></option>
-    // <option value="Municipal"       data-translate="${this.getAttribute('data-translate_op3') || ''}"></option>
-    // <option value="Privada"         data-translate="${this.getAttribute('data-translate_op4') || ''}"></option>
-    // <option value="Publico_Privada" data-translate="${this.getAttribute('data-translate_op5') || ''}"></option>
-    // <option value="Particular"      data-translate="${this.getAttribute('data-translate_op6') || ''}"></option>
-
-
-    // Utilizado pelo formulário page intituicao.js
-    // Sobrescreve o validar do Bae_Field
-    validar() {        
-        return this.validarSelect(); 
-    }
-
-
-    async configurarValidacao() {
-        const input = this.shadowRoot.querySelector(".field-select");    
-        
-        if (input) {
-            input.addEventListener('blur', () => {
-                this.validarSelect();
+     async readAdministracoes() {
+            await executarOperacao({
+                idBotao: 'cadastrarBtn',
+                keyTextoAguarde: 'Consultando...',
+                apiCall: listarAdministracoes,
+                onSuccess: async (resultado) => { 
+                   
+                    this.optionsList = (resultado.data || []).map(item => ({
+                        id: item.uuid, 
+                        nome: item.nome
+                    }));
+                    
+                    this.render(); 
+                }     
             });
         }
-       
-    }
-
-    /**
-     * Valida o próprio componente select/combobox
-     * @param {string} mensagemErro - Mensagem exibida em caso de falha
-     * @returns {boolean}
-     */
-    async validarSelect() {
-
-        const select = this.control;
-        
-        if (!select) {
-            console.error("Elemento select não encontrado internamente.");
-            return false;
-        }
-
-        const valor = select.value;
-
-        // Se não houver valor ou for string vazia (comum na opção "Selecione...")
-        if (!valor || valor.trim() === "") {
-            this.marcarErro("Selecione a administração");
-            return false;
-        }
-
-        this.marcarSucesso();
-        return true;
-    }
-
-
 
 }
 

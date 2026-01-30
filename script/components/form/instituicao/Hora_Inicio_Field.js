@@ -1,27 +1,29 @@
-import { applyTranslations } from "../../utils/i18n/instituicao_i18n.js";
 import { Base_Field } from "../../base/Base_Field.js";
 
 class Hora_Inicio_Field extends Base_Field {
-   
+
+    static i18n = {
+        pt: {
+            lbl_horario_inicial    : "Hora de Início",           
+            tp_lbl_horario_inicial : "Informe a hora inicial da aula",
+            erro_1                 : "Obrigatório",
+            erro_2                 : "Não pode ser zero",
+        },
+
+        es: {
+            lbl_horario_inicial    : "Hora de inicio",            
+            tp_lbl_horario_inicial : "Por favor especifique la hora de inicio de la clase.",
+            erro_1                 : "Obligatorio.",
+            erro_2                 : "No puede ser cero."            
+        }
+    };
+
     constructor() {
         super();        
     }
     
     connectedCallback() {
-        super.render();
-
-        // Tradução inicial na carga do componente
-        applyTranslations(this.shadowRoot);
-
-        // Escuta a mudança global de idioma
-        window.addEventListener('languageChanged', () => {
-            applyTranslations(this.shadowRoot);            
-        });
-
-        super.setupBase();
-        super.initTooltip();
-        super.initEdition();
-        this.configurarValidacao();
+        super.connectedCallback();        
     }
 
     renderControl(p) {       
@@ -36,52 +38,35 @@ class Hora_Inicio_Field extends Base_Field {
                 </div>
         `;                  
     }
-
-    // Utilizado pelo formulário page intituicao.js
-    // Sobrescreve o validar do Bae_Field
+    
     validar() {        
         return this.validarCampoTime(); 
     }
-    
-    async configurarValidacao() {
-        const input = this.shadowRoot.querySelector(".field-input");    
-        
-        if (input) {
-            input.addEventListener('blur', () => {
-                this.validarCampoTime();
-            });
-        }
-       
-    }
-
-
-
-    /**
-     * Valida o campo do tipo time do próprio componente
-     * @param {string} mensagemErro - A mensagem customizada para o erro
-     * @returns {boolean}
-     */
+      
     validarCampoTime() {
-        const input = this.control; // O getter já busca o .field-time ou .field-input
 
-        if (!input) return false;
+        const lang = sessionStorage.getItem('official_language') || 'pt';        
+        const dict = this.constructor.i18n[lang] || this.constructor.i18n['pt'];
+        const valor = this.value; // Usa o getter da Base_Field
 
-        const valor = input.value;
-
-        // Campos do tipo time retornam "" se vazios. 
-        // Adicionamos a checagem de "00:00" conforme sua necessidade.
-        if (!valor || valor.trim() === "" || valor === "00:00") {
-            this.marcarErro("Horário inválido"); // Não precisa passar o elemento!
+        // 1. REGRA: Campo Vazio (Erro 1)
+        // Inputs do tipo 'time' retornam string vazia "" quando não preenchidos
+        if (!valor || valor.trim() === "") {
+            this.marcarErro(dict.erro_1);
             return false;
         }
 
-        this.marcarSucesso(); // Limpa erros e aplica classe 'valid'
+        // 2. REGRA: Hora Zero (Erro 2)
+        // Caso o usuário selecione 00:00, tratamos como inválido conforme sua regra
+        if (valor === "00:00") {
+            this.marcarErro(dict.erro_2);
+            return false;
+        }
+
+        // Se passou pelas validações acima, é sucesso
+        this.marcarSucesso();
         return true;
     }
-
-
-
-
 
 }
 

@@ -2,61 +2,44 @@ import { editionCss } from '../css/Edition_Styles.js';
 
 export const EditionManager = {
 
-     init(shadowRoot) {
-        
-        // Injeta o CSS do tooltip no array de estilos do componente
-        if (!shadowRoot.adoptedStyleSheets.includes(editionCss)) {
+    init(shadowRoot) {
+        // 1. Injeta o CSS (apenas se não estiver presente)
+        if (editionCss && !shadowRoot.adoptedStyleSheets.includes(editionCss)) {
             shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, editionCss];
         }
 
-        this.show(shadowRoot);
+        // 2. DELEGAÇÃO DE EVENTO DE CLIQUE
+        // Ouvimos no shadowRoot. Não importa se o botão foi renderizado agora ou depois pela API.
+        shadowRoot.addEventListener('click', (e) => {
+            // Verifica se o clique foi no botão ou em qualquer ícone dentro dele
+            const btn = e.target.closest('.edit-button');
+            if (btn) {
+                this.handleEditAction(btn, shadowRoot);
+            }
+        });
     },
 
-    show(shadowRoot) {        
-       
-       // 1. Buscamos o input primeiro
-        const campo = shadowRoot.querySelector('input, select');       
+    handleEditAction(btn, shadowRoot) {
+        // 1. Busca o input/select que está no mesmo container que o botão
+        const container = btn.parentElement;
+        const campo = container?.querySelector('input, select, textarea');
 
         if (!campo) return;
 
-        // 2. O container é o pai do input (a div que você criou no renderControl)
-        const container = campo.parentElement;      
+        console.log(`%c[EDITION] %cAtivando foco: ${campo.id || campo.name}`, "color: #007bff; font-weight: bold;", "color: #333;");
 
-        if (container) {
-            // Garante que o container aceite posicionamento absoluto do botão
-            container.style.position = 'relative';
-        
-            // 3. Busca o botão que já veio no seu HTML do renderControl
-            const btn = container.querySelector('.edit-button');
-
-            if (btn) {
-                // Remove listeners antigos para não duplicar se o componente re-renderizar
-                const novoBtn = btn.cloneNode(true);
-                btn.replaceWith(novoBtn);
-
-                // 4. Adiciona o evento de clique
-                novoBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    console.log(`Editando campo: ${campo.id}`);
-                    campo.focus();
-                    
-                    // Exemplo: disparar um evento customizado para o formulário pai
-                    campo.dispatchEvent(new CustomEvent('field-edit-click', {
-                        bubbles: true,
-                        composed: true,
-                        detail: { id: campo.id }
-                    }));
-                });
-            }
-        }
-
-
-    },
-
-    onEditClick(campo) {
-        console.log(`[EditionManager] Editando campo: ${campo.id || campo.name}`);
-        // Aqui você pode disparar CustomEvents se quiser que o formulário reaja
+        // 2. Ação de interface: Foco no campo
         campo.focus();
-    }
 
+        // 3. Dispara o evento customizado para o formulário pai (se necessário)
+        campo.dispatchEvent(new CustomEvent('field-edit-click', {
+            bubbles: true,
+            composed: true,
+            detail: { 
+                id: campo.id,
+                name: campo.name,
+                value: campo.value 
+            }
+        }));
+    }
 };

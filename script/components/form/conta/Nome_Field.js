@@ -28,8 +28,8 @@ class Nome_Field extends Base_Field {
     
     connectedCallback() {
         super.connectedCallback();
-        super.initTooltip();
-        this.configurarValidacao();
+        // super.initTooltip();
+        // this.configurarValidacao();
     }
 
     // 4. Renderização
@@ -63,13 +63,13 @@ class Nome_Field extends Base_Field {
         return this.validarNome(); 
     }
 
-    async configurarValidacao() {
-        const input = this.control;  
-        if (input) {
-            input.addEventListener('blur', () => this.validarNome());
-            input.addEventListener('input', () => this.limparEstado()); 
-        }
-    }
+    // async configurarValidacao() {
+    //     const input = this.control;  
+    //     if (input) {
+    //         input.addEventListener('blur', () => this.validarNome());
+    //         input.addEventListener('input', () => this.limparEstado()); 
+    //     }
+    // }
 
     async validarNome() {
 
