@@ -8,8 +8,6 @@ class Administracao_Field extends Base_Select {
         pt: {
             lbl_administracao    : "Administração",           
             ph_administracao_op0 : "Selecione uma Administração",
-            data_translate_op    : "ph_administracao_op0",
-            placeholder          : "Seleciona uma Administração",
             tp_lbl_administracao : "Informe o sistema de Administração",
             erro                 : "Campo Obrigatório"       
         },
@@ -17,8 +15,6 @@ class Administracao_Field extends Base_Select {
         es: {
             lbl_administracao    : "Administración",           
             ph_administracao_op0 : "Seleccione una Administración",
-            data_translate_op    : "ph_administracao_op0",
-            placeholder          : "Seleccione una Administración",
             tp_lbl_administracao : "Informar al sistema de Administración",
             erro                 : "Campo obligatorio"     
         }
