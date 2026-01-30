@@ -44,43 +44,6 @@ export class Instituicao_Select extends Base_Select {
                 // 2. Renderiza o conteúdo
                 this.render(); 
 
-                // 3. RECONECTA OS EVENTOS usando o método da base
-                // Isso fará os logs [CHANGE] e [VALIDATE] voltarem a aparecer
-                
-                //this.setupEventListeners();
-
-                //this.connectedCallback();
-
-                // 3. Ajuste Geométrico usando getContainerInfo
-                // requestAnimationFrame(() => {
-                //     const info = this.getContainerInfo();
-                //     const select = this.shadowRoot.querySelector('.field-select');
-                //     const container = this.shadowRoot.querySelector('.campo');
-
-                //     if (!info.erro && select && container) {
-                //         const larguraAlvo = `${info.posicaoHorizontal.largura}px`;
-
-                //         // 1. Forçamos o container a ser um bloco rígido que não expande
-                //         container.style.display = "block";
-                //         container.style.width = larguraAlvo;
-                //         container.style.minWidth = larguraAlvo;
-                //         container.style.maxWidth = larguraAlvo;
-
-                //         // 2. Aplicamos o "Reset" de aparência no select para ele obedecer o CSS
-                //         select.style.appearance = "none"; 
-                //         select.style.webkitAppearance = "none";
-                        
-                //         // 3. Travamento absoluto de largura
-                //         select.style.width = "100%"; // Ele vai ocupar 100% dos 760px do container
-                //         select.style.maxWidth = "100%";
-                //         select.style.boxSizing = "border-box";
-                        
-                //         // Para evitar que o texto longo empurre o layout, forçamos o corte
-                //         select.style.overflow = "hidden";
-                //         select.style.textOverflow = "ellipsis";
-                //     }
-                // });
-
             }     
         });
     }

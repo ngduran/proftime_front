@@ -129,8 +129,7 @@ class Senha_Field extends Base_Field {
                 return false;
             }
         }
-
-        // Se chegou aqui, passou em tudo
+        
         this.marcarSucesso();
         this.emitirMudanca(valor);
         return true;

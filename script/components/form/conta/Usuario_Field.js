@@ -23,18 +23,14 @@ class Usuario_Field extends Base_Field {
         }
     };
 
-    // 2. Inicialização
     constructor() {
         super();
     }
     
     connectedCallback() {
-        super.connectedCallback();
-        // super.initTooltip();
-        // this.configurarValidacao();
+        super.connectedCallback(); 
     }
-
-    // 4. Renderização
+   
     renderControl(p) {       
         return `<div class="campo">
                     <label  class          ="field-label"  
@@ -59,7 +55,6 @@ class Usuario_Field extends Base_Field {
         `;        
     }
 
-    // 5. Métodos de Validação
      /** @override */
     validar() {
         return this.validarUsername(); 
@@ -77,7 +72,7 @@ class Usuario_Field extends Base_Field {
         
         const official_language = sessionStorage.getItem('official_language') || 'pt';
         
-        const input = this.control; // Usa o getter da Base_Field
+        const input = this.control;
         if (!input) return;
 
         // 1. Formatação: Username geralmente é todo em minúsculo e sem espaços nas extremidades
@@ -113,5 +108,4 @@ class Usuario_Field extends Base_Field {
     
 }
 
-// 6. Definição do Web Component
 customElements.define('usuario-field', Usuario_Field);

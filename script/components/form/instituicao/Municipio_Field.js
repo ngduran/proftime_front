@@ -21,7 +21,6 @@ class Municipio_Select extends Base_Select {
             erro_2             : "Primero, seleccione un estado.",
         }
     };
-
     
     connectedCallback() {
         super.connectedCallback();
@@ -48,10 +47,7 @@ class Municipio_Select extends Base_Select {
             "color: #fd7e14; font-weight: bold;", "color: #6f42c1; font-weight: bold;", "color: #666;");
 
         debugger
-        if (this.estadoSelecionadoId && letras) {
-            console.log("////////////////////////////////////////////////////////////");
-            console.log("///////// CHAMANDO O READ MUNICIPIOS ///////////////////////");
-            console.log("////////////////////////////////////////////////////////////");
+        if (this.estadoSelecionadoId && letras) {           
             await this.readMunicipios(this.estadoSelecionadoId, letras);
         } else if (!this.estadoSelecionadoId) {
             this.marcarErro(Municipio_Select.i18n[lang].erro_1);
@@ -61,17 +57,11 @@ class Municipio_Select extends Base_Select {
 
     // Handler para Mudança de Estado
     _handleEstadoSelecionado(e) {
-        console.log("////////////////////////////////////////////////////////////");
-        console.log("///////// CHAMANDO O _handleEstadoSelecionado //////////////");
-        console.log("////////////////////////////////////////////////////////////");
-
+        
         if (e.detail.scope !== this.scope) return;
 
         // Guardamos o ID do estado para futuras buscas de cidade
-        this.estadoSelecionadoId = e.detail.estadoId;
-        debugger
-        console.log(`%c[SYNC] %c${this.id.toUpperCase()} %c<- estado-selecionado: ${this.estadoSelecionadoId}`, 
-            "color: #007bff; font-weight: bold;", "color: #6f42c1; font-weight: bold;", "color: #666;");
+        this.estadoSelecionadoId = e.detail.estadoId;        
         
         // Opcional: Limpar o erro do município se ele selecionou um estado agora
         this.limparEstado(); 
@@ -83,29 +73,18 @@ class Municipio_Select extends Base_Select {
             if (input) input.value = '';
         }
     }
-
-
-    // No Municipio_Select.js
-
-    // 1. O que substitui a função gigante:
+    
     escutarBuscaCidade() {
-        // Ouvimos o evento que você provou que está disparando (image_2eaa29.png)
-        // 'composed: true' permite que o evento atravesse a barreira do Shadow DOM
-
+       
         const official_language = sessionStorage.getItem('official_language') || 'pt';
         
         document.addEventListener('filtro-cidade-digitado', async (e) => {
-            // Validação de Escopo (essencial no seu projeto)
+            
             if (e.detail.scope !== this.scope) return;
 
             const letras = e.detail.termoBusca;
             const estadoId = this.elementId;
-
-            // Log de recebimento (Rastreamento)
-            console.log(`%c[RECEIVE-EVENT] %c${this.id.toUpperCase()} %c<- filtro-cidade-digitado | Termo: "${letras}"`, 
-                "color: #fd7e14; font-weight: bold;", "color: #6f42c1; font-weight: bold;", "color: #666;");
-
-            debugger
+           
             if (estadoId && letras) {
                 // Dispara a consulta para a API
                 await this.readMunicipios(estadoId, letras);
@@ -116,12 +95,7 @@ class Municipio_Select extends Base_Select {
             }
         });
     }
-
-
-
-
-
-    // 2. Função auxiliar simples para limpar o campo que disparou o erro
+   
     limparInputCidade(target) {
         if (target && target.shadowRoot) {
             const input = target.shadowRoot.querySelector('input');
@@ -160,67 +134,6 @@ class Municipio_Select extends Base_Select {
         }
     }
 
-
-   
-  
-
-
-
-
-
-
-    // async adicionarListenersGlobais() {        
-        
-    //     const scopeHere = this.getAttribute('scope');
-
-
-    //     // 1. Escuta quando o Estado mudar
-    //     window.addEventListener('estado-selecionado', (e) => {
-
-    //         if (e.detail.scope === scopeHere) {
-    //             this.estadoSelecionadoId = e.detail.estadoId;
-    //             console.log("Municipio guardou o Estado ID:", this.estadoSelecionadoId);
-                
-    //             // Opcional: Se mudar o estado, talvez queira limpar o input de cidade
-    //             const inputBusca = this.shadowRoot.getElementById('cidade'); 
-    //             if (inputBusca) inputBusca.value = "";            
-    //         } else {
-    //             return;
-    //         }
-
-    //     });
-
-    //     // 2. Escuta quando as letras forem digitadas no Cidade_Field
-    //     window.addEventListener('cidade-digitada', async (e) => {
-
-    //         if (e.detail.scope === scopeHere) {
-    //             const letras = e.detail.termoBusca;
-    
-    //             if (this.estadoSelecionadoId && letras) {
-    //                 console.log(`Buscando no Estado ${this.estadoSelecionadoId} as letras: ${letras}`);
-    //                 this.readMunicipios(this.estadoSelecionadoId, letras);
-    //             } else if (!this.estadoSelecionadoId) {
-    //                 //alert("Por favor, selecione um estado primeiro.");
-                    
-    //                 await Mensagem.aviso("Por favor, selecione um estado primeiro!");
-                    
-    //                 // Tenta limpar o alvo do evento (o componente que disparou a digitação)
-    //                 if (e.target && e.target.shadowRoot) {
-    //                     const inputInterno = e.target.shadowRoot.querySelector('input');
-    //                     if (inputInterno) inputInterno.value = "";
-
-    //                 }
-   
-    //             }            
-    //         } else {
-    //             return;
-    //         }
-
-    //     });
-    // }
-
-
-
     /**
      * Popula um elemento <select> com uma lista de objetos.
      * @param {string} idSelect - ID do elemento no HTML
@@ -252,8 +165,6 @@ class Municipio_Select extends Base_Select {
             select.appendChild(option);
         });
     }
-
-    
 
 }
 

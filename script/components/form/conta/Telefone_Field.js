@@ -18,8 +18,7 @@ class Telefone_Field extends Base_Field {
             erro            : "Por favor, introduzca un número de teléfono válido."
         }
     };
-
-    // 2. Inicialização
+ 
     constructor() {
         super();
     }
@@ -33,8 +32,7 @@ class Telefone_Field extends Base_Field {
             this.limparEstado(); 
         });
     }
-
-    // 4. Renderização
+  
     renderControl(p) {       
         return `<div class="campo">
                     <label  class          ="field-label"  

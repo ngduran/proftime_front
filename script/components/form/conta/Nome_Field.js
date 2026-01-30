@@ -1,8 +1,7 @@
 import { Base_Field } from '../../base/Base_Field.js';
 
 class Nome_Field extends Base_Field {
-
-    // 1. Atributos Estáticos
+  
     static i18n = {
         pt: {
             lbl_nome    : "Nome", 
@@ -20,56 +19,30 @@ class Nome_Field extends Base_Field {
             erro_2      : "El nombre debe tener al menos 3 letras."
         }
     };
-
-    // 2. Inicialização
+  
     constructor() {
         super();
     }
     
     connectedCallback() {
-        super.connectedCallback();
-        // super.initTooltip();
-        // this.configurarValidacao();
+        super.connectedCallback();  
     }
-
-    // 4. Renderização
+   
     renderControl(p) {       
         return `<div class="campo">
-                    <label  class          ="field-label"  
-                            for            ="${p.id}" 
-                            data-translate ="${p.data_translate_label}">
-                            ${p.label}
-                    </label>
-                    <i  class          ="${p.icon_question}" 
-                        data-tooltip   ="${p.data_tooltip_balao}" 
-                        data-translate ="${p.data_translate_tooltip}">
-                    </i>
-                    <input type        ="text" 
-                        id             ="${p.id}" 
-                        name           ="${p.name}" 
-                        class          ="field-input" 
-                        data-translate ="${p.data_translate_ph}" 
-                        placeholder    ="${p.placeholder}" 
-                        autocomplete   ="off" 
-                        ${p.is_required}>
+                    <label class="field-label" for="${p.id}" data-translate ="${p.data_translate_label}">${p.label}</label>
+                    <i class="${p.icon_question}" data-tooltip="${p.data_tooltip_balao}" data-translate ="${p.data_translate_tooltip}"></i>
+                    <input type="text" id="${p.id}" name="${p.name}" class="field-input" data-translate ="${p.data_translate_ph}" placeholder="${p.placeholder}" 
+                        autocomplete="off" ${p.is_required}>
                     </input>                    
                 </div>
         `;        
     }
 
-    // 5. Métodos de Validação
      /** @override */
     validar() {
         return this.validarNome(); 
     }
-
-    // async configurarValidacao() {
-    //     const input = this.control;  
-    //     if (input) {
-    //         input.addEventListener('blur', () => this.validarNome());
-    //         input.addEventListener('input', () => this.limparEstado()); 
-    //     }
-    // }
 
     async validarNome() {
 
@@ -96,11 +69,10 @@ class Nome_Field extends Base_Field {
             return false;
         }
 
-        this.marcarSucesso(); // Não precisa passar nada!
+        this.marcarSucesso();
         return true;
     }
 
 }
 
-// 6. Definição do Web Component
 customElements.define('nome-field', Nome_Field);

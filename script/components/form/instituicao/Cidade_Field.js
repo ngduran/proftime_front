@@ -23,9 +23,7 @@ class Cidade_Field extends Base_Field {
     };
 
     connectedCallback() {
-        super.connectedCallback();   
-        
-       
+        super.connectedCallback();      
     }
 
     renderControl(p) {       
