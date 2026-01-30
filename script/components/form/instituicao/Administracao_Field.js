@@ -22,33 +22,27 @@ class Administracao_Field extends Base_Select {
 
     optionsList = [];
   
-    async connectedCallback() {
+    async connectedCallback() {    
         super.connectedCallback();        
-    }
-
-    async connectedCallback() {
-    
-        super.connectedCallback();
-        
         await this.readAdministracoes();
     }
 
      async readAdministracoes() {
-            await executarOperacao({
-                idBotao: 'cadastrarBtn',
-                keyTextoAguarde: 'Consultando...',
-                apiCall: listarAdministracoes,
-                onSuccess: async (resultado) => { 
-                   
-                    this.optionsList = (resultado.data || []).map(item => ({
-                        id: item.uuid, 
-                        nome: item.nome
-                    }));
-                    
-                    this.render(); 
-                }     
-            });
-        }
+        await executarOperacao({
+            idBotao: 'cadastrarBtn',
+            keyTextoAguarde: 'Consultando...',
+            apiCall: listarAdministracoes,
+            onSuccess: async (resultado) => { 
+                
+                this.optionsList = (resultado.data || []).map(item => ({
+                    id: item.uuid, 
+                    nome: item.nome
+                }));
+                
+                this.render(); 
+            }     
+        });
+    }
 
 }
 

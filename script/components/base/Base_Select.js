@@ -11,11 +11,11 @@ export class Base_Select extends Base_Field {
         super.connectedCallback(); 
 
         // 2. Inicializa os Managers (Tooltip e Edição)
-        this.initTooltip();
+        ///this.initTooltip();
         //this.initEdition();
 
         //3. Configura o evento de validação automático para o Select
-        this.setupEventListeners();
+        //this.setupEventListeners();
     }
 
     /**
@@ -26,13 +26,27 @@ export class Base_Select extends Base_Field {
         return `<div class="campo">
                     <label class="field-label"  for="${p.id}" data-translate="${p.data_translate_label}">${p.label}</label>
                     <i class="${p.icon_question}" data-tooltip="${p.data_tooltip_balao}" data-translate="${p.data_translate_tooltip}"></i>
-                    <select id="${p.id}" name="${p.name}" class="field-select"
-                        autocomplete="off" ${p.is_required}>
+                    
+                    ${p.emit_change ? `
+                        
+                        <select id="${p.id}" name="${p.name}" class="field-select"
+                            autocomplete="off" ${p.is_required}>
                         <option value="" data-translate="${p.data_translate_op}">${p.placeholder}</option>
+                        
+                    ` : `
+                        <select id="${p.id}" name="${p.name}" class="field-select"
+                            autocomplete="off" ${p.is_required}>
+                        <option value="" data-translate="${p.data_translate_op}">${p.placeholder}</option>
+                    `}
                     
                         ${ this.renderOptions(p) }
                     
-                    </select>                    
+                    </select>
+                    ${p.icon_edicao ? `
+                        <button type="button" class="edit-button">
+                            <i class="${p.icon_edicao}"></i>
+                        </button>
+                        ` : ''}                 
                 </div>
         `;     
     }
@@ -46,22 +60,11 @@ export class Base_Select extends Base_Field {
         const listaParaRenderizar = this.optionsList || [];
 
         // Log de início do processo
-        console.log(
-            `%c[OPTIONS-PROCESS] %c${this.id.toUpperCase()} %cgerando lista de opções...`,
-            "color: #17a2b8; font-weight: bold;", 
-            "color: #000; font-weight: bold;",
-            "color: #666;"
-        );
+        console.log( `%c[OPTIONS-PROCESS] %c${this.id.toUpperCase()} %cgerando lista de opções...`, "color: #17a2b8; font-weight: bold;", "color: #000; font-weight: bold;", "color: #666;" );
 
         // 2. Se houver uma lista de objetos, ela gera as options automaticamente
         if (listaParaRenderizar.length > 0) {
-            console.log(
-                `%c[OPTIONS-DATA] %c${this.id.toUpperCase()} %cusando optionsList interna. Itens: %c${listaParaRenderizar.length}`,
-                "color: #28a745; font-weight: bold;", 
-                "color: #000; font-weight: bold;",
-                "color: #666;",
-                "background: #28a745; color: #fff; padding: 0 5px; border-radius: 3px;"
-            );
+            console.log( `%c[OPTIONS-DATA] %c${this.id.toUpperCase()} %cusando optionsList interna. Itens: %c${listaParaRenderizar.length}`, "color: #28a745; font-weight: bold;", "color: #000; font-weight: bold;", "color: #666;", "background: #28a745; color: #fff; padding: 0 5px; border-radius: 3px;" );
 
             return listaParaRenderizar.map(item => 
                 `<option value="${item.id || item.sigla}">${item.nome}</option>`
@@ -70,12 +73,7 @@ export class Base_Select extends Base_Field {
 
         // 3. Fallback: Caso as opções venham via atributo HTML (string separada por vírgula)
         if (p.options) {
-            console.log(
-                `%c[OPTIONS-FALLBACK] %c${this.id.toUpperCase()} %cusando string de atributo 'options'.`,
-                "color: #ffc107; font-weight: bold;", 
-                "color: #000; font-weight: bold;",
-                "color: #666;"
-            );
+            console.log( `%c[OPTIONS-FALLBACK] %c${this.id.toUpperCase()} %cusando string de atributo 'options'.`, "color: #ffc107; font-weight: bold;", "color: #000; font-weight: bold;", "color: #666;" );
 
             return p.options.split(',').map(opt => {
                 const [value, text] = opt.includes(':') ? opt.split(':') : [opt, opt];
@@ -84,12 +82,7 @@ export class Base_Select extends Base_Field {
         }
 
         // Caso não encontre nenhuma fonte de dados
-        console.warn(
-            `%c[OPTIONS-EMPTY] %c${this.id.toUpperCase()} %cNenhuma opção encontrada para renderizar.`,
-            "color: #dc3545; font-weight: bold;", 
-            "color: #000; font-weight: bold;",
-            "color: #666;"
-        );
+        console.warn( `%c[OPTIONS-EMPTY] %c${this.id.toUpperCase()} %cNenhuma opção encontrada para renderizar.`, "color: #dc3545; font-weight: bold;", "color: #000; font-weight: bold;", "color: #666;" );
 
         return '';
     }
@@ -137,7 +130,14 @@ export class Base_Select extends Base_Field {
                 "color: #555; font-style: italic;"
             );
             this.validarSelect(); // Chama o método de validação genérico
-            //this.emitirMudanca(e.target.value);
+            
+            // SÓ EXECUTA SE:
+            // O componente tiver o atributo 'emit-change' no HTML
+            // Ex: <estado-select emit-change ...></estado-select>
+            if (this.hasAttribute('emit-change')) {
+                this.emitirMudanca(e.target.value);
+            }
+            
         });
 
         // 2. Evento de Perda de Foco (Validação de interface)
@@ -190,7 +190,36 @@ export class Base_Select extends Base_Field {
         return true;
     }
 
+    emitirMudanca(valor) {
 
+        console.log("------------------------------------------------------------");
+        console.log("Chamou o emitir mudança");
+        console.log("------------------------------------------------------------");
+        // Captura o 'scope' ou define 'default' se não existir
+        const scope = this.getAttribute('scope') || 'default';
+        
+        // Torna o nome do evento dinâmico (ex: se o componente for 'Estado_Field', vira 'estado-change')
+        const eventName = `${this.tagName.toLowerCase().replace('-field', '')}-selecionado`;
+
+        // 2. Rastreamento de Log (conforme padrão que definimos)
+            console.log(
+                `%c[SEARCH-EMIT] %c${this.id.toUpperCase()} %c-> estado-alterado | Termo: %c"${valor}"`,
+                "color: #007bff; font-weight: bold;", 
+                "color: #6f42c1; font-weight: bold;", 
+                "color: #666;",                       
+                "color: #28a745; font-weight: bold;"
+            );
+
+        this.dispatchEvent(new CustomEvent(eventName, {
+            detail: { 
+                estadoId: valor,
+                scope: scope,
+                elementId: this.id // Útil para identificar quem disparou em formulários grandes
+            },
+            bubbles: true,
+            composed: true 
+        }));
+    }
 
 
 

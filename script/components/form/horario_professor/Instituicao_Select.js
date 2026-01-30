@@ -25,9 +25,7 @@ export class Instituicao_Select extends Base_Select {
 
 
     async connectedCallback() {
-    
         super.connectedCallback(); // Renderiza o esqueleto e o placeholder
-        
         await this.readInstituicoes(); // Busca os dados da API
     }
   

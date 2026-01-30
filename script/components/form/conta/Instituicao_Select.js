@@ -1,6 +1,5 @@
 import { executarOperacao } from '../../../core/api-engine.js';
 import { listarEstados } from '../../../services/api_service.js';
-import { applyTranslations } from "../../utils/i18n/instituicao_i18n.js";
 import { Base_Field } from "../../base/Base_Field.js";
 
 

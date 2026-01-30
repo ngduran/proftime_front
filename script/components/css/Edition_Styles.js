@@ -2,8 +2,6 @@ export const editionCss = new CSSStyleSheet();
 
 editionCss.replaceSync(`
     
- 
-
     /* ===== 5 =====*/
     .edit-button {
         position: absolute;

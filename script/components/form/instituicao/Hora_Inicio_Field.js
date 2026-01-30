@@ -17,11 +17,7 @@ class Hora_Inicio_Field extends Base_Field {
             erro_2                 : "No puede ser cero."            
         }
     };
-
-    constructor() {
-        super();        
-    }
-    
+       
     connectedCallback() {
         super.connectedCallback();        
     }
@@ -67,7 +63,6 @@ class Hora_Inicio_Field extends Base_Field {
         this.marcarSucesso();
         return true;
     }
-
 }
 
 customElements.define('hora-inicio-field', Hora_Inicio_Field);

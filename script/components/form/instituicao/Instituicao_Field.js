@@ -37,9 +37,11 @@ class Instituicao_Field extends Base_Field {
                     <i class="${p.icon_question}" data-tooltip="${p.data_tooltip_balao}" data-translate="${p.data_translate_tooltip}"></i>
                     <input type="text" id="${p.id}" name="${p.name}" class="field-input" data-translate="${p.data_translate_ph}" placeholder="${p.placeholder}" autocomplete="off" ${p.is_required}>
                     </input>
-                    <button type="button" class="edit-button">
-                        <i class="${p.icon_edicao}"></i>
-                    </button>   
+                    ${p.icon_edicao ? `
+                        <button type="button" class="edit-button">
+                            <i class="${p.icon_edicao}"></i>
+                        </button>
+                        ` : ''}     
                 </div>
         `;        
     }

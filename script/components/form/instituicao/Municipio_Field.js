@@ -1,155 +1,132 @@
-import { executarOperacao } from '../../../core/api-engine.js';
+import { executarOperacao } from "../../../core/api-engine.js";
 import { listarMunicipiosPorEstado } from '../../../services/api_service.js';
-import { Mensagem } from '../../../utils/mensageiro.js';
-import { applyTranslations } from "../../utils/i18n/instituicao_i18n.js";
-import { Base_Field } from "../../base/Base_Field.js";
+import { Base_Select } from "../../base/Base_Select.js";
 
-
-class Municipio_Field extends Base_Field {
+class Municipio_Select extends Base_Select {
    
-    constructor() {
-        super();               
-    }
-   
-    connectedCallback() {
-        super.render();
+    static i18n = {
+        pt: {
+            lbl_cidade       : "Cidade",           
+            ph_municipio_op0 : "Selecione uma cidade",
+            tp_lbl_municipio : "Utilizado para organizar seu horário",
+            erro_1           : "Por favor, selecione uma cidade",      
+            erro_2           : "Primeiro selecione um Estado"      
+        },
 
-        // Tradução inicial na carga do componente
-        applyTranslations(this.shadowRoot);
-
-        // Escuta a mudança global de idioma
-        window.addEventListener('languageChanged', () => {
-            applyTranslations(this.shadowRoot);            
-        });
-
-        super.setupBase();
-        super.initTooltip();
-        super.initEdition();
-         
-        // Inicia a escuta de eventos externos
-        this.adicionarListenersGlobais();
-        this.configurarValidacao();
-    }
-
-    renderControl(p) {       
-        return `<div class="campo">
-                    <label class="field-label"  for="${p.id}" data-translate="${p.data_translate_label}">${p.label}</label>
-                    <i class="${p.icon_question}" data-tooltip="${p.data_tooltip_balao}" data-translate="${p.data_translate_tooltip}"></i>
-                    <select id="${p.id}" name="${p.name}" class="field-select"
-                        autocomplete="off" ${p.is_required}>
-                        <option value="" data-translate="${p.data_translate_op}">${p.placeholder}</option>
-                    </select>
-                    <button type="button" class="edit-button">
-                        <i class="${p.icon_edicao}"></i>
-                    </button>
-                </div>
-        `;           
-    }
-
-    // Utilizado pelo formulário page intituicao.js
-    // Sobrescreve o validar do Bae_Field
-    validar() {        
-        return this.validarSelect(); 
-    }
-
-    configurarValidacao() {        
-        const select = this.control; // Use o getter da Base_Field em vez de getElementById
-        if (!select) return;
-        const scope = this.getAttribute('scope'); // Captura o atributo 'scope'  
-        
-        // Disparar evento quando o estado mudar
-        select.addEventListener('change', (e) => {
-            this.validarSelect();
-            const municipioId = e.target.value;
-            this.dispatchEvent(new CustomEvent('municipio-selecionado', {
-                detail: { 
-                    municipioId: municipioId,
-                    scope:    scope // Envia o escopo junto com o ID
-                },
-                bubbles: true, // Permite que o evento suba na árvore DOM
-                composed: true // Permite que o evento atravesse o Shadow DOM
-            }));
-        });
-
-        select.addEventListener('blur', () => {
-            this.validarSelect();
-        });
-    }
-
-    /**
-     * Valida o próprio componente select/combobox
-     * @param {string} mensagemErro - Mensagem exibida em caso de falha
-     * @returns {boolean}
-     */
-    validarSelect() {              
-        const select = this.control; 
-        
-        if (!select) {
-            console.error("Elemento select não encontrado internamente.");
-            return false;
+        es: {
+            lbl_instituicao    : "Ciudad",           
+            ph_instituicao_op0 : "Seleccione una ciudad",
+            tp_lbl_instituicao : "Se utiliza para organizar tu agenda.",
+            erro_1             : "Por favor seleccione una ciudad.",
+            erro_2             : "Primero, seleccione un estado.",
         }
+    };
 
-        const valor = select.value;
-
-        // Se não houver valor ou for string vazia (comum na opção "Selecione...")
-        if (!valor || valor.trim() === "") {
-            this.marcarErro("Selecione a cidade");
-            return false;
-        }
-
-        this.marcarSucesso();
-        return true;
-    }
-
-
-    async adicionarListenersGlobais() {        
-        
-        const scopeHere = this.getAttribute('scope');
-
-
-        // 1. Escuta quando o Estado mudar
-        window.addEventListener('estado-selecionado', (e) => {
-
-            if (e.detail.scope === scopeHere) {
-                this.estadoSelecionadoId = e.detail.estadoId;
-                console.log("Municipio guardou o Estado ID:", this.estadoSelecionadoId);
-                
-                // Opcional: Se mudar o estado, talvez queira limpar o input de cidade
-                const inputBusca = this.shadowRoot.getElementById('cidade'); 
-                if (inputBusca) inputBusca.value = "";            
-            } else {
-                return;
-            }
-
-        });
-
-        // 2. Escuta quando as letras forem digitadas no Cidade_Field
-        window.addEventListener('cidade-digitada', async (e) => {
-
-            if (e.detail.scope === scopeHere) {
-                const letras = e.detail.termoBusca;
     
-                if (this.estadoSelecionadoId && letras) {
-                    console.log(`Buscando no Estado ${this.estadoSelecionadoId} as letras: ${letras}`);
-                    this.readMunicipios(this.estadoSelecionadoId, letras);
-                } else if (!this.estadoSelecionadoId) {
-                    //alert("Por favor, selecione um estado primeiro.");
-                    
-                    await Mensagem.aviso("Por favor, selecione um estado primeiro!");
-                    
-                    // Tenta limpar o alvo do evento (o componente que disparou a digitação)
-                    if (e.target && e.target.shadowRoot) {
-                        const inputInterno = e.target.shadowRoot.querySelector('input');
-                        if (inputInterno) inputInterno.value = "";
+    connectedCallback() {
+        super.connectedCallback();
+        this.registrarEscutas();               
+    }
 
-                    }
-   
-                }            
-            } else {
-                return;
+    registrarEscutas() {
+        // Escuta 1: Quando o usuário digita na Cidade
+        document.addEventListener('filtro-cidade-digitado', (e) => this._handleFiltroCidade(e));
+
+        // Escuta 2: Quando o usuário seleciona um Estado
+        document.addEventListener('estado-select-selecionado', (e) => this._handleEstadoSelecionado(e));
+    }
+
+    // Handler para Digitação de Cidade
+    async _handleFiltroCidade(e) {
+        
+        if (e.detail.scope !== this.scope) return;
+
+        const letras = e.detail.termoBusca;       
+        const lang = sessionStorage.getItem('official_language') || 'pt';
+
+        console.log(`%c[EVENT] %c${this.id.toUpperCase()} %c<- filtro-cidade-digitado: "${letras}"`, 
+            "color: #fd7e14; font-weight: bold;", "color: #6f42c1; font-weight: bold;", "color: #666;");
+
+        debugger
+        if (this.estadoSelecionadoId && letras) {
+            console.log("////////////////////////////////////////////////////////////");
+            console.log("///////// CHAMANDO O READ MUNICIPIOS ///////////////////////");
+            console.log("////////////////////////////////////////////////////////////");
+            await this.readMunicipios(this.estadoSelecionadoId, letras);
+        } else if (!this.estadoSelecionadoId) {
+            this.marcarErro(Municipio_Select.i18n[lang].erro_1);
+            this.limparInputCidade(e.target);
+        }
+    }
+
+    // Handler para Mudança de Estado
+    _handleEstadoSelecionado(e) {
+        console.log("////////////////////////////////////////////////////////////");
+        console.log("///////// CHAMANDO O _handleEstadoSelecionado //////////////");
+        console.log("////////////////////////////////////////////////////////////");
+
+        if (e.detail.scope !== this.scope) return;
+
+        // Guardamos o ID do estado para futuras buscas de cidade
+        this.estadoSelecionadoId = e.detail.estadoId;
+        debugger
+        console.log(`%c[SYNC] %c${this.id.toUpperCase()} %c<- estado-selecionado: ${this.estadoSelecionadoId}`, 
+            "color: #007bff; font-weight: bold;", "color: #6f42c1; font-weight: bold;", "color: #666;");
+        
+        // Opcional: Limpar o erro do município se ele selecionou um estado agora
+        this.limparEstado(); 
+    }
+
+    limparInputCidade(target) {
+        if (target && target.shadowRoot) {
+            const input = target.shadowRoot.querySelector('input');
+            if (input) input.value = '';
+        }
+    }
+
+
+    // No Municipio_Select.js
+
+    // 1. O que substitui a função gigante:
+    escutarBuscaCidade() {
+        // Ouvimos o evento que você provou que está disparando (image_2eaa29.png)
+        // 'composed: true' permite que o evento atravesse a barreira do Shadow DOM
+
+        const official_language = sessionStorage.getItem('official_language') || 'pt';
+        
+        document.addEventListener('filtro-cidade-digitado', async (e) => {
+            // Validação de Escopo (essencial no seu projeto)
+            if (e.detail.scope !== this.scope) return;
+
+            const letras = e.detail.termoBusca;
+            const estadoId = this.elementId;
+
+            // Log de recebimento (Rastreamento)
+            console.log(`%c[RECEIVE-EVENT] %c${this.id.toUpperCase()} %c<- filtro-cidade-digitado | Termo: "${letras}"`, 
+                "color: #fd7e14; font-weight: bold;", "color: #6f42c1; font-weight: bold;", "color: #666;");
+
+            debugger
+            if (estadoId && letras) {
+                // Dispara a consulta para a API
+                await this.readMunicipios(estadoId, letras);
+            } else if (!estadoId) {
+                const mensagem = Municipio_Select.i18n[official_language].erro_1;
+                this.marcarErro( mensagem );                
+                this.limparInputCidade(e.target);
             }
-
         });
+    }
+
+
+
+
+
+    // 2. Função auxiliar simples para limpar o campo que disparou o erro
+    limparInputCidade(target) {
+        if (target && target.shadowRoot) {
+            const input = target.shadowRoot.querySelector('input');
+            if (input) input.value = '';
+        }
     }
 
     async readMunicipios(termoCidade, letras) {
@@ -166,6 +143,83 @@ class Municipio_Field extends Base_Field {
             }     
         });
     }
+
+    alternarComponentes() {       
+        
+        // Buscamos os elementos no DOM principal (fora do shadow)
+        const busca = document.querySelector('cidade-field');
+        const selecao = document.querySelector('municipio-select');       
+
+        if (busca && selecao) {
+            busca.style.display = 'none';    // Esconde o input de digitação
+            selecao.style.display = 'block'; // Mostra o select populado
+            
+            // Foca no select para facilitar a navegação do usuário
+            const selectInterno = selecao.shadowRoot.querySelector('select');
+            if (selectInterno) selectInterno.focus();
+        }
+    }
+
+
+   
+  
+
+
+
+
+
+
+    // async adicionarListenersGlobais() {        
+        
+    //     const scopeHere = this.getAttribute('scope');
+
+
+    //     // 1. Escuta quando o Estado mudar
+    //     window.addEventListener('estado-selecionado', (e) => {
+
+    //         if (e.detail.scope === scopeHere) {
+    //             this.estadoSelecionadoId = e.detail.estadoId;
+    //             console.log("Municipio guardou o Estado ID:", this.estadoSelecionadoId);
+                
+    //             // Opcional: Se mudar o estado, talvez queira limpar o input de cidade
+    //             const inputBusca = this.shadowRoot.getElementById('cidade'); 
+    //             if (inputBusca) inputBusca.value = "";            
+    //         } else {
+    //             return;
+    //         }
+
+    //     });
+
+    //     // 2. Escuta quando as letras forem digitadas no Cidade_Field
+    //     window.addEventListener('cidade-digitada', async (e) => {
+
+    //         if (e.detail.scope === scopeHere) {
+    //             const letras = e.detail.termoBusca;
+    
+    //             if (this.estadoSelecionadoId && letras) {
+    //                 console.log(`Buscando no Estado ${this.estadoSelecionadoId} as letras: ${letras}`);
+    //                 this.readMunicipios(this.estadoSelecionadoId, letras);
+    //             } else if (!this.estadoSelecionadoId) {
+    //                 //alert("Por favor, selecione um estado primeiro.");
+                    
+    //                 await Mensagem.aviso("Por favor, selecione um estado primeiro!");
+                    
+    //                 // Tenta limpar o alvo do evento (o componente que disparou a digitação)
+    //                 if (e.target && e.target.shadowRoot) {
+    //                     const inputInterno = e.target.shadowRoot.querySelector('input');
+    //                     if (inputInterno) inputInterno.value = "";
+
+    //                 }
+   
+    //             }            
+    //         } else {
+    //             return;
+    //         }
+
+    //     });
+    // }
+
+
 
     /**
      * Popula um elemento <select> com uma lista de objetos.
@@ -199,22 +253,8 @@ class Municipio_Field extends Base_Field {
         });
     }
 
-    alternarComponentes() {       
-        
-        // Buscamos os elementos no DOM principal (fora do shadow)
-        const busca = document.querySelector('cidade-field');
-        const selecao = document.querySelector('municipio-field');       
-
-        if (busca && selecao) {
-            busca.style.display = 'none';    // Esconde o input de digitação
-            selecao.style.display = 'block'; // Mostra o select populado
-            
-            // Foca no select para facilitar a navegação do usuário
-            const selectInterno = selecao.shadowRoot.querySelector('select');
-            if (selectInterno) selectInterno.focus();
-        }
-    }
+    
 
 }
 
-customElements.define('municipio-field', Municipio_Field);
+customElements.define('municipio-select', Municipio_Select);

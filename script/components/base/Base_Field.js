@@ -88,22 +88,63 @@ export class Base_Field extends HTMLElement {
         }
     }
 
+    // _handleDelegatedEvent = (event) => {
+    //     const target = event.target;
+
+    //     // Se o usuário está digitando, limpamos o estado de erro
+    //     if (event.type === 'input') {
+    //         this.limparEstado();
+    //     }
+        
+    //     // Só executa se o filho tiver definido essa função específica
+    //     if (typeof this.processarBusca === 'function') {
+    //         this.processarBusca(target.value);
+    //         return;
+    //     }
+        
+
+    //     // O matches garante que só validamos se o alvo for um dos nossos campos
+    //     if (target.matches('.field-input, .field-select, .field-time')) {
+    //         console.log(`%c[DELEGATED-${event.type.toUpperCase()}] %c${this.id}`, "color: #28a745;");
+    //         this.validar();
+    //     }
+    // }
+
     _handleDelegatedEvent = (event) => {
         const target = event.target;
 
-        // Se o usuário está digitando, limpamos o estado de erro
+        // 1. FLUXO DE DIGITAÇÃO (Input)
         if (event.type === 'input') {
             this.limparEstado();
-            return;
+            // A busca só deve rodar no input
+            if (typeof this.processarBusca === 'function') {
+                this.processarBusca(target.value);
+            }
+            return; // No input, paramos por aqui
         }
 
+        // 2. FLUXO DE MUDANÇA (Change - Selects)
+        if (event.type === 'change') {
+            // Log para confirmar que a Base capturou a mudança
+            console.log(`%c[DELEGATED-CHANGE] %c${this.id}`, "color: #28a745; font-weight: bold;");
+            
+            this.validar(); // Valida o select
 
-        // O matches garante que só validamos se o alvo for um dos nossos campos
-        if (target.matches('.field-input, .field-select, .field-time')) {
-            console.log(`%c[DELEGATED-${event.type.toUpperCase()}] %c${this.id}`, "color: #28a745;");
-            this.validar();
+            // Executa a emissão de mudança APENAS se o componente tiver a função e o atributo
+            if (this.hasAttribute('emit-change') && typeof this.emitirMudanca === 'function') {
+                this.emitirMudanca(target.value);
+            }
+        }
+
+        // 3. FLUXO DE SAÍDA (Blur)
+        if (event.type === 'blur') {
+            if (target.matches('.field-input, .field-select, .field-time')) {
+                this.validar();
+            }
         }
     }
+
+
 
     translate() {
         const lang = sessionStorage.getItem('official_language') || 'pt';
@@ -304,6 +345,29 @@ export class Base_Field extends HTMLElement {
         };
     }
     
+    inspectEvents() {
+        console.group(`%c[EVENT-INSPECTOR] %c${this.tagName}`, "color: #ffc107; font-weight: bold;", "color: #666;");
+        
+        // 1. Identifica os eventos delegados no ShadowRoot
+        const masterEvents = ['input', 'blur', 'change']; // Os que você definiu no connectedCallback
+        
+        console.log("%cOuvintes Mestres (ShadowRoot):", "font-weight: bold; color: #007bff;");
+        masterEvents.forEach(evt => {
+            console.log(` - %c${evt}%c: Gerenciado por _handleDelegatedEvent`, "color: #28a745; font-weight: bold;", "color: #666;");
+        });
+
+        // 2. Identifica escutas globais
+        console.log("%cEscutas Globais (window):", "font-weight: bold; color: #007bff;");
+        console.log(" - %clanguageChanged%c: Gerenciado por _handleLanguageChange", "color: #28a745; font-weight: bold;", "color: #666;");
+
+        // 3. Verifica se o componente é 'searchable' (Busca ativa)
+        if (this.hasAttribute('searchable')) {
+            console.log("%cFluxos Customizados:", "font-weight: bold; color: #007bff;");
+            console.log(" - %cBusca Ativa%c: Dispara 'filtro-cidade-digitado' (min: 3 chars)", "color: #fd7e14; font-weight: bold;", "color: #666;");
+        }
+
+        console.groupEnd();
+    }
 }
 
 // 8. DEFINIÇÃO DO WEB COMPONENT

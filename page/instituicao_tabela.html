@@ -39,14 +39,15 @@
 
                <div class="field-group col-8">
                    <div class="field-col">
-                       <instituicao-field 
+                       <instituicao-field
+                                scope                  = "administracao"
                                 id                     = "nome"
                                 name                   = "nome"                                
                                 data_translate_label   = "lbl_nome"
                                 data_translate_ph      = "ph_nome"
                                 data_translate_tooltip = "tp_lbl_nome"
                                 icon_question          = "fa-solid fa-circle-question info-question"
-                                icon-edicao            = "fa-regular fa-pen-to-square"
+                                icon_edicao            = "fa-regular fa-pen-to-square"
                         >
                         </instituicao-field>
                    </div>
@@ -54,6 +55,7 @@
                <div class="field-group col-2">
                    <div class="field-col">
                        <hora-inicio-field
+                            scope                  = "administracao"
                             id                     = "horarioInicial"
                             name                   = "horarioInicial" 
                             data_translate_label   = "lbl_horario_inicial"
@@ -79,14 +81,15 @@
                             icon_question          = "fa-solid fa-circle-question info-question"
                             data_translate_tooltip = "tp_lbl_administracao"
                             placeholder            = "Selecione a adminstração"
-                            icon-edicao            = "fa-regular fa-pen-to-square"
+                            icon_edicao            = "fa-regular fa-pen-to-square"
                         >
                         </administracao-field>  
                    </div>
                </div>
                <div class="field-group col-2">
                    <div class="field-col">
-                       <hora-aula-field                        
+                       <hora-aula-field
+                            scope                  = "administracao"
                             id                     = "horaAula"
                             name                   = "horaAula" 
                             data_translate_label   = "lbl_hora_aula"
@@ -104,56 +107,48 @@
 
                <div class="field-group col-5">
                    <div class="field-col">
-                       <estado-field 
+                       <estado-select 
                             scope                  = "instituicao"
-                            label                  = "Estado (UF)" 
-                            data-translate_label   = "lbl_estado"
                             id                     = "estado"
                             name                   = "estado"
-                            data-translate_op      = "ph_estado_op0"                   
-                            icon-question          = "fa-solid fa-circle-question info-question"
-                            data-tooltip_balao     = "Em qual estado fica?"
-                            data-translate-tooltip = "tp_lbl_estado"
+                            emit-change            = "emit-change"
+                            data_translate_label   = "lbl_estado"
+                            data_translate_op      = "ph_estado_op0"                   
+                            icon_question          = "fa-solid fa-circle-question info-question"
+                            data_translate_tooltip = "tp_lbl_estado"
                             placeholder            = "Selecione o estado"
-                            icon-edicao            = "fa-regular fa-pen-to-square"
-                            required>
-                        </estado-field>
+                            icon_edicao            = "fa-regular fa-pen-to-square"
+                        >
+                        </estado-select>
                    </div>
                </div>
                <div class="field-group col-5">
                     <div class="field-col">
                        <cidade-field 
                             scope                  = "instituicao"
-                            label                  = "Cidade" 
-                            data-translate_label   = "lbl_cidade"
                             id                     = "cidade"
                             name                   = "cidade"                                
-                            icon-question          = "fa-solid fa-circle-question info-question"
-                            data-translate_ph      = "ph_cidade"
-                            data-tooltip_balao     = "Letras usadas para filtrar a lista de cidades"
-                            data-translate-tooltip = "tp_lbl_cidade"
-                            placeholder            = "Digite as 3 letras iniciais da cidade"
-                            icon-edicao            = "fa-regular fa-pen-to-square"
-                            required
+                            data_translate_label   = "lbl_cidade"
+                            data_translate_ph      = "ph_cidade"
+                            data_translate_tooltip = "tp_lbl_cidade"
+                            icon_question          = "fa-solid fa-circle-question info-question"
+                            
                         >
                         </cidade-field>
-                   <!-- </div> -->
-                   <!-- <div class="field-col"> -->
-                       <municipio-field 
+      
+                        <municipio-select 
                             style                   = "display: none;"
-                            scope                   = "instituicao"
-                            label                   = "Cidade" 
-                            data-translate_label    = "lbl_cidade"
+                            scope                   = "instituicao"                            
                             id                      = "municipio"         
                             name                    = "municipio"
-                            data-translate_op       = "ph_municipio_op0"                   
-                            icon-question           = "fa-solid fa-circle-question info-question"
-                            data-tooltip_balao      = "Em qual cidade?"
-                            data-translate-tooltip  = "tp_lbl_municipio"
-                            placeholder             = "Selecione a cidade"
+                            data_translate_label    = "lbl_cidade"
+                            data_translate_ph       = "ph_cidade"
+                            data_translate_op       = "ph_municipio_op0"                   
+                            data_translate-tooltip  = "tp_lbl_municipio"
+                            icon_question           = "fa-solid fa-circle-question info-question"
                             icon-edicao             = "fa-regular fa-pen-to-square"
-                            required>
-                        </municipio-field>
+                        >
+                        </municipio-select>
                    </div>
                    
                </div>

@@ -18,10 +18,6 @@ class Hora_Aula_Field extends Base_Field {
         }
     };
 
-    constructor() {
-        super();
-    }
-
     connectedCallback() {
         super.connectedCallback();        
     }
