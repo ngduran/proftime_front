@@ -1,0 +1,177 @@
+.container { 
+    width: 100% !important; 
+    max-width: 1100px !important; 
+}
+
+.input-group {
+    display: flex;   
+    align-items: flex-start;
+    position: relative;
+    margin-bottom: 15px;
+    width: 100%;
+    flex-direction: column;
+}
+
+.responsive-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.entry-grid {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr auto;
+    gap: 10px;
+    align-items: anchor-center;
+    justify-content: space-between;
+}
+
+.table-responsive-container {
+    width: 100%;
+    overflow-x: auto; /* Permite scroll horizontal */
+    margin-top: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+/* .horario-table {
+    width: 100%;
+    min-width: 700px; 
+    border-collapse: collapse;
+} */
+
+/* Garante que a tabela tenha um layout fixo para as colunas não "dançarem" */
+.horario-table {
+    table-layout: fixed; /* Força colunas de tamanhos iguais ou controlados */
+    width: 100%;
+}
+
+.horario-table th, .horario-table td {
+    padding: 12px;
+    border: 1px solid #f0f0f0;
+    text-align: center;
+}
+
+.horario-table th { 
+    background: #f8f9fa; 
+    color: var(--color-primary);
+}
+
+/* Largura da coluna de numeração (Aula) */
+.horario-table th:first-child, 
+.horario-table td:first-child {
+    width: 60px;
+}
+
+/* Ajuste das colunas de dias da semana */
+.horario-table th:not(:first-child), 
+.horario-table td:not(:first-child) {
+    width: 180px; /* Largura mínima confortável para o nome da turma */
+}
+
+/* Ajuste da Badge para lidar com nomes longos */
+.badge {
+    display: block; /* Muda para block para preencher a célula */
+    white-space: normal; /* Permite quebra de linha se for muito grande */
+    word-wrap: break-word;
+    text-align: center;
+    line-height: 1.2;
+    padding: 8px;
+    margin: 2px auto;
+    max-width: 100%;
+}
+
+/* .badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    white-space: nowrap; 
+} */
+
+.badge-blue { 
+    background: #d1e3ff; 
+    color: #1748af; 
+}
+
+.badge-orange { 
+    background: #ffe8d1; 
+    color: #af6b17; 
+}
+
+/* MEDIA QUERIES PARA CELULAR */
+@media (max-width: 768px) {
+    .responsive-grid, .entry-grid {
+        grid-template-columns: 1fr; /* Tudo vira uma única coluna */
+    }
+    
+    .cta-button.secundario { width: 100%; }
+    
+    .form-card { padding: 15px; }
+}
+
+.tooltip-container {
+    position: absolute;
+    background-color: #444;
+    color: #fff;
+    padding: 10px 15px;
+    /* Canto arredondado invertido para a ponta do balão */
+    border-radius: 12px 0px 12px 0px !important; 
+    font-size: 13px;
+    line-height: 1.4;
+    z-index: 1000;
+    width: max-content;
+    max-width: 180px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    
+    /* Posicionamento inicial acima do ícone */
+    bottom: 100%; 
+    right: 0;
+    margin-bottom: 10px;
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(10px);
+}
+
+/* Pequena seta para o balão */
+.tooltip-container::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 118px !important;
+    border-width: 8px;
+    border-style: solid;
+    border-color: #444 transparent transparent transparent;
+}
+
+.form-card {
+    background-color: var(--color-card-bg);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.header-title {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px; 
+}
+
+.input-group {
+        position: relative; 
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }

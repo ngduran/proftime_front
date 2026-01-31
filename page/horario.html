@@ -69,6 +69,184 @@
                </div>
         </div>
 
+        <div class="field-container">
+            <div class="field-group col-2">
+                <div class="field-col">
+                    <posicao-aula-field
+                        scope                  = "horario"
+                        id                     = "posicaoAula"
+                        name                   = "posicaoAula"                                
+                        data_translate_label   = "lbl_posicaoAula"                    
+                        data_translate_tooltip = "tp_lbl_posicaoAula"
+                        icon_question          = "fa-solid fa-circle-question info-question"
+                    >
+                    </posicao-aula-field>
+                </div>
+            </div>
+
+            <div class="field-group col-2">
+                <div class="field-col">
+                    <dia-semana-select
+                        scope                  = "horario"
+                        id                     = "diaSemana"
+                        name                   = "diaSemana" 
+                        data_translate_label   = "lbl_diaSemana"
+                        data_translate_ph      = "ph_diaSemana"
+                        data_translate_op      = "ph_diaSemana_op0" 
+                        data_translate_tooltip = "tp_lbl_diaSemana"                                
+                        icon_question          = "fa-solid fa-circle-question info-question"                                
+                    >
+                    </dia-semana-select>
+                </div>
+            </div>
+
+            <div class="field-group col-2">
+                <div class="field-col">
+                    <turma-select
+                        scope                  = "horario"
+                        id                     = "turma"
+                        name                   = "turma" 
+                        data_translate_label   = "lbl_turma"
+                        data_translate_ph      = "ph_turma"
+                        data_translate_op      = "ph_turma_op0" 
+                        data_translate_tooltip = "tp_lbl_turma"                                
+                        icon_question          = "fa-solid fa-circle-question info-question"                                
+                    >
+                    </turma-select>
+                </div>
+            </div>
+
+            <div class="field-group col-2">
+                <div class="field-col">
+                    <materia-select
+                        scope                  = "horario"
+                        id                     = "materia"
+                        name                   = "materia" 
+                        data_translate_label   = "lbl_materia"
+                        data_translate_ph      = "ph_materia"
+                        data_translate_op      = "ph_materia_op0" 
+                        data_translate_tooltip = "tp_lbl_materia"                                
+                        icon_question          = "fa-solid fa-circle-question info-question"                                
+                    >
+                    </materia-select>
+                </div>
+            </div>
+
+            <div class="field-group col-2">
+                <div class="field-col"></div>
+                <button type="button" id="adicionarBtn" class="cta-button btn-add">Adicionar</button>
+            </div>
+        </div>
+
+
+        <div class="field-container">
+
+            <div class="table-responsive-container">
+
+                <div class="item">Aula</div>
+
+                <div class="item">Segunda</div>
+
+                <div class="item">Terça</div>
+
+                <div class="item">Quarta</div>
+
+                <div class="item">Quinta</div>
+
+                <div class="item">Sexta</div>
+
+                <div class="item">Sábado</div>
+
+                <div class="item">Domingo</div>
+
+                <!-- 1 posição ---------------------------------->
+                <div class="item data">1º</div>
+                
+                <div class="item data">Teste</div>                
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <!----------------------------------------------->
+            
+                <!-- 2 posição ---------------------------------->
+                <div class="item data">2º</div>
+                
+                <div class="item data"></div>                
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <!----------------------------------------------->
+
+                <!-- 3 posição ---------------------------------->
+                <div class="item data">3º</div>
+                
+                <div class="item data"></div>                
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <!----------------------------------------------->
+
+                <!-- 4 posição ---------------------------------->
+                <div class="item data">4º</div>
+                
+                <div class="item data"></div>                
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <!----------------------------------------------->
+
+                <!-- 5 posição ---------------------------------->
+                <div class="item data">5º</div>
+                
+                <div class="item data"></div>                
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <!----------------------------------------------->
+
+                <!-- 6 posição ---------------------------------->
+                <div class="item data">6º</div>
+                
+                <div class="item data"></div>                
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <div class="item data"></div> 
+                <!----------------------------------------------->
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
         <div class="field-container">
             <div class="field-group col-5">
@@ -81,13 +259,15 @@
             </div>
         </div>
 
-
-
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script type="module" src="../script/components/form/horario_professor/Instituicao_Select.js"></script>
     <script type="module" src="../script/components/form/horario_professor/Turno_Select.js"></script>
+    <script type="module" src="../script/components/form/horario_professor/Posicao_Aula_Field.js"></script>
+    <script type="module" src="../script/components/form/horario_professor/Dia_Semana_Select.js"></script>
+    <script type="module" src="../script/components/form/horario_professor/Turma_Select.js"></script>
+    <script type="module" src="../script/components/form/horario_professor/Materia_Select.js"></script>
     <script type="module" src="../script/pages/horario.js"></script>
 </body>
 </html>
