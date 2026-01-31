@@ -6,6 +6,7 @@
     --color-text-dark: #2E2F33; /* Cinza Escuro (Textos) */
     --color-card-bg: #FFFFFF; /* Branco (Fundo do Card) */
     --color-input-bg: #FFFFFF; /* Branco (Fundo dos campos) */
+    --color-cell-aula: #8ec1f3; /* Célula da posição da aula */
 }
 
 /* Reset básico */
@@ -97,7 +98,7 @@ body {
 
 .col-2 {
     flex: 2 1 0; /* Cresce 2 vezes mais, pode encolher, base começa em 0 */
-    max-width: 8rem;
+    //max-width: 8rem; /* Nos menores dispositivos diminui o componente em relação aos outros */
 }
 
 .col-5 {
@@ -196,5 +197,22 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     .col-8, .col-2, .col-5 {
         flex: 1 1 100%; /* No mobile, ambos forçam 100% da largura */
     }
+
+    /* .col-2 {
+        max-width: 8rem;
+    } */
     
+}
+
+/* Ajustar o gap dos campos no mobile */
+@media screen and (max-width: 320px) {
+    .field-container {
+        gap: 0.5rem !important; /* Diminuir o espaço entre campos para não empurrar para fora */
+        padding: 5px;
+    }
+    
+    /* Garantir que o body não force uma largura maior que a tela */
+    body {
+        padding: 4px;
+    }
 }

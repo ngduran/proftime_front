@@ -1,0 +1,70 @@
+.form-container { 
+    width: 100% !important; 
+    max-width: 800px !important; 
+}
+
+
+/* ===================================================================================*/
+/* Grid de Horário */
+/* Container que segura todos os dias */
+.horario-grid-container {
+    display: flex;
+    flex-wrap: nowrap; /* No desktop mantém todos na mesma linha */
+    gap: 5px;
+    width: 100%;
+    overflow-x: auto; /* Permite scroll se a tela for média */
+}
+
+/* Cada bloco de dia */
+.dia-bloco {
+    display: grid;
+    /* Coluna Aula (estreita) e Coluna Conteúdo (larga) */
+    grid-template-columns: min-content 1fr; 
+    flex: 1 1 0; /* Faz todos os dias terem a mesma largura no desktop */
+    gap: 2px;
+}
+
+/* Itens individuais */
+.item {
+    padding: 0.5rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    background-color: #fff;
+}
+
+.item.header {
+    background-color: var(--color-primary);
+    color: var(--color-accent);
+    font-weight: bold;
+    border: none;
+}
+
+/* Coluna Aula (1º, 2º...) */
+.cell-aula {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    min-width: 50px; /* Largura mínima para o número da aula */
+}
+
+/* RESPONSIVIDADE (Mobile) */
+@media screen and (max-width: 720px) {
+    .horario-grid-container {
+        flex-direction: column; /* Empilha os blocos de dias */
+        gap: 20px; /* Espaço maior entre um dia e outro (Efeito Bloco) */
+    }
+
+    .dia-bloco {
+        border: 2px solid var(--color-primary);
+        border-radius: 8px;
+        padding: 8px;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+}
+
+/* ===================================================================================*/
