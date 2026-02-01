@@ -122,6 +122,14 @@
     cursor: grabbing;
 }
 
+/* Quando o item é selecionado (durante o delay) */
+.sortable-chosen {
+    background-color: var(--color-cell-aula) !important;
+    transform: scale(1.02); /* Dá uma leve aumentada para mostrar que "desgrudou" */
+    transition: transform 0.2s;
+    z-index: 10;
+}
+
 
 
 /* RESPONSIVIDADE (Mobile) */

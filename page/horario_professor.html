@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof Time - Grade de Horários Responsiva</title>
+    <link rel="stylesheet" href="../asset/style/base/base-form.css">
+    <link rel="stylesheet" href="../asset/style/horario.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+    <form id="horarioProfessorForm" class="form-container">
+
+        <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col">
+                    <h1 class="header-title" data-translate="lbl_titulo">Horário</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="field-container">
+            <div class="field-group col-0">
+                <div class="field-col posicao-end">
+                    <button type="button" id="btn-pt" class="lang-btn active">
+                            <img class="icon-flag" src="../asset/icon/bandeira-do-brasil.png" alt="Bandeira do Brasil">
+                        </button>                   
+                        <button type="button" id="btn-es" class="lang-btn">
+                            <img class="icon-flag" src="../asset/icon/paraguai.png" alt="Bandeira do Paraguai">
+                        </button> 
+                </div>
+            </div>
+        </div>
+
+
+        <div class="field-container">
+
+               <div class="field-group col-8">
+                   <div class="field-col">
+                       <instituicao-select
+                            scope                  = "horario" 
+                            id                     = "instituicao"
+                            name                   = "instituicao"                                
+                            data_translate_label   = "lbl_instituicao"
+                            data_translate_ph      = "ph_instituicao"
+                            data_translate_op      = "ph_instituicao_op0" 
+                            data_translate_tooltip = "tp_lbl_instituicao"
+                            icon_question          = "fa-solid fa-circle-question info-question"
+                        >
+                        </instituicao-select>
+                   </div>
+               </div>
+               <div class="field-group col-2">
+                   <div class="field-col">
+                       <turno-select
+                            scope                  = "horario"
+                            id                     = "turno"
+                            name                   = "turno" 
+                            data_translate_label   = "lbl_turno"
+                            data_translate_ph      = "ph_turno"
+                            data_translate_op      = "ph_turno_op0" 
+                            data_translate_tooltip = "tp_lbl_turno"                                
+                            icon_question          = "fa-solid fa-circle-question info-question"                                
+                        >
+                        </turno-select>
+                   </div>
+               </div>
+        </div>
+
+        <div class="field-container">
+            <div class="field-group col-2">
+                <div class="field-col">
+                    <posicao-aula-field
+                        scope                  = "horario"
+                        id                     = "posicaoAula"
+                        name                   = "posicaoAula"                                
+                        data_translate_label   = "lbl_posicaoAula"                    
+                        data_translate_tooltip = "tp_lbl_posicaoAula"
+                        icon_question          = "fa-solid fa-circle-question info-question"
+                    >
+                    </posicao-aula-field>
+                </div>
+            </div>
+
+            <div class="field-group col-2">
+                <div class="field-col">
+                    <dia-semana-select
+                        scope                  = "horario"
+                        id                     = "diaSemana"
+                        name                   = "diaSemana" 
+                        data_translate_label   = "lbl_diaSemana"
+                        data_translate_ph      = "ph_diaSemana"
+                        data_translate_op      = "ph_diaSemana_op0" 
+                        data_translate_tooltip = "tp_lbl_diaSemana"                                
+                        icon_question          = "fa-solid fa-circle-question info-question"                                
+                    >
+                    </dia-semana-select>
+                </div>
+            </div>
+
+            <div class="field-group col-2">
+                <div class="field-col">
+                    <turma-select
+                        scope                  = "horario"
+                        id                     = "turma"
+                        name                   = "turma" 
+                        data_translate_label   = "lbl_turma"
+                        data_translate_ph      = "ph_turma"
+                        data_translate_op      = "ph_turma_op0" 
+                        data_translate_tooltip = "tp_lbl_turma"                                
+                        icon_question          = "fa-solid fa-circle-question info-question"                                
+                    >
+                    </turma-select>
+                </div>
+            </div>
+
+            <div class="field-group col-2">
+                <div class="field-col">
+                    <materia-select
+                        scope                  = "horario"
+                        id                     = "materia"
+                        name                   = "materia" 
+                        data_translate_label   = "lbl_materia"
+                        data_translate_ph      = "ph_materia"
+                        data_translate_op      = "ph_materia_op0" 
+                        data_translate_tooltip = "tp_lbl_materia"                                
+                        icon_question          = "fa-solid fa-circle-question info-question"                                
+                    >
+                    </materia-select>
+                </div>
+            </div>
+
+            <div class="field-group col-2">
+                <div class="field-col"></div>
+                <button type="button" id="adicionarBtn" class="cta-button btn-add">Adicionar</button>
+            </div>
+        </div>
+
+
+        <div class="field-container">
+            <grade-horario-professor>
+                
+            </grade-horario-professor>
+        
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="field-container">
+            <div class="field-group col-5">
+                <div class="field-col"></div>
+                <button type="button" id="voltarBtn"    class="cta-button" data-translate="lbl_voltarBtn">Voltar</button>
+            </div>   
+            <div class="field-group col-5">
+                <div class="field-col"></div>
+                <button type="button" id="cadastrarBtn" class="cta-button" data-translate="lbl_cadastrarBtn">Salvar</button>
+            </div>
+        </div>
+
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script type="module" src="../script/components/form/horario_professor/Instituicao_Select.js"></script>
+    <script type="module" src="../script/components/form/horario_professor/Turno_Select.js"></script>
+    <script type="module" src="../script/components/form/horario_professor/Posicao_Aula_Field.js"></script>
+    <script type="module" src="../script/components/form/horario_professor/Dia_Semana_Select.js"></script>
+    <script type="module" src="../script/components/form/horario_professor/Turma_Select.js"></script>
+    <script type="module" src="../script/components/form/horario_professor/Materia_Select.js"></script>
+    <script type="module" src="../script/components/form/horario_professor/Grade_Horario_Professor.js"></script>
+    
+    <script type="module" src="../script/pages/horario.js"></script>
+</body>
+</html>
