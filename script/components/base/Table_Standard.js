@@ -17,6 +17,7 @@ export class Table_Standard extends HTMLElement {
 
     connectedCallback() {
         this.render();
+        this.initSortable(); // Ativa o SortableJS após renderizar o HTML
     }
 
     render() {
@@ -49,6 +50,39 @@ export class Table_Standard extends HTMLElement {
                 ${htmlGeral}
             </div>
         `;
+    }
+
+    initSortable() {
+   
+        const blocosDias = this.shadowRoot.querySelectorAll('.dia-bloco');
+
+        blocosDias.forEach(bloco => {
+            new Sortable(bloco, {
+                group: 'horario-escolar',
+                animation: 150,
+                swap: true, // Ativa a troca de lugar entre duas células
+                
+                // --- AJUSTE PARA MOBILE (DELAY) ---
+                delay: 300,        // Tempo em milissegundos (0.3s) pressionado para começar a arrastar
+                delayOnTouchOnly: true, // O delay só será aplicado no celular/touch
+                touchStartThreshold: 5, // Quantos pixels o dedo pode "tremer" antes de cancelar o delay
+
+
+                // REGRA DE OURO 1: Só permite arrastar o que for 'celula-materia'
+                draggable: '.cell-materia', 
+
+                // REGRA DE OURO 2: Ignora cliques em qualquer outra classe
+                filter: 'item-header, .cell-aula',
+                preventOnFilter: true,
+
+                // REGRA DE OURO 3: Só permite soltar se o alvo for 'celula-materia'
+                onMove: function (evt) {
+                    // evt.related é o elemento de destino
+                    return evt.related.classList.contains('cell-materia');
+                }
+            });
+        });
+        
     }
 
 }
