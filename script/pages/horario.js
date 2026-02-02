@@ -117,3 +117,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const grade = document.querySelector('grade-horario-professor');
+    const btnLimpar = document.getElementById('limparBtn');
+
+    if (btnLimpar) {
+        btnLimpar.addEventListener('click', () => {
+            // Chamada direta para o método que criamos dentro do componente
+            grade.limparGrade();
+        });
+    }
+});

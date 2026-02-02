@@ -139,12 +139,21 @@
         </div>
 
         <!-- O rotulo pode ser individual ou fixo. Coluna que aparece como primeira coluna ou separando as outras -->
+        <!-- O rotulo indica se quer uma coluna para cada coluna principal do dia -->
+        <!-- rotulo = individual - uma coluna adicional para cada coluna do dia -->
+        <!-- rotulo = fixo - uma coluna na esquerda somente -->
+        <!-- rotulo-cabecalho - label da coluna fixa ou individual -->
+        <!-- linhas - número de linhas -->
+        <!-- colunas - número de colunas -->
+        <!-- cuidar do número de colunas para não quebrar layout com colunas-nomes -->
+        <!-- colunas-nomes - nomes das colunas principais - bater com número de colunas -->
+        <!-- linhas-nomes - nomes dos labels das linhas que ficam fixo ou individual, mesmos nomes para fixo ou individual -->
         <div class="field-container">
             <grade-horario-professor
-                rotulo = "fixo"
-                linhas  = 6
-                colunas = 7
-                colunas-nomes="Segunda, Terça, Quarta, Quinta, Sexta, Sábado, Domingo"
+                rotulo="individual"
+                rotulo-cabecalho="Aula" 
+                colunas-nomes="Seg, Ter, Qua"
+                linhas-nomes="07:10, 08:00, 08:50, 09:55, 10:45, 11:35"
             >
             </grade-horario-professor>
         

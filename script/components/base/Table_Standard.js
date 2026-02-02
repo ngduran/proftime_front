@@ -14,36 +14,92 @@ export class Table_Standard extends HTMLElement {
         this.shadowRoot.adoptedStyleSheets = [table_standard_style];
 
         // Valores padrão caso não sejam passados no HTML
-        this._linhas = 6;
-        this._colunas = 7;
-        this._nomesDias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
-        this._rotulo = 'individual'; // Padrão atual 
+        //this._linhas = 6;
+        //this._colunas = 0;
+        //this._nomesDias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+        //this.nomesDias = [];
+        //this._rotulo = 'individual'; // Padrão atual 
+        //this._rotuloCabecalho = 'Aula';
+        //this._nomesLinhas = ['1º', '2º', '3º', '4º', '5º', '6º'];
+        //this._nomesLinhas = [];
+
+
+        // Inicialização de estados internos (Private-like)
+        this._linhas = 0;
+        this._colunas = 0;
+        this._nomesDias = [];
+        this._nomesLinhas = [];
+        this._rotulo = 'individual'; 
+        this._rotuloCabecalho = 'Aula';
+
         
     }
 
-    // Monitora os atributos definidos no HTML
-    static get observedAttributes() {        
-        return ['linhas', 'colunas', 'colunas-nomes', 'rotulo'];
+    /**
+     * Lista de atributos do HTML que o componente observa.
+     */
+    static get observedAttributes() {
+        return ['linhas', 'colunas', 'colunas-nomes', 'rotulo', 'linhas-nomes', 'rotulo-cabecalho'];
     }
 
 
     connectedCallback() {
-        this.render();
-        this.initSortable(); // Ativa o SortableJS após renderizar o HTML
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue === newValue) return;
-
-        if (name === 'rotulo') {
-            this._rotulo = newValue;
-        } else if (name === 'colunas-nomes') {
-            this._nomesDias = newValue.split(',').map(n => n.trim());
-        } else {
-            this[`_${name}`] = parseInt(newValue) || this[`_${name}`];
+        // Garantia de idioma conforme requisito do sistema [cite: 2026-01-27]
+        if (!sessionStorage.getItem('official_language')) {
+            sessionStorage.setItem('official_language', 'pr');
         }
         this.render();
         this.initSortable();
+    }
+
+    /**
+     * Sincroniza os atributos do HTML com as propriedades internas.
+     * Implementa a inteligência de contar itens em strings separadas por vírgula.
+     */
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (oldValue === newValue) return;
+
+        switch (name) {
+            case 'colunas-nomes':
+                // Converte string em array e define automaticamente o número de colunas
+                this._nomesDias = newValue.split(',').map(n => n.trim());
+                this._colunas = this._nomesDias.length; 
+                break;
+
+            case 'linhas-nomes':
+                // Converte string em array e define automaticamente o número de linhas
+                this._nomesLinhas = newValue.split(',').map(n => n.trim());
+                this._linhas = this._nomesLinhas.length;
+                break;
+
+            case 'linhas':
+                // Só define via número se o array de nomes ainda estiver vazio
+                if (this._nomesLinhas.length === 0) {
+                    this._linhas = parseInt(newValue) || 0;
+                }
+                break;
+
+            case 'colunas':
+                // Só define via número se o array de nomes ainda estiver vazio
+                if (this._nomesDias.length === 0) {
+                    this._colunas = parseInt(newValue) || 0;
+                }
+                break;
+
+            case 'rotulo':
+                this._rotulo = newValue;
+                break;
+
+            case 'rotulo-cabecalho':
+                this._rotuloCabecalho = newValue;
+                break;
+        }
+
+        // Renderiza novamente apenas se o componente já estiver na tela
+        if (this.isConnected) {
+            this.render();
+            this.initSortable();
+        }
     }
 
 
@@ -134,33 +190,76 @@ export class Table_Standard extends HTMLElement {
     //     `;
     // }
 
+    // render() {
+    //     let htmlFinal = '';
+    //     const ehFixo = this._rotulo === 'fixo';
+
+    //     // 1. COLUNA FIXA (Aparece apenas uma vez à esquerda)
+    //     if (ehFixo) {
+    //         htmlFinal += `
+    //             <div class="dia-bloco coluna-fixa-aula">
+    //                 <div class="item-header">${this._rotuloCabecalho}</div>
+    //                 ${Array.from({ length: this._linhas }).map((_, idx) => `
+    //                     <div class="item-data cell-aula">${this._nomesLinhas[idx] || (idx + 1) + 'º'}</div>
+    //                 `).join('')}
+    //             </div>
+    //         `;
+    //     }
+
+    //     // 2. BLOCOS DOS DIAS
+    //     for (let i = 0; i < this._colunas; i++) {
+    //         const nomeDia = this._nomesDias[i] || `Dia ${i + 1}`;
+            
+    //         htmlFinal += `
+    //             <div class="dia-bloco">
+    //                 ${!ehFixo ? `<div class="item-header">${this._rotuloCabecalho}</div>` : ''}
+    //                 <div class="item-header">${nomeDia}</div>
+                    
+    //                 ${Array.from({ length: this._linhas }).map((_, idx) => `
+    //                     ${!ehFixo ? `<div class="item-data cell-aula">${this._nomesLinhas[idx] || (idx + 1) + 'º'}</div>` : ''}
+    //                     <div class="item-data cell-materia"></div>
+    //                 `).join('')}
+    //             </div>
+    //         `;
+    //     }
+
+    //     this.shadowRoot.innerHTML = `
+    //         <div class="horario-grid-container">
+    //             ${htmlFinal}
+    //         </div>
+    //     `;
+    // }
+
+    /**
+     * Renderiza a estrutura da grade baseada nos atributos processados.
+     */
     render() {
         let htmlFinal = '';
         const ehFixo = this._rotulo === 'fixo';
 
-        // 1. COLUNA FIXA (Aparece apenas uma vez à esquerda)
+        // Geração da Coluna de Horários (Aula) quando em modo FIXO
         if (ehFixo) {
             htmlFinal += `
                 <div class="dia-bloco coluna-fixa-aula">
-                    <div class="item-header">Aula</div>
+                    <div class="item-header">${this._rotuloCabecalho}</div>
                     ${Array.from({ length: this._linhas }).map((_, idx) => `
-                        <div class="item-data cell-aula">${idx + 1}º</div>
+                        <div class="item-data cell-aula">${this._nomesLinhas[idx] || (idx + 1) + 'º'}</div>
                     `).join('')}
                 </div>
             `;
         }
 
-        // 2. BLOCOS DOS DIAS
+        // Geração das colunas de Dias/Matérias
         for (let i = 0; i < this._colunas; i++) {
             const nomeDia = this._nomesDias[i] || `Dia ${i + 1}`;
             
             htmlFinal += `
                 <div class="dia-bloco">
-                    ${!ehFixo ? '<div class="item-header">Aula</div>' : ''}
+                    ${!ehFixo ? `<div class="item-header">${this._rotuloCabecalho}</div>` : ''}
                     <div class="item-header">${nomeDia}</div>
                     
                     ${Array.from({ length: this._linhas }).map((_, idx) => `
-                        ${!ehFixo ? `<div class="item-data cell-aula">${idx + 1}º</div>` : ''}
+                        ${!ehFixo ? `<div class="item-data cell-aula">${this._nomesLinhas[idx] || (idx + 1) + 'º'}</div>` : ''}
                         <div class="item-data cell-materia"></div>
                     `).join('')}
                 </div>
@@ -173,6 +272,9 @@ export class Table_Standard extends HTMLElement {
             </div>
         `;
     }
+
+
+
 
 
     initSortable() {
@@ -207,6 +309,24 @@ export class Table_Standard extends HTMLElement {
             });
         });
         
+    }
+
+
+    /**
+     * Limpa o conteúdo de todas as células de matéria da grade.
+     * Pode ser chamado externamente via: documento.querySelector('grade-horario-professor').limparGrade();
+     */
+    limparGrade() {
+        // Busca todas as células que contêm matérias dentro do Shadow DOM
+        const celulasMateria = this.shadowRoot.querySelectorAll('.cell-materia');
+        
+        celulasMateria.forEach(celula => {
+            celula.textContent = ''; // Remove o texto da matéria
+            // Se você usar algum atributo de dados ou ID de matéria, limpe-o aqui também:
+            // celula.removeAttribute('data-id-materia');
+        });
+
+        console.log("Grade de horários limpa com sucesso.");
     }
 
 }
