@@ -31,17 +31,46 @@ table_standard_style.replaceSync(`
     }
 
     /* Cada bloco de dia */
+    // .dia-bloco {
+    //     display: grid;
+    //     grid-template-columns: min-content 1fr; 
+        
+    //     /* O segredo: define que cada bloco deve ocupar pelo menos 30% da largura 
+    //     Isso força o scroll a aparecer após o 3º bloco ficar visível */
+    //     flex: 0 0 300px; 
+        
+    //     gap: 2px;
+    //     min-width: 250px; /* Largura mínima de segurança */
+    // }
+
+    /* No seu Table_Standard_Styles.js */
     .dia-bloco {
         display: grid;
         grid-template-columns: min-content 1fr; 
-        
-        /* O segredo: define que cada bloco deve ocupar pelo menos 30% da largura 
-        Isso força o scroll a aparecer após o 3º bloco ficar visível */
-        flex: 0 0 300px; 
-        
+        flex: 0 0 300px; /* Mantém cada dia com 300px de largura */
+        min-width: 280px;
         gap: 2px;
-        min-width: 250px; /* Largura mínima de segurança */
+        align-content: start; /* Garante que os itens comecem no topo */
     }
+
+    /* MODO INDIVIDUAL (image_fc4857.png) */
+    /* Se o bloco contém a célula de aula, divide em duas colunas */
+    .dia-bloco:has(.cell-aula) {
+        grid-template-columns: min-content 1fr;
+    }
+
+    /* MODO FIXO (image_fc4933.png) */
+    /* Se o bloco NÃO contém a célula de aula, a matéria ocupa tudo */
+    .dia-bloco:not(:has(.cell-aula)) {
+        grid-template-columns: 1fr;
+    }
+
+    /* Estilo para a coluna fixa de aula (modo fixo) */
+    .coluna-fixa-aula {
+        flex: 0 0 60px !important; /* Bem estreita, apenas para os números */
+        min-width: 60px !important;
+    }
+
 
     /* Ajuste fino para o scrollbar ficar mais elegante (opcional) */
     .horario-grid-container::-webkit-scrollbar {
@@ -79,7 +108,9 @@ table_standard_style.replaceSync(`
         border: none;
     } */
 
+  
     .item-header {
+        width: 100%;
         padding: 0.5rem;
         height: 3rem;
         display: flex;
@@ -93,6 +124,7 @@ table_standard_style.replaceSync(`
         color: var(--color-accent);
         font-weight: bold;
         border: none;
+        grid-column: span 1; 
     }
 
     .item-data {
@@ -107,6 +139,11 @@ table_standard_style.replaceSync(`
         background-color: #fff;
     }
 
+    .coluna-fixa-aula {
+        flex: 0 0 60px !important;
+        min-width: 60px !important;
+        grid-template-columns: 1fr !important; /* Coluna fixa é sempre simples */
+    }
 
     /* Coluna Aula (1º, 2º...) */
     .cell-aula {
