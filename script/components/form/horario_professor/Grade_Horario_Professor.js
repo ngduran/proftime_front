@@ -39,6 +39,7 @@ export class Grade_Horario_Professor extends Table_Standard {
             console.log(`%c RENDER %c Iniciando pintura de ${listaAulas.length} aulas.`, "background: #1748AF; color: white; font-weight: bold;", "");
 
             listaAulas.forEach((aula, index) => {
+                const instituicao = aula.instituicao?.texto;
                 const dia = aula.diaSemana?.valor;
                 const posicao = aula.posicaoAula?.valor;
                 const materia = aula.materia?.texto;
@@ -65,9 +66,11 @@ export class Grade_Horario_Professor extends Table_Standard {
                     
                     // 3. Criamos o elemento visual da aula
                     celula.innerHTML = `
-                        <div class="aula-preenchida" style="background: #e1f5fe; border-left: 4px solid #1748AF; padding: 5px; height: 100%;">
-                            <div style="font-weight: bold; font-size: 0.85em; color: #1748AF;">${materia}</div>
-                            <div style="font-size: 0.75em; color: #555;">${aula.turma.texto}</div>
+                        
+                        <div class="aula-preenchida" ">
+                            <div class="instituicao-nome">${instituicao}</div>
+                            <div class="materia-nome">${materia}</div>
+                            <div class="turma-nome">${aula.turma.texto}</div>
                         </div>
                     `;
                     celula.classList.add('ocupada');

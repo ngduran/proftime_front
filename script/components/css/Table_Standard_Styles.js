@@ -27,7 +27,9 @@ table_standard_style.replaceSync(`
         padding-bottom: 15px; /* Espaço para a barra de scroll não cobrir o conteúdo */
         
         /* Garante um deslize suave em dispositivos touch */
-        -webkit-overflow-scrolling: touch; 
+        -webkit-overflow-scrolling: touch;
+
+        align-items: stretch; /* Força todas as colunas (dia-bloco) a terem a mesma altura total */
     }
 
     /* No seu Table_Standard_Styles.js */
@@ -86,13 +88,17 @@ table_standard_style.replaceSync(`
 
     .item-data {
         padding: 0.5rem;
-        height: 3rem;
+        height: 100%;
+        min-height: 2.5rem;
         display: flex;
         align-items: center;
         justify-content: center;
         border: 1px solid var(--color-border);
         border-radius: 4px;
         font-size: 0.85rem;
+        background-color: #fff;
+        margin-bottom: -1px;      /* Colapsa as bordas */
+        box-sizing: border-box;
         background-color: #fff;
     }
 
@@ -104,9 +110,10 @@ table_standard_style.replaceSync(`
 
     /* Coluna Key (1º, 2º...) */
     .cell-key {
-        background-color: var(--color-cell-key);
+        background-color: var(--color-cell-key);       
         font-weight: bold;
         min-width: 50px; /* Largura mínima para o número da key */
+        color: #504f4f;
     }
 
     /* Estilo do item enquanto ele é arrastado */
@@ -133,7 +140,57 @@ table_standard_style.replaceSync(`
         z-index: 10;
     }
 
+    /*============== Adicionado para não quebrar a celula em celulares ===*/
+    
+    /* Garante que a célula cresça com o conteúdo e o fundo acompanhe */
+    .item-data.cell-value {
+        height: auto;             /* Permite expandir verticalmente */
+        min-height: 3.5rem;       /* Mantém uma altura mínima estética */
+        display: flex;
+        flex-direction: column;
+        padding: 0;               /* Remove padding para o fundo interno encostar nas bordas */
+        overflow: hidden;
+    }
 
+    /* Estilização dos textos internos */
+    .aula-preenchida {
+        background: #e1f5fe;
+        border-left: 4px solid var(--color-primary, #1748AF);
+        padding: 6px;
+        height: 100%;             /* Ocupa toda a altura da célula */
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;  /* Centraliza o conteúdo verticalmente */
+        word-break: break-word;   /* Força quebra de palavras longas no mobile */
+    }
+    
+    .materia-nome { 
+        font-weight: bold; 
+        font-size: 0.85em; 
+        color: #1748AF; 
+        line-height: 1.2; 
+    }
+       
+    .turma-nome { 
+        font-size: 0.95em; 
+        color: #7813b3; 
+        margin-top: 2px; 
+    }
+    
+    .instituicao-nome { 
+        font-size: 1.0em; 
+        color: #176617; 
+        text-transform: uppercase; 
+        margin-top: 0px;
+        ///border-top: 1px dotted #ccc;
+        padding-top: 0px;
+    }
+
+
+
+    /*====================================================================*/
 
     /* RESPONSIVIDADE (Mobile) */
     @media screen and (max-width: 720px) {

@@ -6,7 +6,7 @@
     --color-text-dark: #2E2F33; /* Cinza Escuro (Textos) */
     --color-card-bg: #FFFFFF; /* Branco (Fundo do Card) */
     --color-input-bg: #FFFFFF; /* Branco (Fundo dos campos) */
-    --color-cell-aula: #8ec1f3; /* Célula da posição da aula */
+    --color-cell-key: #8ec1f3; /* Célula da posição da aula */
 }
 
 /* Reset básico */
