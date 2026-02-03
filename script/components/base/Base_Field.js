@@ -345,8 +345,7 @@ export class Base_Field extends HTMLElement {
         };
     }
     
-    inspectEvents() {
-        console.group(`%c[EVENT-INSPECTOR] %c${this.tagName}`, "color: #ffc107; font-weight: bold;", "color: #666;");
+    inspectEvents() {        
         
         // 1. Identifica os eventos delegados no ShadowRoot
         const masterEvents = ['input', 'blur', 'change']; // Os que você definiu no connectedCallback

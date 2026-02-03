@@ -30,19 +30,6 @@ table_standard_style.replaceSync(`
         -webkit-overflow-scrolling: touch; 
     }
 
-    /* Cada bloco de dia */
-    // .dia-bloco {
-    //     display: grid;
-    //     grid-template-columns: min-content 1fr; 
-        
-    //     /* O segredo: define que cada bloco deve ocupar pelo menos 30% da largura 
-    //     Isso força o scroll a aparecer após o 3º bloco ficar visível */
-    //     flex: 0 0 300px; 
-        
-    //     gap: 2px;
-    //     min-width: 250px; /* Largura mínima de segurança */
-    // }
-
     /* No seu Table_Standard_Styles.js */
     .dia-bloco {
         display: grid;
@@ -54,23 +41,16 @@ table_standard_style.replaceSync(`
     }
 
     /* MODO INDIVIDUAL (image_fc4857.png) */
-    /* Se o bloco contém a célula de aula, divide em duas colunas */
-    .dia-bloco:has(.cell-aula) {
+    /* Se o bloco contém a célula de key, divide em duas colunas */
+    .dia-bloco:has(.cell-key) {
         grid-template-columns: min-content 1fr;
     }
 
     /* MODO FIXO (image_fc4933.png) */
-    /* Se o bloco NÃO contém a célula de aula, a matéria ocupa tudo */
-    .dia-bloco:not(:has(.cell-aula)) {
+    /* Se o bloco NÃO contém a célula de key, a matéria ocupa tudo */
+    .dia-bloco:not(:has(.cell-key)) {
         grid-template-columns: 1fr;
     }
-
-    /* Estilo para a coluna fixa de aula (modo fixo) */
-    .coluna-fixa-aula {
-        flex: 0 0 60px !important; /* Bem estreita, apenas para os números */
-        min-width: 60px !important;
-    }
-
 
     /* Ajuste fino para o scrollbar ficar mais elegante (opcional) */
     .horario-grid-container::-webkit-scrollbar {
@@ -85,30 +65,7 @@ table_standard_style.replaceSync(`
     .horario-grid-container::-webkit-scrollbar-track {
         background: #e0e0e0;
     }
-
-    /* Itens individuais */
-    /* .item {
-        padding: 0.5rem;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid var(--color-border);
-        border-radius: 4px;
-        font-size: 0.85rem;
-        background-color: #fff;
-    }
-
-
-
-    .item.header {
-        background-color: var(--color-primary);
-        color: var(--color-accent);
-        font-weight: bold;
-        border: none;
-    } */
-
-  
+    
     .item-header {
         width: 100%;
         padding: 0.5rem;
@@ -139,17 +96,17 @@ table_standard_style.replaceSync(`
         background-color: #fff;
     }
 
-    .coluna-fixa-aula {
+    .coluna-fixa {
         flex: 0 0 60px !important;
         min-width: 60px !important;
         grid-template-columns: 1fr !important; /* Coluna fixa é sempre simples */
     }
 
-    /* Coluna Aula (1º, 2º...) */
-    .cell-aula {
-        background-color: var(--color-cell-aula);
+    /* Coluna Key (1º, 2º...) */
+    .cell-key {
+        background-color: var(--color-cell-key);
         font-weight: bold;
-        min-width: 50px; /* Largura mínima para o número da aula */
+        min-width: 50px; /* Largura mínima para o número da key */
     }
 
     /* Estilo do item enquanto ele é arrastado */
@@ -160,17 +117,17 @@ table_standard_style.replaceSync(`
     }
 
     /* Indica que o item pode ser pego (opcional) */
-    .item-data:not(.cell-aula) {
+    .item-data:not(.cell-key) {
         cursor: grab;
     }
 
-    .item-data:not(.cell-aula):active {
+    .item-data:not(.cell-key):active {
         cursor: grabbing;
     }
 
     /* Quando o item é selecionado (durante o delay) */
     .sortable-chosen {
-        background-color: var(--color-cell-aula) !important;
+        background-color: var(--color-cell-key) !important;
         transform: scale(1.02); /* Dá uma leve aumentada para mostrar que "desgrudou" */
         transition: transform 0.2s;
         z-index: 10;

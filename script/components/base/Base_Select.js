@@ -101,6 +101,12 @@ export class Base_Select extends Base_Field {
         return this.control?.value || '';
     }
 
+    get textoSelecionado() {
+        const select = this.shadowRoot.querySelector('select');
+        // Captura o texto da opção que está selecionada no momento
+        return select.options[select.selectedIndex].text;
+    }
+
     // 4. EVENTOS E COMPORTAMENTO DE INTERFACE
     setupEventListeners() {
        

@@ -134,7 +134,7 @@
 
             <div class="field-group col-2">
                 <div class="field-col"></div>
-                <button type="button" id="adicionarBtn" class="cta-button btn-add">Adicionar</button>
+                <button type="button" id="adicionarBtn" name="adicionarBtn" class="cta-button btn-add">Adicionar</button>
             </div>
         </div>
 
@@ -150,6 +150,8 @@
         <!-- linhas-nomes - nomes dos labels das linhas que ficam fixo ou individual, mesmos nomes para fixo ou individual -->
         <div class="field-container">
             <grade-horario-professor
+                data-storage-name="grade_professor" 
+                data-uid-fields="dia, posicao"
                 rotulo="individual"
                 rotulo-cabecalho="Aula" 
                 colunas-nomes="Seg, Ter, Qua"
@@ -162,7 +164,7 @@
         <div class="field-container">
             <div class="field-group col-5">
                 <div class="field-col"></div>
-                <button type="button" id="voltarBtn"    class="cta-button" data-translate="lbl_voltarBtn">Voltar</button>
+                <button type="button" id="voltarBtn"  class="cta-button" data-translate="lbl_voltarBtn">Voltar</button>
             </div>   
             <div class="field-group col-5">
                 <div class="field-col"></div>

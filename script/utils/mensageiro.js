@@ -64,4 +64,24 @@ export const Mensagem = {
             return confirm(texto); // Fallback caso o Swal falhe
         }
     },
+
+
+    async confirmarAdicionar(texto) {
+        if (typeof Swal !== 'undefined') {
+            const resultado = await window.Swal.fire({
+                icon: 'question',
+                title: 'Adicionar aula?',
+                text: texto,
+                showCancelButton: true,
+                confirmButtonText: 'Sim',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#1748AF', // Seu Azul Primário
+                cancelButtonColor: '#BCBDC1'  // Seu Cinza de Borda
+            });
+            
+            return resultado.isConfirmed; // Retorna true se clicou em Sim
+        } else {
+            return confirm(texto); // Fallback caso o Swal falhe
+        }
+    },
 };
