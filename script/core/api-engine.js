@@ -19,10 +19,12 @@ export async function executarOperacao({
     dados,      // Dados para enviar (null para GET)
     mensagemSucesso,
     onSuccess,         // Callback opcional para ações específicas após sucesso
-    validacao = null   // Função de validação opcional
+    validacao = null,   // Função de validação opcional
+    sessionKey = null // <--- NOVO: Parâmetro para a chave do SessionManager
 }) {
     // 1. Executa validação se existir
-    if (validacao && !( await validacao() ) ) return;
+    //if (validacao && !( await validacao() ) ) return;
+    if (validacao && (await validacao()) === false) return;
 
     try {
         //bloquearButton(idBotao, textoAguarde);
@@ -37,15 +39,18 @@ export async function executarOperacao({
         // 3. Processamento da resposta (Lógica unificada que você já usa)
         const resultado = response.ok 
             ? await lerRespostaSucesso(response) 
-            : await lerRespostaErro(response);                   
+            : await lerRespostaErro(response);    
 
         if (response.ok) {
             // Persistência de ID/UUID se retornar
-            const idParaSalvar = resultado?.uuid || resultado?.id;
-            if (idParaSalvar) { 
-                SessionManager.salvar("instituicao_id", idParaSalvar); 
+            // Só salva no SessionManager se uma sessionKey foi fornecida
+            if (sessionKey) {
+                const idParaSalvar = resultado?.uuid || resultado?.id;
+                if (idParaSalvar) { 
+                    SessionManager.salvar(sessionKey, idParaSalvar); 
+                }
             }
-
+           
             if (mensagemSucesso) await Mensagem.sucesso(mensagemSucesso);
             
             // 4. Ação específica de cada tela (Popular ou Navegar)

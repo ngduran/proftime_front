@@ -104,13 +104,9 @@ class Senha_Field extends Base_Field {
         const valor = this.value;
 
         // 1. Validação de Obrigatoriedade (Se sair sem digitar nada)
-        if (!valor) {
-            if (this.hasAttribute('required')) {
-                this.marcarErro(dict.erro_1);
-                return false;
-            }
-            this.limparEstado();
-            return true;
+        if (!valor) {            
+            this.marcarErro(dict.erro_1);
+            return false;           
         }
 
         // 2. Validação de Complexidade (Apenas se for o campo 'senha')

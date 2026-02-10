@@ -72,13 +72,9 @@ class Telefone_Field extends Base_Field {
         const valorLimpo = valor.replace(/\D/g, "");
 
         // REGRA 1: Vazio / Obrigatório
-        if (!valorLimpo) {
-            if (this.hasAttribute('required')) {
-                this.marcarErro(dict.erro);
-                return false;
-            }
-            this.limparEstado();
-            return true;
+        if (!valorLimpo) {            
+            this.marcarErro(dict.erro);
+            return false;            
         }
 
         // REGRA 2: Tamanho Mínimo (DDD + 8 ou 9 dígitos)

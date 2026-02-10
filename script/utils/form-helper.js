@@ -101,10 +101,27 @@ export function aplicarMascaraTelefone(valor) {
  * Redireciona para uma página específica dentro da pasta /page/
  * @param {string} nomePagina - O nome do arquivo (ex: 'login', 'home', 'index')
  */
-export function navegarPara(nomePagina) {    
+// export function navegarPara(nomePagina) {    
+//     const pagina = nomePagina.replace('.html', '');  
+//     // window.location.href = `../page/${pagina}.html`;
+//     window.location.href = `${pagina}.html`;
+// }
+
+
+export function navegarPara(nomePagina, resetarShell = false) {    
     const pagina = nomePagina.replace('.html', '');  
-    window.location.href = `../page/${pagina}.html`;
+    
+    if (resetarShell) {
+        // Altera a URL da janela PAI (sai do iframe e recarrega o Shell principal)
+        window.top.location.href = `../index.html`; 
+    } else {
+        // Mantém o Menu e altera apenas o conteúdo do Iframe
+        window.location.href = `${pagina}.html`;
+    }
 }
+
+
+
 
 // // Evento para formatar enquanto o usuário digita
 // document.getElementById('telefone').addEventListener('input', (e) => {

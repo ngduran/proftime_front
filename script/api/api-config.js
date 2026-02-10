@@ -1,7 +1,8 @@
 import { ENV } from '../../env-config.js'
 
-const BASE_URL = ENV.BASE_URL;
-//const BASE_URL = "https://aad6a90435c4.ngrok-free.app";
+// Definimos as duas bases separadamente
+const PROF_URL = ENV.PROFESSOR_API;
+const AUCT_URL = ENV.AUCTORITAS_API;
 
 const R_USUARIO         = "/usuario";
 const R_CONTA           = "/conta";
@@ -14,38 +15,45 @@ const R_MUNICIPIO       = "/municipios";
 const R_ADMINISTRACAO   = "/administracoes";
 
 export const API_MAP = {
-    BASE_URL: BASE_URL,
+    
+    // Mantemos as URLs base caso precise em algum lugar
+    BASE_URL_PROFESSOR: PROF_URL,
+    BASE_URL_AUCTORITAS: AUCT_URL,
 
     USUARIO: {
-        CREATE: { path: `${BASE_URL}${R_USUARIO}/create`, method: 'POST' },
-        READ:   { path: `${BASE_URL}${R_USUARIO}/read`,   method: 'POST' },
-        UPDATE: { path: `${BASE_URL}${R_USUARIO}/update`, method: 'PUT'  },
-        DELETE: { path: `${BASE_URL}${R_USUARIO}/delete`, method: 'DELETE'}
+        CREATE: { path: `${AUCT_URL}${R_USUARIO}/create`, method: 'POST' },
+        READ:   { path: `${AUCT_URL}${R_USUARIO}/read`,   method: 'POST' },
+        UPDATE: { path: `${AUCT_URL}${R_USUARIO}/update`, method: 'PUT'  },
+        DELETE: { path: `${AUCT_URL}${R_USUARIO}/delete`, method: 'DELETE'}
     },
 
     AUTH: {
-        LOGIN: { path: `${BASE_URL}${R_LOGIN}/login`, method: 'POST' }
+        LOGIN: { path: `${AUCT_URL}${R_LOGIN}/login`, method: 'POST' }
+    },
+
+    CONTA: {
+        CREATE:  { path: `${AUCT_URL}${R_CONTA}/create`, method: 'POST' },
     },
 
     PROFESSOR_GRADE: {
-        CREATE_ITEM: { path: `${BASE_URL}${R_GRADE_PROFESSOR}/create-item`, method: 'POST' }
+        CREATE_ITEM: { path: `${PROF_URL}${R_GRADE_PROFESSOR}/create-item`, method: 'POST' }
     },
 
     INSTITUICAO: {
-        CREATE:  { path: `${BASE_URL}${R_INSTITUICAO}/create`,   method: 'POST' },
-        FINDALL: { path: `${BASE_URL}${R_INSTITUICAO}/find-all`, method: 'GET'  },
+        CREATE:  { path: `${PROF_URL}${R_INSTITUICAO}/create`,   method: 'POST' },
+        FINDALL: { path: `${PROF_URL}${R_INSTITUICAO}/find-all`, method: 'GET'  },
     },
 
     ESTADO: {
-        FINDALL:  { path: `${BASE_URL}${R_ESTADO}/find-all`, method: 'GET' },
+        FINDALL:  { path: `${PROF_URL}${R_ESTADO}/find-all`, method: 'GET' },
     },
     
     MUNICIPIO: {
-        POR_ESTADO:  { path: `${BASE_URL}${R_MUNICIPIO}/listar-por-estado`, method: 'GET' },
+        POR_ESTADO:  { path: `${PROF_URL}${R_MUNICIPIO}/listar-por-estado`, method: 'GET' },
     },
     
     ADMINISTRACAO: {
-        FINDALL:  { path: `${BASE_URL}${R_ADMINISTRACAO}/find-all`, method: 'GET' },
+        FINDALL:  { path: `${PROF_URL}${R_ADMINISTRACAO}/find-all`, method: 'GET' },
     },
     
 

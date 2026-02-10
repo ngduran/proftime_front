@@ -126,7 +126,7 @@ export class Base_Field extends HTMLElement {
         // 2. FLUXO DE MUDANÇA (Change - Selects)
         if (event.type === 'change') {
             // Log para confirmar que a Base capturou a mudança
-            console.log(`%c[DELEGATED-CHANGE] %c${this.id}`, "color: #28a745; font-weight: bold;");
+            //console.log(`%c[DELEGATED-CHANGE] %c${this.id}`, "color: #28a745; font-weight: bold;");
             
             this.validar(); // Valida o select
 

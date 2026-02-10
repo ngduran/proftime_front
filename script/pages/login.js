@@ -1,3 +1,5 @@
+import { navegarPara } from "../utils/form-helper.js";
+
 // 1. DICIONÁRIO DE INTERFACE ESTÁTICA (Textos que não são Web Components)
 const dicionarioLogin = {
 
@@ -61,5 +63,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4.4 OUVINTES DOS BOTÕES DE BANDEIRA
     document.getElementById('btn-pt')?.addEventListener('click', () => trocarIdiomaSistema('pt'));
     document.getElementById('btn-es')?.addEventListener('click', () => trocarIdiomaSistema('es'));
-
+   
+   
 });
+
+// ======================================================================================
+// 8. BOTÃO ADICIONAR (EVENTO)
+// ======================================================================================
+document.getElementById('criarConta').addEventListener('click', () => {
+    navegarPara('conta');
+});
+
+//Se precisar fazer mais coisas
+// document.getElementById('criarConta').addEventListener('click', function() {
+//     console.log("Usuário clicou em Criar Conta");
+//     navegarPara('conta');
+// });
