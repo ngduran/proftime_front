@@ -20,7 +20,8 @@ export async function executarOperacao({
     mensagemSucesso,
     onSuccess,         // Callback opcional para ações específicas após sucesso
     validacao = null,   // Função de validação opcional
-    sessionKey = null // <--- NOVO: Parâmetro para a chave do SessionManager
+    sessionKey = null, // <--- NOVO: Parâmetro para a chave do SessionManager
+    onError = null // <--- NOVO: Parâmetro para capturar erros de processamento
 }) {
     // 1. Executa validação se existir
     //if (validacao && !( await validacao() ) ) return;
@@ -60,15 +61,32 @@ export async function executarOperacao({
             const mensagemFinal = typeof resultado === 'object' 
                 ? (resultado.message || "Erro no servidor") 
                 : resultado;
-            await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
+            //await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
+
+            // Se existir um onError, passamos o erro para ele, senão usamos o padrão
+            if (onError) {
+                await onError(mensagemFinal);
+            } else {
+                await Mensagem.erro(response.status, mensagemFinal || "Erro desconhecido");
+            }
+
         }
 
     } catch (error) {
         if (error.message.includes("fetch") || error.message.includes("Network")) {
             await Mensagem.erro("Conexão", "Não foi possível alcançar o servidor.");
         } else {
-            alert("Erro no processamento: " + error.message);
+            //alert("Erro no processamento: " + error.message);
+            //console.error(error);
+
+            // AQUI O PULO DO GATO: Se houver onError, ele substitui o alert
+            if (onError) {
+                await onError(error.message);
+            } else {
+                alert("Erro no processamento: " + error.message);
+            }
             console.error(error);
+
         }
     } finally {
         desbloquearButton(idBotao, textoOriginal);

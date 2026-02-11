@@ -1,11 +1,7 @@
 import { apiFetch, apiFetchGet, apiFetchGetWithId } from "../api/api-client.js";
 import { API_MAP } from "../api/api-config.js";
 
-export async function cadastrarUsuario(dados) {
-    console.log(" === [TRACE START] Cadastrar Usuário ===");
-    console.log(" > Alvo: AUCTORITAS_API");
-    console.log(" > Endpoint:", API_MAP.USUARIO.CREATE.path);
-    console.log(" > Dados enviados:", dados);
+export async function cadastrarUsuario(dados) {    
     return await apiFetch(API_MAP.USUARIO.CREATE, dados);
 }
 

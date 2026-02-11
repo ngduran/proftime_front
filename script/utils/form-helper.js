@@ -101,13 +101,6 @@ export function aplicarMascaraTelefone(valor) {
  * Redireciona para uma página específica dentro da pasta /page/
  * @param {string} nomePagina - O nome do arquivo (ex: 'login', 'home', 'index')
  */
-// export function navegarPara(nomePagina) {    
-//     const pagina = nomePagina.replace('.html', '');  
-//     // window.location.href = `../page/${pagina}.html`;
-//     window.location.href = `${pagina}.html`;
-// }
-
-
 export function navegarPara(nomePagina, resetarShell = false) {    
     const pagina = nomePagina.replace('.html', '');  
     
@@ -119,14 +112,6 @@ export function navegarPara(nomePagina, resetarShell = false) {
         window.location.href = `${pagina}.html`;
     }
 }
-
-
-
-
-// // Evento para formatar enquanto o usuário digita
-// document.getElementById('telefone').addEventListener('input', (e) => {
-//     e.target.value = aplicarMascaraTelefone(e.target.value);
-// });
 
 
 export function renderizarTabela() {
@@ -276,4 +261,77 @@ export function preencherSelect(idSelect, dados) {
         option.textContent = item.nome; 
         select.appendChild(option);
     });
+}
+
+
+// =======================================================
+// REVISADO - REFATORADO - GENÉRICO - DINÂMICO 2026-02-10
+// =======================================================
+export function validarFormulario(seletores) {
+
+    let todosValidos = true;
+
+    seletores.forEach(tag => {
+        const campo = document.querySelector(tag);
+
+        if (!campo) {
+            todosValidos = false;
+            return;
+        }
+        
+        try {
+            const eValido = campo.validar();
+            const valor = campo.value;
+
+            if (!eValido) {
+                todosValidos = false;
+            }
+
+        } catch (err) {
+            console.log(`%c CRÍTICO %c <${tag}> sem método validar()`, "background: #8e44ad; color: white; font-weight: bold;", "color: #8e44ad;");
+            todosValidos = false;
+        }
+    });
+
+    return todosValidos;
+}
+
+// =======================================================
+// REVISADO - REFATORADO - GENÉRICO - DINÂMICO 2026-02-10
+// =======================================================
+export function capturarDadosFormulario(seletores) {
+    
+    const dadosCapturados = {};
+
+    seletores.forEach(tag => {
+        const componente = document.querySelector(tag);
+
+        if (componente) {
+            
+            const chave = componente.id;            
+            
+            dadosCapturados[chave] = {
+                valor: componente.value,
+                texto: componente.textoSelecionado,
+                nome:  componente.name
+            };            
+        }
+    });
+
+    
+    return dadosCapturados;
+}
+
+// =======================================================
+// REVISADO - REFATORADO - GENÉRICO - DINÂMICO 2026-02-10
+// =======================================================
+export function simplificarDados(dadosComplexos) {
+    const dadosSimples = {};
+    
+    Object.keys(dadosComplexos).forEach(chave => {
+        // Extrai apenas a string contida em 'valor'
+        dadosSimples[chave] = dadosComplexos[chave].valor;
+    });
+
+    return dadosSimples;
 }
