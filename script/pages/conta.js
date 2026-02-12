@@ -2,6 +2,7 @@ import { executarOperacao } from "../core/api-engine.js";
 import { Mensagem } from "../utils/mensageiro.js";
 import { cadastrarUsuario } from "../services/api_service.js";
 import { capturarDadosFormulario, navegarPara, simplificarDados, validarFormulario } from "../utils/form-helper.js";
+import { inicializarI18n } from "../components/utils/i18n/i18n-helper.js";
 
 // 1. DICIONÁRIO DE INTERFACE ESTÁTICA (Textos que não são Web Components)
 const dicionarioConta = {
@@ -98,7 +99,7 @@ async function executarTarefasSalvar() {
     }
 
     // Passo 3: Capturar os dados (Passo isolado para o log que você pediu)
-    const dadosConta = capturarDadosFormulario();
+    const dadosConta = capturarDadosFormulario(seletoresConta);
    
     // 2. Transforma em um DTO simples que o Spring entende
     const dadosParaAPI = simplificarDados(dadosConta);
